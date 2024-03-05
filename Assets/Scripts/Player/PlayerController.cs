@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utilities;
+
 
 // PlayerInput의 Invoke Unity Events 사용
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
@@ -26,8 +28,6 @@ public class PlayerController : MonoBehaviour,IDamageable
     bool isParry;
     bool isJumping;
     bool isInvincible; 
-    
-    
 
     Animator anim;
 
@@ -35,9 +35,8 @@ public class PlayerController : MonoBehaviour,IDamageable
 
     Rigidbody2D rb;
 
-    
-
     bool isJumpingDown => rb.velocity.y < 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +65,7 @@ public class PlayerController : MonoBehaviour,IDamageable
         if (playerInput != null)
         {
             moveDir = new Vector2(playerInput.x, 0);
-            Debug.Log($"Move Direction : {moveDir}");
+            this.Log($"Move Direction : {moveDir}");
         }
     }
 
@@ -77,7 +76,7 @@ public class PlayerController : MonoBehaviour,IDamageable
         //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
         if (playerInput != null)
         {
-            Debug.Log($"Look Direction{playerInput}");
+            this.Log($"Look Direction{playerInput}");
             switch (playerInput.y)
             {
                 case 0:
@@ -103,14 +102,14 @@ public class PlayerController : MonoBehaviour,IDamageable
 
         if (input.performed)
         {
-            Debug.Log(isShield);
+            this.Log(isShield);
             anim.SetTrigger("Shield");
             shield.ShieldActivate(isShield);
         }
 
         if (input.canceled)
         {
-            Debug.Log(isShield);
+            this.Log(isShield);
             shield.ShieldActivate(isShield);
         }
         
@@ -133,7 +132,7 @@ public class PlayerController : MonoBehaviour,IDamageable
             }
             else
             {
-                Debug.Log("Attack");
+                this.Log("Attack");
                 anim.SetTrigger("Attack");
             }
         }
@@ -150,17 +149,17 @@ public class PlayerController : MonoBehaviour,IDamageable
     // coyote time은 가능하면?
     public void OnJump(InputAction.CallbackContext input)
     {
-        Debug.Log("executed");
+        this.Log("executed");
         if (input.performed)
         {
-            Debug.Log("Performed");
+            this.Log("Performed");
             Jump();
         }
 
         //점프중에 키를 빠르게 놓았을 때 근데 내려갈때는 작동되면 안됨
         if(input.canceled && isJumping && !isJumpingDown)
         {
-            Debug.Log("Jump Cut");
+            this.Log("Jump Cut");
             JumpCut();
             //dosth
         }
@@ -245,7 +244,7 @@ public class PlayerController : MonoBehaviour,IDamageable
     public void Damaged(int dmg)
     {
         DamageEffect();
-        Debug.Log($"currentHp : {HP} - {dmg} = {HP-=dmg}");
+        this.Log($"currentHp : {HP} - {dmg} = {HP-=dmg}");
     }
 
     void DamageEffect()

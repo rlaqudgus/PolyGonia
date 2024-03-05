@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Utilities;
 
 //기본적인 상태 구조는 상위 스크립트에서 해결
 //여기서는 각 상태 세부 구현 및 애니메이션 짜기
@@ -135,7 +136,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         {
             case EnemyType.Civilian:
                 isMoving = false;
-                Debug.Log("dosth");
+                this.Log("dosth");
                 StateChange(EnemyState.Idle);
                 break;
             case EnemyType.Soldier:
@@ -181,7 +182,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         {
             anim.SetTrigger("Attack");
 
-            Debug.Log("attack2");
+            this.Log("attack2");
         }
         
         //공격패턴 끝나면 다시 감지
@@ -229,7 +230,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
         else
         {
-            Debug.Log("??");
+            this.Log("??");
             //state 바꾸기
             StateChange(EnemyState.Idle);
         }
@@ -257,7 +258,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     public void ByParry(Shield shield)
     {
         //패링하면 disarm 컨셉 - 시민으로 돌아감
-        Debug.Log("Attacked by Parrying");
+        this.Log("Attacked by Parrying");
         ParryKnockBack();
         shield.ParryEffect();
         ParryDisarm();
@@ -281,7 +282,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     }
     public void ByShield(Shield shield)
     {
-        Debug.Log("Attacked by Shield");
+        this.Log("Attacked by Shield");
 
         gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * shield.shieldForce * (1 / level), ForceMode2D.Impulse);
         shield.ShieldEffect();
@@ -289,7 +290,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     public void BySpear()
     {
-        Debug.Log("Attacked by Spear");
+        this.Log("Attacked by Spear");
     }
 
     public void Damaged(int dmg)

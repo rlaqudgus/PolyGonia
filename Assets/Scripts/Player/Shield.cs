@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 //방패 관련 메서드나 오브젝트 관리해주는 클래스
 //하위 오브젝트에 방패 콜라이더나 패링 히트박스 등 담아둬야 할듯
@@ -43,13 +44,13 @@ public class Shield : MonoBehaviour
 
     public void ShieldEffect()
     {
-        Debug.Log("shieldEffect");
+        this.Log("shieldEffect");
         Instantiate(shieldEffect, effectPos.position, Quaternion.identity);
     }
 
     public void ParryEffect()
     {
-        Debug.Log("parryEffect");
+        this.Log("parryEffect");
         Instantiate(parryEffect,effectPos.position,Quaternion.identity);
         //parryEffect.SetActive(true);
         

@@ -14,7 +14,7 @@ public class RayBox : MonoBehaviour
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag(tagName))
             {
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
                 return true;
             }
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 public class ParryBox : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ParryBox : MonoBehaviour
         //패링 오브젝트의 부모 접근 - 부모의 IAttackable 컴포넌트 접근 - byParry 메서드 실행
         if (col.CompareTag("Parry"))
         {
+            this.Log("parry");
             var parent = col.transform.parent;
             if (parent.TryGetComponent<IAttackable>(out IAttackable a))
             {
@@ -23,7 +25,7 @@ public class ParryBox : MonoBehaviour
                 playerController.PlayerKnockBack();
                 //플레이어 효과 - 카메라 흔들기
                 StartCoroutine(playerController.cam.Shake());
-                Debug.Log("parry");
+                
             }
         }
     }
