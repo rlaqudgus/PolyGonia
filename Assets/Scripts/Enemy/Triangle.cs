@@ -285,7 +285,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         this.Log("Attacked by Shield");
 
         gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * shield.shieldForce * (1 / level), ForceMode2D.Impulse);
-        shield.ShieldEffect();
+        //shield.ShieldEffect();
     }
 
     public void BySpear()

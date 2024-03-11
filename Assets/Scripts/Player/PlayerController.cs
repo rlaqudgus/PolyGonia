@@ -6,7 +6,7 @@ using Utilities;
 
 // PlayerInput의 Invoke Unity Events 사용
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
-public class PlayerController : MonoBehaviour,IDamageable
+public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
     Vector2 moveDir;
     public CameraController cam;
@@ -281,5 +281,20 @@ public class PlayerController : MonoBehaviour,IDamageable
         }
         isInvincible = false;
         
+    }
+
+    public void ByShield(Shield shield)
+    {
+        PlayerKnockBack();
+    }
+
+    public void ByParry(Shield shield)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void BySpear()
+    {
+        throw new System.NotImplementedException();
     }
 }
