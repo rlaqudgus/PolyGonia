@@ -1,56 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 public class HitBox : MonoBehaviour
 {
-    [SerializeField] bool shieldHit;
-    [SerializeField] bool shieldParry;
+    public bool isBody;
     [SerializeField] int hitPoint;
-    //무조건 수정!!!!
-    [SerializeField] PlayerController playerController;
-    //private void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if (col.gameObject.TryGetComponent<IAttackable>(out IAttackable a))
-    //    {
-    //        if (shieldHit)
-    //        {
-    //            var shield = this.GetComponentInParent<Shield>();
-
-    //            //a.ByShield(shield);
-    //            Debug.Log("hit");
-
-    //        }
-
-    //        //else if (shieldParry) 
-    //        //{
-    //        //    var shield = this.GetComponentInParent<Shield>();
-
-    //        //    a.ByParry(shield);
-    //        //    Debug.Log("parry");
-    //        //}
-    //    }
-    //}
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Parry"))
+        // HitBox가 HurtBox와 trigger 되었을 경우 
+        if (col.TryGetComponent<HurtBox>(out HurtBox hbox))
         {
-            var parent = col.transform.parent;
-            if (parent.TryGetComponent<IAttackable>(out IAttackable a))
-            {
-                var shield = this.GetComponentInParent<Shield>();
-
-                a.ByShield(shield);
-                playerController.PlayerKnockBack();
-                Debug.Log("shield");
-            }
+            this.Log($"{this.gameObject.name} collided with {hbox.gameObject.name}");
+            hbox.Damage(hitPoint);
         }
 
-        //damage 입을 수 있는 오브젝트라면 해당 Damaged 메서드 실행
-        if (col.TryGetComponent<IDamageable>(out IDamageable d))
+        // HitBox가 패리 오브젝트와 trigger 되었을 경우 패링되게 할 것인가?
+        // 좀 애매 패링 부분은 따로 빼는게 나을 것 같다
+        if (col.TryGetComponent<ParryBox>(out ParryBox pbox))
         {
-            d.Damaged(hitPoint);
+            this.Log($"{this.gameObject.name} collided with {pbox.gameObject.name}");
+
         }
     }
 }
