@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     [SerializeField] int jumpCounter;
     [SerializeField] int maxHP;
     [SerializeField] int HP;
+    [SerializeField] RayBox ray;
 
     int initJumpCounter;
 
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
         PlayerMove();
         PlayerAnim();
+        IsGrounded();
     }
 
     //Event를 통해 호출되는 함수
@@ -167,7 +169,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     void Jump()
     {
-        if (jumpCounter>0) 
+        if (jumpCounter>0 || !isJumping) 
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             isJumping = true;
@@ -230,15 +232,25 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * 0.5f,0);
     }
 
-    //ㅈㄴ마음에안든다
-    private void OnCollisionEnter2D(Collision2D col)
+    void IsGrounded()
     {
-        if (col.gameObject.CompareTag("Ground"))
+        if (ray.CheckWithBox())
         {
+            this.Log("?");
             isJumping = false;
             jumpCounter = initJumpCounter;
+            //return true;
         }
     }
+    //ㅈㄴ마음에안든다
+    //private void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    if (col.gameObject.CompareTag("Ground"))
+    //    {
+    //        isJumping = false;
+    //        jumpCounter = initJumpCounter;
+    //    }
+    //}
 
    
 
