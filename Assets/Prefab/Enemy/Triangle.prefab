@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 1953297320576921670}
   m_Layer: 8
   m_Name: Triangle
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -514,6 +514,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2226717205164945350}
     m_Modifications:
+    - target: {fileID: 2096733249180477558, guid: 717b026114318cd4ebd38b6ba0de76c1, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2096733249180477558, guid: 717b026114318cd4ebd38b6ba0de76c1, type: 3}
       propertyPath: m_Name
       value: RayBox

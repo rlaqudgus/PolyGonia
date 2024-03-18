@@ -12,6 +12,7 @@ namespace Utilities
         {
             Debug.Log($"[{obj.GetType()}] [{obj.name}]");
         }
+
         //overload 1 - log message print & custom color to the msg if u want to
         public static void Log(this Object obj, object print, string msgColor)
         {
@@ -34,10 +35,9 @@ namespace Utilities
                     default:
                         Debug.Log($"[{obj.GetType()}] [{obj.name}] : <color=white>{print}</color>\n", obj);
                         break;
-                        
                 }
-
             }
+
             else
             {
                 Debug.Log($"[{obj.GetType()}] [{obj.name}] : <color=white>{print}</color>\n", obj);

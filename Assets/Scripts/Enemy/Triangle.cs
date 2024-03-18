@@ -230,7 +230,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
         else
         {
-            this.Log("??");
+            this.Log($"{target} Out of Sight");
             //state ¹Ù²Ù±â
             StateChange(EnemyState.Idle);
         }

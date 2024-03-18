@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         //Vector2 jumpCutVec = new Vector2(rb.velocity.x, 0);
         //rb.velocity = jumpCutVec;
-        rb.AddForce(Vector2.down * rb.velocity.y * (1 - jumpCutMultiplier), ForceMode2D.Impulse);
+        rb.AddForce(Vector2.down * rb.velocity.y * jumpCutMultiplier, ForceMode2D.Impulse);
     }
 
     void PlayerMove()
@@ -230,6 +230,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * 0.5f,0);
     }
 
+    //ㅈㄴ마음에안든다
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground"))
@@ -257,15 +258,25 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     IEnumerator InvincibleEffect()
     {
-        while(isInvincible)
+        //최상위 콜라이더 invincible로 변경
+        gameObject.layer = 31;
+        //하위 모든 오브젝트 invincible로 변경
+        foreach (Transform child in transform)
         {
-            gameObject.layer = 31;
+            child.gameObject.layer = 31;
+        }
+        while (isInvincible)
+        {   
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = false;
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = true;
         }
-        gameObject.layer = 6;
+        //하위 모든 오브젝트 
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = 6;
+        }
 
     }
 

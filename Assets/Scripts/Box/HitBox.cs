@@ -22,7 +22,6 @@ public class HitBox : MonoBehaviour
         if (col.TryGetComponent<ParryBox>(out ParryBox pbox))
         {
             this.Log($"{this.gameObject.name} collided with {pbox.gameObject.name}");
-
         }
 
         // HitBox가 ShieldBox와 trigger 되었을 경우
@@ -43,15 +42,5 @@ public class HitBox : MonoBehaviour
             sbox.Shield();
 
         }
-    }
-
-    void HitBoxParent()
-    {
-
-    }
-
-    Shield GetShield()
-    {
-        return GetComponentInParent<Shield>();
     }
 }

@@ -19,7 +19,6 @@ public class RayBox : MonoBehaviour
             }
         }
         
-
         return false;
     }
 }
