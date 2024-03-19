@@ -45,8 +45,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     Shield shield;
 
-    BoxCollider2D boxCollider;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -55,12 +53,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         shield = GetComponentInChildren<Shield>(true);
-        boxCollider = GetComponent<BoxCollider2D>();
 
         initJumpCounter = jumpCounter;
         HP = maxHP;
-
-        ray.transform.position = boxCollider.bounds.center;
     }
 
 
@@ -255,29 +250,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     private bool IsGrounded()
     {
-        bool check = false;
-        float epsilon = 0.1f;
-        Vector2 center = boxCollider.bounds.center;
-        Vector2 extents = boxCollider.bounds.extents;
-        Vector2 boxBottomLeft = center + new Vector2(-1, -1) * extents;
-        Vector2 boxBottomRight = center + new Vector2(1, -1) * extents;
-
-        ray.transform.position = boxBottomLeft;
-        check = check || ray.CheckWithRay(Vector2.down, epsilon);
-
-        ray.transform.position = boxBottomRight;
-        check = check || ray.CheckWithRay(Vector2.down, epsilon);
-
-        ray.transform.position = center;
-        this.Log($"is Grounded : {check}");
-
-        return check;
+        return ray.CheckWithBox();
     }
-
-    //bool IsGrounded()
-    //{
-    //    return ray.CheckWithBox();
-    //}
 
     //ㅈㄴ마음에안든다
     //private void OnCollisionEnter2D(Collision2D col)

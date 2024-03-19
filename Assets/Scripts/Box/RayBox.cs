@@ -5,7 +5,7 @@ using Utilities;
 
 public class RayBox : MonoBehaviour
 {
-    //ÅÂ±×·Î °Ë»çÇÒÁö Layer·Î °Ë»çÇÒÁö? °í¹ÎÇØ¾ßÇÑ´Ù
+    //íƒœê·¸ë¡œ ê²€ì‚¬í• ì§€ Layerë¡œ ê²€ì‚¬í• ì§€? ê³ ë¯¼í•´ì•¼í•œë‹¤
     [SerializeField] string tagName;
 
     BoxCollider2D col;
@@ -14,10 +14,10 @@ public class RayBox : MonoBehaviour
     {
         col = GetComponent<BoxCollider2D>();
     }
-    //Äİ¶óÀÌ´õ ¹Ú½º ÀÚÃ¼°¡ ¹üÀ§°¡ µÇ¾î È®ÀÎ ray ½î´Â °Í x
+    //ì½œë¼ì´ë” ë°•ìŠ¤ ìì²´ê°€ ë²”ìœ„ê°€ ë˜ì–´ í™•ì¸ ray ì˜ëŠ” ê²ƒ x
     public bool CheckWithBox()
     {
-        RaycastHit2D[] boxHits = Physics2D.BoxCastAll(col.bounds.center, col.bounds.size, 0, Vector2.down, 0);
+        RaycastHit2D[] boxHits = Physics2D.BoxCastAll(col.bounds.center, col.bounds.size, 0, Vector2.down, 0.1f);
         foreach (var hit in boxHits)
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag(tagName))
