@@ -4,8 +4,8 @@ using UnityEditor;
 using UnityEngine;
 using Utilities;
 
-//±âº»ÀûÀÎ »óÅÂ ±¸Á¶´Â »óÀ§ ½ºÅ©¸³Æ®¿¡¼­ ÇØ°á
-//¿©±â¼­´Â °¢ »óÅÂ ¼¼ºÎ ±¸Çö ¹× ¾Ö´Ï¸ŞÀÌ¼Ç Â¥±â
+//ê¸°ë³¸ì ì¸ ìƒíƒœ êµ¬ì¡°ëŠ” ìƒìœ„ ìŠ¤í¬ë¦½íŠ¸ì—ì„œ í•´ê²°
+//ì—¬ê¸°ì„œëŠ” ê° ìƒíƒœ ì„¸ë¶€ êµ¬í˜„ ë° ì• ë‹ˆë©”ì´ì…˜ ì§œê¸°
 
 public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 {
@@ -25,7 +25,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         StartCoroutine(EnemyStateHandler());
     }
 
-    //¸Å ÇÁ·¹ÀÓ¸¶´Ù È®ÀÎÇØ¾ß ÇÒ °Í? bool ¾Ö´Ï¸ŞÀÌ¼ÇÀº ¾Ö´Ï¸ŞÀÌ¼Ç ÇÔ¼ö·Î µû·Î Ã³¸®ÇÏ±â ÆÄÆíÈ­µÇ¾îÀÖÀ¸´Ï º¸±â ½È´Ù
+    //ë§¤ í”„ë ˆì„ë§ˆë‹¤ í™•ì¸í•´ì•¼ í•  ê²ƒ? bool ì• ë‹ˆë©”ì´ì…˜ì€ ì• ë‹ˆë©”ì´ì…˜ í•¨ìˆ˜ë¡œ ë”°ë¡œ ì²˜ë¦¬í•˜ê¸° íŒŒí¸í™”ë˜ì–´ìˆìœ¼ë‹ˆ ë³´ê¸° ì‹«ë‹¤
     // Update is called once per frame
     void Update()
     {
@@ -57,7 +57,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
                 yield break;
         }
 
-        //triangle ±â»ç´Â °¡¸¸È÷ ÀÖ´Â ÄÁ¼Á(±ÙÀ§º´ °°Àº ´À³¦?)
+        //triangle ê¸°ì‚¬ëŠ” ê°€ë§Œíˆ ìˆëŠ” ì»¨ì…‰(ê·¼ìœ„ë³‘ ê°™ì€ ëŠë‚Œ?)
 
         yield return null;
     }
@@ -78,23 +78,23 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     protected override IEnumerator Detect()
     {
         yield return null;
-        //¹æÇâ ¼³Á¤
+        //ë°©í–¥ ì„¤ì •
         CalculateDir();
 
-        ////meelee rangeÀÎÁö ¾Æ´ÑÁö Ã¼Å©ÇÏ°í Attack state·Î ÀüÈ¯ÇØ¾ßÇÑ´Ù
+        ////meelee rangeì¸ì§€ ì•„ë‹Œì§€ ì²´í¬í•˜ê³  Attack stateë¡œ ì „í™˜í•´ì•¼í•œë‹¤
         //if (TargetDistance(target) < meeleeRange)
         //{
         //    StateChange(EnemyState.Attack);
         //}
 
-        //state°¡ ¹Ù²îÁö ¾Ê¾Ò´Ù¸é ÀÌµ¿
+        //stateê°€ ë°”ë€Œì§€ ì•Šì•˜ë‹¤ë©´ ì´ë™
         isMoving = true;
 
-        //Å¸ÀÔ¿¡ µû¸¥ ÀÌµ¿ ·ÎÁ÷
+        //íƒ€ì…ì— ë”°ë¥¸ ì´ë™ ë¡œì§
         switch (enemyType)
         {
             case EnemyType.Civilian:
-                //meelee rangeÀÎÁö ¾Æ´ÑÁö Ã¼Å©ÇÏ°í Attack state·Î ÀüÈ¯ÇØ¾ßÇÑ´Ù
+                //meelee rangeì¸ì§€ ì•„ë‹Œì§€ ì²´í¬í•˜ê³  Attack stateë¡œ ì „í™˜í•´ì•¼í•œë‹¤
                 if (TargetDistance(target) < meeleeRange)
                 {
                     StateChange(EnemyState.Attack);
@@ -103,7 +103,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
                 transform.position = newPos;
                 break;
             case EnemyType.Soldier:
-                //meelee rangeÀÎÁö ¾Æ´ÑÁö Ã¼Å©ÇÏ°í Attack state·Î ÀüÈ¯ÇØ¾ßÇÑ´Ù
+                //meelee rangeì¸ì§€ ì•„ë‹Œì§€ ì²´í¬í•˜ê³  Attack stateë¡œ ì „í™˜í•´ì•¼í•œë‹¤
                 if (TargetDistance(target) < meeleeRange)
                 {
                     StateChange(EnemyState.Attack);
@@ -131,7 +131,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     {
         
 
-        // °Å¸®¿¡ µé¾î¿À¸é ¼öÇàÇÒ µ¿ÀÛ
+        // ê±°ë¦¬ì— ë“¤ì–´ì˜¤ë©´ ìˆ˜í–‰í•  ë™ì‘
         switch (enemyType)
         {
             case EnemyType.Civilian:
@@ -168,16 +168,24 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     {
         anim.SetTrigger("Attack");
 
-        //¾Ö´Ï¸ŞÀÌ¼Ç°ú ÀÌµ¿ ¸ÂÃß±â À§ÇØ ½Ã°£ Á¶Á¤
+        //ì• ë‹ˆë©”ì´ì…˜ê³¼ ì´ë™ ë§ì¶”ê¸° ìœ„í•´ ì‹œê°„ ì¡°ì •
         yield return new WaitForSeconds(.5f);
 
-        //°ø°İÇÒ¶§ ¾ÕÀ¸·Î µ¹ÁøÇÏ´Â ¸ğ¼Ç
-        var attack = (Vector2)gameObject.transform.position - (runDir) * 0.63f;
-        gameObject.transform.position = attack;
+        //ê³µê²©í• ë•Œ ì•ìœ¼ë¡œ ëŒì§„í•˜ëŠ” ëª¨ì…˜
+        // Old Model: Change Position
+        // var attack = (Vector2)gameObject.transform.position - (runDir) * 0.63f;
+        // gameObject.transform.position = attack;
+        
+        // New Model with AddForce
+        // float attackForce = 2.5f;
+        // rb.AddForce(-runDir * attackForce, ForceMode2D.Impulse);
+
+        // New Model with Rigidbody.velocity
+        StartCoroutine(Dash(transform, rb, -runDir * 0.63f, 5f));
 
         yield return new WaitForSeconds(.3f);
         
-        //¾ÆÁ÷µµ ¹üÀ§ ¾È¿¡ ÀÖÀ¸¸é 2Å¸ ½ÇÇà
+        //ì•„ì§ë„ ë²”ìœ„ ì•ˆì— ìˆìœ¼ë©´ 2íƒ€ ì‹¤í–‰
         if (TargetDistance(target) < meeleeRange)
         {
             anim.SetTrigger("Attack");
@@ -185,14 +193,14 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
             this.Log("attack2");
         }
         
-        //°ø°İÆĞÅÏ ³¡³ª¸é ´Ù½Ã °¨Áö
+        //ê³µê²©íŒ¨í„´ ëë‚˜ë©´ ë‹¤ì‹œ ê°ì§€
         StateChange(EnemyState.Detect);
     }
 
 
     void CalculateDir()
     {
-        //¹æÇâ ¼³Á¤
+        //ë°©í–¥ ì„¤ì •
         detectPoint = target.position;
         var curPoint = (Vector2)transform.position;
         var dir = curPoint.x - detectPoint.x > 0;
@@ -209,29 +217,29 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         return dis;
     }
 
-    //¾ê´Â °¨ÁöÇÏ´Â ³ğ - DetectBox°¡ È£Ãâ
+    //ì–˜ëŠ” ê°ì§€í•˜ëŠ” ë†ˆ - DetectBoxê°€ í˜¸ì¶œ
     public void Detect(Transform target)
     {
-        //targetÀÌ nullÀÌ ¾Æ´Ï¸é
+        //targetì´ nullì´ ì•„ë‹ˆë©´
         if (target != null)
         {
-            //¸Å°³º¯¼ö ¹ŞÀº ³ğÀ¸·Î ÃÊ±âÈ­½ÃÄÑÁÖ°í
+            //ë§¤ê°œë³€ìˆ˜ ë°›ì€ ë†ˆìœ¼ë¡œ ì´ˆê¸°í™”ì‹œì¼œì£¼ê³ 
             this.target = target;
 
-            //¹æÇâ ¼³Á¤
+            //ë°©í–¥ ì„¤ì •
             detectPoint = target.position;
             var curPoint = (Vector2)transform.position;
             var dir = curPoint.x - detectPoint.x > 0;
             runDir = dir ? new Vector2(1, 0) : new Vector2(-1, 0);
 
-            //state ¹Ù²Ù±â
+            //state ë°”ê¾¸ê¸°
             StateChange(EnemyState.Detect);
         }
 
         else
         {
             this.Log($"{target} Out of Sight");
-            //state ¹Ù²Ù±â
+            //state ë°”ê¾¸ê¸°
             StateChange(EnemyState.Idle);
         }
         
@@ -257,7 +265,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     public void ByParry(Shield shield)
     {
-        //ÆĞ¸µÇÏ¸é disarm ÄÁ¼Á - ½Ã¹ÎÀ¸·Î µ¹¾Æ°¨
+        //íŒ¨ë§í•˜ë©´ disarm ì»¨ì…‰ - ì‹œë¯¼ìœ¼ë¡œ ëŒì•„ê°
         this.Log("Attacked by Parrying");
         ParryKnockBack();
         shield.ParryEffect();
@@ -297,5 +305,26 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     {
         //blood effect?
         throw new System.NotImplementedException();
+    }
+
+    IEnumerator Dash(Transform tf, Rigidbody2D rb, Vector2 dir, float dashForce)
+    {
+        Vector2 lastVelocity = rb.velocity;
+        bool arrived = false;
+
+        Vector2 initPos = new Vector2(tf.position.x, tf.position.y);
+        Vector2 targetPos = initPos + dir;
+        Vector2 curPos = initPos;
+
+        rb.velocity = dir * dashForce;
+        while (!arrived)
+        {   
+            curPos = new Vector2(tf.position.x, tf.position.y);
+            Vector2 check = (targetPos - initPos) * (targetPos - curPos);
+            if (check.x < 0 && check.y < 0)
+            arrived = true;
+            
+            yield return new WaitForFixedUpdate();
+        }
     }
 }
