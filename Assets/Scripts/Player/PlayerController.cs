@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 using Utilities;
 
 
-// PlayerInputÀÇ Invoke Unity Events »ç¿ë
-// Action¿¡ ¹Ì¸® mapping ÇØ³õÀº Å°°¡ ºÒ·ÈÀ» ¶§ Unity Events¸¦ È£ÃâÇÑ´Ù. 
+// PlayerInputì˜ Invoke Unity Events ì‚¬ìš©
+// Actionì— ë¯¸ë¦¬ mapping í•´ë†“ì€ í‚¤ê°€ ë¶ˆë ¸ì„ ë•Œ Unity Eventsë¥¼ í˜¸ì¶œí•œë‹¤. 
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
-    Vector2 moveDir;
     public CameraController cam;
+    [SerializeField] RayBox ray;
     [SerializeField] float moveSpd;
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCutMultiplier;
@@ -17,120 +17,171 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     [SerializeField] int jumpCounter;
     [SerializeField] int maxHP;
     [SerializeField] int HP;
-    [SerializeField] RayBox ray;
 
     int initJumpCounter;
 
+    Vector2 moveDir;
+    int dir;
     bool isMoving;
     bool isLookUp;
     bool isLookDown;
+
     public bool isShield;
-    bool isAttack;
+    bool isAttacking;
     bool isParry;
+    
     bool isJumping;
+    bool isJumpingDown => rb.velocity.y < 0;
+
     bool isInvincible; 
+
+    PlayerInput playerInput;
+
+    Rigidbody2D rb;
+
+    SpriteRenderer sr;
 
     Animator anim;
 
     Shield shield;
 
-    Rigidbody2D rb;
-
-    bool isJumpingDown => rb.velocity.y < 0;
+    BoxCollider2D boxCollider;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         shield = GetComponentInChildren<Shield>(true);
+        boxCollider = GetComponent<BoxCollider2D>();
+
         initJumpCounter = jumpCounter;
         HP = maxHP;
+
+        ray.transform.position = boxCollider.bounds.center;
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        isMoving = (moveDir != Vector2.zero);
+        // Don't put Move() inside the OnMove()
+        // I guess OnMove() is invoked when the input is changed - i.e. pressed or released
+        // The character should keep moving when we hold the key
+        // But the input state is not changing when we hold the key
+        // We can use this technique if we implement dash or telepote move later
+        // In that case, we have to put the function inside the OnMove()
+        Move();
 
-        PlayerMove();
-        PlayerAnim();
-        IsGrounded();
+        // This is for Raycast Debug
+        // isGrounded();
     }
 
-    //Event¸¦ ÅëÇØ È£ÃâµÇ´Â ÇÔ¼ö
-    //input¿¡ µû¶ó moveDir¸¦ º¯°æ
+    //Eventë¥¼ í†µí•´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+    //inputì— ë”°ë¼ moveDirë¥¼ ë³€ê²½
     public void OnMove(InputAction.CallbackContext input)
     {
         Vector2 playerInput = input.ReadValue<Vector2>();
 
-        if (playerInput != null)
+        if (playerInput.x > Mathf.Epsilon) dir = 1;
+        else if (playerInput.x < -Mathf.Epsilon) dir = -1;
+        else dir = 0;
+        
+        moveDir = Vector2.right * dir;
+        // this.Log($"Move Direction : {moveDir}");
+
+        isMoving = (dir != 0);
+        // this.Log($"isMoving : {isMoving}");
+    }
+
+    private void Move()
+    {
+        if (isMoving)
         {
-            moveDir = new Vector2(playerInput.x, 0);
-            this.Log($"Move Direction : {moveDir}");
+            //ë°©ì–´ìƒíƒœ ì´ë™ ê·¸ëƒ¥ ì´ë™ ì°¨ì´
+            float moveAmount = 1.0f;
+            if (isShield) moveAmount *= 0.25f;
+            if (isParry) moveAmount *= 0.25f;
+            
+            // Move
+            transform.Translate(moveDir * moveSpd * moveAmount * Time.deltaTime);
+            
+            //xì¶• ë¶€í˜¸ ë°”ê¾¸ê¸° (ì¢Œìš°ë°˜ì „)
+            transform.localScale = new Vector2(dir, transform.localScale.y);;
         }
+        
+        // Animation Transition
+        anim.SetBool("isMoving", isMoving);
     }
 
     public void OnLook(InputAction.CallbackContext input)
     {
         Vector2 playerInput = input.ReadValue<Vector2>();
 
-        //Å°¸¦ ¶¿ ¶§µµ È£ÃâµÇ±â ¶§¹®¿¡ 0ÀÔ·ÂµÇ°í false½ÃÄÑÁÜ
-        if (playerInput != null)
+        isLookUp = (playerInput.y > 0);
+        isLookDown = (playerInput.y < 0);
+
+        //ìœ„ë‚˜ ì•„ë˜ë¥¼ ë³´ê³  ìˆì„ ë•Œ ì›€ì§ì´ë©´ ë°”ë¡œ ì›€ì§ì´ê²Œ
+        //í‚¤ë¥¼ ë—„ ë•Œë„ í˜¸ì¶œë˜ê¸° ë•Œë¬¸ì— 0ì…ë ¥ë˜ê³  falseì‹œì¼œì¤Œ
+        if (isMoving) 
         {
-            this.Log($"Look Direction{playerInput}");
-            switch (playerInput.y)
-            {
-                case 0:
-                    isLookDown = false;
-                    isLookUp = false;
-                    break;
-                case 1:
-                    isLookUp = true;
-                    break;
-                case -1:
-                    isLookDown = true;
-                    break;
-            }
-        } 
+            isLookUp = false;
+            isLookDown = false;
+        }
+
+        Look();
     }
 
-    // Axis´Â ´­·¶À» ¶§ 1, ¶ÃÀ» ¶§ 0À¸·Î º¯ÇÏ´Â float return
-    // °è¼Ó ´©¸£°í ÀÖÀ¸¸é °è¼Ó True¸¦ ¹İÈ¯ÇÏ´Â isShield º¯¼ö - ÀÌ³ğÀº shield idle ¾Ö´Ï¸ŞÀÌ¼Ç ÇÒ ¶§ ¾²±â
-    // ÇÑ¹ø ´­·¶À» ¶§ µü ÇÑ¹ø ½ÇÇàÇÏ´Â ¾Ö´Ï¸ŞÀÌ¼Ç(¹æÆĞ »Ì´Â ¾Ö´Ï¸ŞÀÌ¼Ç)À» ½á¾ßÇÏ±â ¶§¹®¿¡ trigger º¯¼ö ÇÏ³ª ´õ ¸¸µé¾îÁÖÀÚ 
+    private void Look() 
+    {
+        anim.SetBool("isLookUp", isLookUp);
+        anim.SetBool("isLookDown", isLookDown);
+    }
+
+    // AxisëŠ” ëˆŒë €ì„ ë•Œ 1, ë—ì„ ë•Œ 0ìœ¼ë¡œ ë³€í•˜ëŠ” float return
+    // ê³„ì† ëˆ„ë¥´ê³  ìˆìœ¼ë©´ ê³„ì† Trueë¥¼ ë°˜í™˜í•˜ëŠ” isShield ë³€ìˆ˜ - ì´ë†ˆì€ shield idle ì• ë‹ˆë©”ì´ì…˜ í•  ë•Œ ì“°ê¸°
+    // í•œë²ˆ ëˆŒë €ì„ ë•Œ ë”± í•œë²ˆ ì‹¤í–‰í•˜ëŠ” ì• ë‹ˆë©”ì´ì…˜(ë°©íŒ¨ ë½‘ëŠ” ì• ë‹ˆë©”ì´ì…˜)ì„ ì¨ì•¼í•˜ê¸° ë•Œë¬¸ì— trigger ë³€ìˆ˜ í•˜ë‚˜ ë” ë§Œë“¤ì–´ì£¼ì 
     public void OnShield(InputAction.CallbackContext input)
     {
         isShield = input.ReadValueAsButton();
+        this.Log($"isShield : {isShield}");
 
-        if (input.performed)
+        Shield();
+    }
+    
+    private void Shield()
+    {
+        if (isShield)
         {
-            this.Log(isShield);
             anim.SetTrigger("Shield");
-            shield.ShieldActivate(isShield);
         }
 
-        if (input.canceled)
-        {
-            this.Log(isShield);
-            shield.ShieldActivate(isShield);
-        }
-        
+        shield.ShieldActivate(isShield);
+        anim.SetBool("isShield", isShield);
+
     }
 
    
-    // shield »óÅÂÀÏ¶§¿Í ¾Æ´Ò ¶§ ±¸ºĞ
-    public void OnAttack(InputAction.CallbackContext input)
+    // shield ìƒíƒœì¼ë•Œì™€ ì•„ë‹ ë•Œ êµ¬ë¶„
+        public void OnAttack(InputAction.CallbackContext input)
     {
-        isAttack = input.ReadValueAsButton();
+        isAttacking = input.ReadValueAsButton();
+        Attack();
+    }
 
-        if (input.performed)
+    private void Attack() {
+        if (isAttacking)
         {
-            // ´­·¶À» ¶§ shieldbox¸¦ ²ô°í parrybox¸¦ ÄÒ´Ù
+            // ëˆŒë €ì„ ë•Œ shieldboxë¥¼ ë„ê³  parryboxë¥¼ ì¼ ë‹¤
             if (isShield)
             {
+                this.Log($"isParry: {isParry}");
                 anim.SetTrigger("Parry");
                 StartCoroutine(CheckParry());
                 shield.ShieldParry();
+
             }
             else
             {
@@ -139,85 +190,55 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             }
         }
 
-        //³Ê¹« »¡¸® ¶ÃÀ» ¶§ Æ®¸®°Å°¡ resetµÇÁö ¾ÊÀ½ ¼öµ¿À¸·Î reset ÇØÁÖÀÚ..
-        if (input.canceled)
+        ////ë„ˆë¬´ ë¹¨ë¦¬ ë—ì„ ë•Œ íŠ¸ë¦¬ê±°ê°€ resetë˜ì§€ ì•ŠìŒ ìˆ˜ë™ìœ¼ë¡œ reset í•´ì£¼ì..
+        else
         {
             anim.ResetTrigger("Parry");
         }
     }
 
-    // responsive ÇÏ°Ô ¸¸µé°í½Í´Ù
-    // hold ÇÏ´Â ½Ã°£¿¡ µû¶ó Á¡ÇÁ ³ôÀÌ ´Ş¶óÁö°Ô (Jump Cut)
-    // coyote timeÀº °¡´ÉÇÏ¸é?
+
+    // responsive í•˜ê²Œ ë§Œë“¤ê³ ì‹¶ë‹¤
+    // hold í•˜ëŠ” ì‹œê°„ì— ë”°ë¼ ì í”„ ë†’ì´ ë‹¬ë¼ì§€ê²Œ (Jump Cut)
+    // coyote timeì€ ê°€ëŠ¥í•˜ë©´?
     public void OnJump(InputAction.CallbackContext input)
     {
-        this.Log("executed");
-        if (input.performed)
-        {
-            this.Log("Performed");
-            Jump();
-        }
+        this.Log("Jump executed");
 
-        //Á¡ÇÁÁß¿¡ Å°¸¦ ºü¸£°Ô ³õ¾ÒÀ» ¶§ ±Ùµ¥ ³»·Á°¥¶§´Â ÀÛµ¿µÇ¸é ¾ÈµÊ
-        if(input.canceled && isJumping && !isJumpingDown)
-        {
-            this.Log("Jump Cut");
-            JumpCut();
-            //dosth
-        }
+        if (input.performed) Jump();
+        if (input.canceled) JumpCut();
     }
 
     void Jump()
     {
-        if (jumpCounter>0 || !isJumping) 
+        if (IsGrounded() && rb.velocity.y <= Mathf.Epsilon)
         {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            isJumping = true;
-            jumpCounter--;
+            isJumping = false;
+            jumpCounter = initJumpCounter;
         }
+        if (jumpCounter <= 0) return;
+
+        this.Log("Performed");
+        isJumping = true;
+        jumpCounter--;
+
+        // Y velocity after adding force is the same as the initial jump velocity
+        // It keeps the jump height whenever the jump key is pressed
+        rb.AddForce(Vector2.up * rb.mass * (jumpForce - rb.velocity.y), ForceMode2D.Impulse);
+
+        // This is the old jump model
+        // jump height does not stay the same because the net force is changing
+        // rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
     void JumpCut()
     {
-        //Vector2 jumpCutVec = new Vector2(rb.velocity.x, 0);
-        //rb.velocity = jumpCutVec;
-        rb.AddForce(Vector2.down * rb.velocity.y * jumpCutMultiplier, ForceMode2D.Impulse);
-    }
+        // Adjustable jump height
+        if (!isJumping) return;
+        if (isJumpingDown) return;
+        this.Log("Jump Cut");
 
-    void PlayerMove()
-    {   //À§³ª ¾Æ·¡¸¦ º¸°í ÀÖÀ» ¶§ ¿òÁ÷ÀÌ¸é ¹Ù·Î ¿òÁ÷ÀÌ°Ô
-        if (isMoving && !isParry && !isShield)
-        {
-            //¹æ¾î»óÅÂ ÀÌµ¿ ±×³É ÀÌµ¿ Â÷ÀÌ
-            var moveAmount = moveDir.x * moveSpd * Time.deltaTime;
-            var move = isShield ? moveAmount * 0.5f : moveAmount;
-
-            Vector3 newPos = new Vector3(transform.position.x + move, transform.position.y, transform.position.z);
-            transform.position = newPos;
-
-            //xÃà ºÎÈ£ ¹Ù²Ù±â (ÁÂ¿ì¹İÀü)
-            Vector2 newScale = move < 0 ? new Vector2(-1, transform.localScale.y) : new Vector2(1, transform.localScale.y);
-            transform.localScale = newScale;
-            
-        }
-    }
-    void PlayerAnim()
-    {
-        
-        anim.SetBool("isMoving", isMoving);
-        anim.SetBool("isShield", isShield);
-
-        // ¿òÁ÷ÀÌ¸é ¹Ù¶óº¸´Â ¾Ö´Ï¸ŞÀÌ¼Ç ÁßÁö
-        if (isMoving ) 
-        {
-            anim.SetBool("isLookUp", false);
-            anim.SetBool("isLookDown", false);
-            return;
-        }
-
-        anim.SetBool("isLookUp", isLookUp);
-        anim.SetBool("isLookDown", isLookDown);
-        
+        rb.AddForce(Vector2.down * rb.velocity.y * rb.mass * (1 - jumpCutMultiplier), ForceMode2D.Impulse);
     }
 
     IEnumerator CheckParry()
@@ -232,17 +253,33 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * 0.5f,0);
     }
 
-    void IsGrounded()
+    private bool IsGrounded()
     {
-        if (ray.CheckWithBox())
-        {
-            this.Log("?");
-            isJumping = false;
-            jumpCounter = initJumpCounter;
-            //return true;
-        }
+        bool check = false;
+        float epsilon = 0.1f;
+        Vector2 center = boxCollider.bounds.center;
+        Vector2 extents = boxCollider.bounds.extents;
+        Vector2 boxBottomLeft = center + new Vector2(-1, -1) * extents;
+        Vector2 boxBottomRight = center + new Vector2(1, -1) * extents;
+
+        ray.transform.position = boxBottomLeft;
+        check = check || ray.CheckWithRay(Vector2.down, epsilon);
+
+        ray.transform.position = boxBottomRight;
+        check = check || ray.CheckWithRay(Vector2.down, epsilon);
+
+        ray.transform.position = center;
+        this.Log($"is Grounded : {check}");
+
+        return check;
     }
-    //¤¸¤¤¸¶À½¿¡¾Èµç´Ù
+
+    //bool IsGrounded()
+    //{
+    //    return ray.CheckWithBox();
+    //}
+
+    //ã…ˆã„´ë§ˆìŒì—ì•ˆë“ ë‹¤
     //private void OnCollisionEnter2D(Collision2D col)
     //{
     //    if (col.gameObject.CompareTag("Ground"))
@@ -270,12 +307,12 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     IEnumerator InvincibleEffect()
     {
-        //ÃÖ»óÀ§ Äİ¶óÀÌ´õ invincible·Î º¯°æ
-        gameObject.layer = 31;
-        //ÇÏÀ§ ¸ğµç ¿ÀºêÁ§Æ® invincible·Î º¯°æ
+        //ìµœìƒìœ„ ì½œë¼ì´ë” invincibleë¡œ ë³€ê²½
+        gameObject.layer = LayerMask.NameToLayer("Invincible");
+        //í•˜ìœ„ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ invincibleë¡œ ë³€ê²½
         foreach (Transform child in transform)
         {
-            child.gameObject.layer = 31;
+            child.gameObject.layer = LayerMask.NameToLayer("Invincible");
         }
         while (isInvincible)
         {   
@@ -284,10 +321,10 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = true;
         }
-        //ÇÏÀ§ ¸ğµç ¿ÀºêÁ§Æ® 
+        //í•˜ìœ„ ëª¨ë“  ì˜¤ë¸Œì íŠ¸ 
         foreach (Transform child in transform)
         {
-            child.gameObject.layer = 6;
+            child.gameObject.layer = LayerMask.NameToLayer("Player1");
         }
 
     }
@@ -298,7 +335,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         while (timer <= invincibleTime) 
         {
             isInvincible = true;
-            ;
+            
             timer += Time.deltaTime;
             yield return null;
         }
