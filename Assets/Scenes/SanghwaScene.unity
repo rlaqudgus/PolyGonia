@@ -4467,14 +4467,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 519420033}
+  ray: {fileID: 751395397}
   moveSpd: 4
   jumpForce: 15
   jumpCutMultiplier: 0.5
   invincibleTime: 2
-  jumpCounter: 1
+  jumpCounter: 3
   maxHP: 5
   HP: 0
-  ray: {fileID: 751395397}
   isShield: 0
 --- !u!61 &920711035
 BoxCollider2D:
