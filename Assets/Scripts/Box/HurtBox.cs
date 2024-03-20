@@ -7,7 +7,7 @@ public class HurtBox : MonoBehaviour
 {
     public void Damage(int hitPnt)
     {
-        //¸ğµç HurtBox´Â Hierarchy »óÀ¸·Î IDamageable ÀÎÅÍÆäÀÌ½º »ó¼Ó¹ŞÀº Å¬·¡½º ÇÏÀ§¿¡ ¼ÓÇØÀÖ¾î¾ßÇÔ
+        //ëª¨ë“  HurtBoxëŠ” Hierarchy ìƒìœ¼ë¡œ IDamageable ì¸í„°í˜ì´ìŠ¤ ìƒì†ë°›ì€ í´ë˜ìŠ¤ í•˜ìœ„ì— ì†í•´ìˆì–´ì•¼í•¨
         if(transform.parent.TryGetComponent<IDamageable>(out IDamageable d))
         {
             this.Log("Hurtbox method");
