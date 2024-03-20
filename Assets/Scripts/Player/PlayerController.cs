@@ -62,16 +62,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // Update is called once per frame
     void Update()
     {
-        // Don't put Move() inside the OnMove()
-        // I guess OnMove() is invoked when the input is changed - i.e. pressed or released
-        // The character should keep moving when we hold the key
-        // But the input state is not changing when we hold the key
-        // We can use this technique if we implement dash or telepote move later
-        // In that case, we have to put the function inside the OnMove()
+        // Do not put Move() inside the OnMove()
+        // OnMove() is invoked when the input is changed - i.e. pressed or released
         Move();
-
-        // This is for Raycast Debug
-        // isGrounded();
     }
 
     //Event를 통해 호출되는 함수
@@ -206,11 +199,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     void Jump()
     {
-        if (IsGrounded() && rb.velocity.y <= Mathf.Epsilon)
-        {
-            isJumping = false;
-            jumpCounter = initJumpCounter;
-        }
         if (jumpCounter <= 0) return;
 
         this.Log("Performed");
@@ -248,20 +236,18 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * 0.5f,0);
     }
 
-    private bool IsGrounded()
-    {
-        return ray.CheckWithBox();
-    }
-
     //ㅈㄴ마음에안든다
-    //private void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if (col.gameObject.CompareTag("Ground"))
-    //    {
-    //        isJumping = false;
-    //        jumpCounter = initJumpCounter;
-    //    }
-    //}
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Ground"))
+        {
+            if (ray.CheckWithBox()) 
+            {
+                isJumping = false;
+                jumpCounter = initJumpCounter;
+            }
+        }
+    }
 
    
 
