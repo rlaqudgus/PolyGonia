@@ -181,7 +181,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         // rb.AddForce(-runDir * attackForce, ForceMode2D.Impulse);
 
         // New Model with Rigidbody.velocity
-        StartCoroutine(Dash(transform, rb, -runDir * 0.63f, 5f));
+        StartCoroutine(Dash(-runDir * 0.63f, 5f));
 
         yield return new WaitForSeconds(.3f);
         
@@ -307,19 +307,19 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         throw new System.NotImplementedException();
     }
 
-    IEnumerator Dash(Transform tf, Rigidbody2D rb, Vector2 dir, float dashForce)
+    IEnumerator Dash(Vector2 dir, float dashForce)
     {
         Vector2 lastVelocity = rb.velocity;
         bool arrived = false;
 
-        Vector2 initPos = new Vector2(tf.position.x, tf.position.y);
+        Vector2 initPos = new Vector2(transform.position.x, transform.position.y);
         Vector2 targetPos = initPos + dir;
         Vector2 curPos = initPos;
 
         rb.velocity = dir * dashForce;
         while (!arrived)
         {   
-            curPos = new Vector2(tf.position.x, tf.position.y);
+            curPos = new Vector2(transform.position.x, transform.position.y);
             Vector2 check = (targetPos - initPos) * (targetPos - curPos);
             if (check.x < 0 && check.y < 0)
             arrived = true;
