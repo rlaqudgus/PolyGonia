@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 
-//¹æÆĞ °ü·Ã ¸Ş¼­µå³ª ¿ÀºêÁ§Æ® °ü¸®ÇØÁÖ´Â Å¬·¡½º
-//ÇÏÀ§ ¿ÀºêÁ§Æ®¿¡ ¹æÆĞ Äİ¶óÀÌ´õ³ª ÆĞ¸µ È÷Æ®¹Ú½º µî ´ã¾ÆµÖ¾ß ÇÒµí
+//ë°©íŒ¨ ê´€ë ¨ ë©”ì„œë“œë‚˜ ì˜¤ë¸Œì íŠ¸ ê´€ë¦¬í•´ì£¼ëŠ” í´ë˜ìŠ¤
+//í•˜ìœ„ ì˜¤ë¸Œì íŠ¸ì— ë°©íŒ¨ ì½œë¼ì´ë”ë‚˜ íŒ¨ë§ íˆíŠ¸ë°•ìŠ¤ ë“± ë‹´ì•„ë‘¬ì•¼ í• ë“¯
 public class Shield : MonoBehaviour
 {
     public float shieldForce;
@@ -16,7 +16,7 @@ public class Shield : MonoBehaviour
     [SerializeField] GameObject parryEffect;
     [SerializeField] Transform effectPos;
 
-    //ÀÌ°Ç Á» tlqkf
+    //ì´ê±´ ì¢€ tlqkf
     PlayerController player;
 
     // Start is called before the first frame update
@@ -60,7 +60,7 @@ public class Shield : MonoBehaviour
 
     }
 
-    //ÀÌºÎºĞ ¶§¹®¿¡ ¹æÆĞ ¹Ú½º°¡ µÚ´Ê°Ô setactive µÇ´Â °æ¿ì°¡ »ı±è
+    //ì´ë¶€ë¶„ ë•Œë¬¸ì— ë°©íŒ¨ ë°•ìŠ¤ê°€ ë’¤ëŠ¦ê²Œ setactive ë˜ëŠ” ê²½ìš°ê°€ ìƒê¹€
     IEnumerator ParryReset()
     {
         shieldParry.SetActive(true);
@@ -73,8 +73,8 @@ public class Shield : MonoBehaviour
         shieldBox.SetActive(true);
     }
 
-    //¹æÆĞ´Â Äİ¸®ÀüÀ¸·Î 
-    //¹æÆĞ¿¡ Enemy°¡ collide µÇ¸é ³Ë¹é
+    //ë°©íŒ¨ëŠ” ì½œë¦¬ì „ìœ¼ë¡œ 
+    //ë°©íŒ¨ì— Enemyê°€ collide ë˜ë©´ ë„‰ë°±
 
     private void OnCollisionEnter2D(Collision2D col)
     {
