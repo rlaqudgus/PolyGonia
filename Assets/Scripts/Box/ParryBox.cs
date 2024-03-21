@@ -9,8 +9,8 @@ public class ParryBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        //ÆĞ¸µ ¿ÀºêÁ§Æ®°¡ °ËÃâµÇ¾ú´Ù¸é(ÆĞ¸µ ¼º°ø)
-        //ÆĞ¸µ ¿ÀºêÁ§Æ®ÀÇ ºÎ¸ğ Á¢±Ù - ºÎ¸ğÀÇ IAttackable ÄÄÆ÷³ÍÆ® Á¢±Ù - byParry ¸Ş¼­µå ½ÇÇà
+        //íŒ¨ë§ ì˜¤ë¸Œì íŠ¸ê°€ ê²€ì¶œë˜ì—ˆë‹¤ë©´(íŒ¨ë§ ì„±ê³µ)
+        //íŒ¨ë§ ì˜¤ë¸Œì íŠ¸ì˜ ë¶€ëª¨ ì ‘ê·¼ - ë¶€ëª¨ì˜ IAttackable ì»´í¬ë„ŒíŠ¸ ì ‘ê·¼ - byParry ë©”ì„œë“œ ì‹¤í–‰
         if (col.CompareTag("Parry"))
         {
             this.Log("parry");
@@ -19,11 +19,11 @@ public class ParryBox : MonoBehaviour
             {
                 var shield = this.GetComponentInParent<Shield>();
 
-                //ÆĞ¸µµÈ³ğÀÇ ByParry ¸Ş¼­µå
+                //íŒ¨ë§ëœë†ˆì˜ ByParry ë©”ì„œë“œ
                 a.ByParry(shield);
-                //ÇÃ·¹ÀÌ¾î È¿°ú - ³Ë¹é
+                //í”Œë ˆì´ì–´ íš¨ê³¼ - ë„‰ë°±
                 playerController.PlayerKnockBack();
-                //ÇÃ·¹ÀÌ¾î È¿°ú - Ä«¸Ş¶ó Èçµé±â
+                //í”Œë ˆì´ì–´ íš¨ê³¼ - ì¹´ë©”ë¼ í”ë“¤ê¸°
                 StartCoroutine(playerController.cam.Shake());
                 
             }

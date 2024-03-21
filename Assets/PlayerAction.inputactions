@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Look",
-                    "type": "Value",
-                    "id": "007f89f7-2a2f-4f45-a9ad-4acdb56d5a54",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Shield",
                     "type": "Button",
                     "id": "ced9e200-a543-406a-8fca-c672f790172b",
@@ -53,7 +44,7 @@
             ],
             "bindings": [
                 {
-                    "name": "AD",
+                    "name": "WASD",
                     "id": "6778880f-1292-4398-b0b3-9c70998e14b8",
                     "path": "2DVector",
                     "interactions": "",
@@ -78,6 +69,28 @@
                     "name": "right",
                     "id": "163997b9-c62c-4191-8879-feddbce60116",
                     "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Up",
+                    "id": "01097d93-9242-40ef-9282-da49cf606824",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "40125517-55a4-410e-8657-1ec33327cb17",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
@@ -119,57 +132,13 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "WS",
-                    "id": "9c762edb-f976-4d8c-9fd6-ef3a2cb9ccfb",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Up",
-                    "id": "01097d93-9242-40ef-9282-da49cf606824",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Down",
-                    "id": "40125517-55a4-410e-8657-1ec33327cb17",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "PC",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Arrows",
-                    "id": "ad5eca11-4e37-4bd6-8628-8b2607489918",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "Up",
                     "id": "66761e96-ab57-414d-901e-0bf4e0dd1797",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Look",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -180,7 +149,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Look",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -209,7 +178,7 @@
                 {
                     "name": "",
                     "id": "c8fe0c77-8bee-4621-a1ca-5c20f59564b9",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

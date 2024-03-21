@@ -10,35 +10,35 @@ public class HitBox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        // HitBox°¡ HurtBox¿Í trigger µÇ¾úÀ» °æ¿ì 
+        // HitBoxê°€ HurtBoxì™€ trigger ë˜ì—ˆì„ ê²½ìš° 
         if (col.TryGetComponent<HurtBox>(out HurtBox hbox))
         {
             this.Log($"{this.gameObject.name} collided with {hbox.gameObject.name}");
             hbox.Damage(hitPoint);
         }
 
-        // HitBox°¡ ÆĞ¸® ¿ÀºêÁ§Æ®¿Í trigger µÇ¾úÀ» °æ¿ì ÆĞ¸µµÇ°Ô ÇÒ °ÍÀÎ°¡?
-        // Á» ¾Ö¸Å ÆĞ¸µ ºÎºĞÀº µû·Î »©´Â°Ô ³ªÀ» °Í °°´Ù
+        // HitBoxê°€ íŒ¨ë¦¬ ì˜¤ë¸Œì íŠ¸ì™€ trigger ë˜ì—ˆì„ ê²½ìš° íŒ¨ë§ë˜ê²Œ í•  ê²ƒì¸ê°€?
+        // ì¢€ ì• ë§¤ íŒ¨ë§ ë¶€ë¶„ì€ ë”°ë¡œ ë¹¼ëŠ”ê²Œ ë‚˜ì„ ê²ƒ ê°™ë‹¤
         if (col.TryGetComponent<ParryBox>(out ParryBox pbox))
         {
             this.Log($"{this.gameObject.name} collided with {pbox.gameObject.name}");
         }
 
-        // HitBox°¡ ShieldBox¿Í trigger µÇ¾úÀ» °æ¿ì
-        // HitBox´Â µÎÁ¾·ù,
-        // 1. enemyÀÇ ¸ö¿¡ ºÙ¾îÀÖ´Â °Í 2. ¹«±â¿¡ ºÙ¾îÀÖ´Â °Í
-        // Ä®¿¡ ºÙ¾îÀÖ´Â È÷Æ®¹Ú½º°¡ ½¯µå¹Ú½º¿¡ Æ®¸®°ÅµÇ¾úÀ» ¶§¸¸!
+        // HitBoxê°€ ShieldBoxì™€ trigger ë˜ì—ˆì„ ê²½ìš°
+        // HitBoxëŠ” ë‘ì¢…ë¥˜,
+        // 1. enemyì˜ ëª¸ì— ë¶™ì–´ìˆëŠ” ê²ƒ 2. ë¬´ê¸°ì— ë¶™ì–´ìˆëŠ” ê²ƒ
+        // ì¹¼ì— ë¶™ì–´ìˆëŠ” íˆíŠ¸ë°•ìŠ¤ê°€ ì‰´ë“œë°•ìŠ¤ì— íŠ¸ë¦¬ê±°ë˜ì—ˆì„ ë•Œë§Œ!
 
         if(col.TryGetComponent<ShieldBox>(out ShieldBox sbox) && !isBody)
         {
             this.Log($"{this.gameObject.name} collided with {sbox.gameObject.name}");
 
             var parent = GetComponentsInParent<IAttackable>();
-            //È÷Æ®¹Ú½º º»ÀÎÀÇ ÀÌÆåÆ®
+            //íˆíŠ¸ë°•ìŠ¤ ë³¸ì¸ì˜ ì´í™íŠ¸
             //parent[0].gameObject.TryGetComponent<IAttackable>(out IAttackable a);
             parent[0].ByShield(sbox.GetComponentInParent<Shield>());
 
-            //Æ®¸®°ÅµÈ ½¯µå¹Ú½ºÀÇ ÀÌÆåÆ®
+            //íŠ¸ë¦¬ê±°ëœ ì‰´ë“œë°•ìŠ¤ì˜ ì´í™íŠ¸
             sbox.Shield();
 
         }

@@ -2741,7 +2741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &519420029
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3194,7 +3194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &791945778
 Grid:
   m_ObjectHideFlags: 0
@@ -4453,7 +4453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &920711034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4472,7 +4472,7 @@ MonoBehaviour:
   jumpForce: 15
   jumpCutMultiplier: 0.5
   invincibleTime: 2
-  jumpCounter: 1
+  jumpCounter: 3
   maxHP: 5
   HP: 0
   isShield: 0
@@ -4761,7 +4761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1072144106
 Grid:
   m_ObjectHideFlags: 0
@@ -4851,16 +4851,28 @@ PrefabInstance:
       value: Triangle
       objectReference: {fileID: 0}
     - target: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4226059429479970974, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9219360126884417707, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: m_Size.x
+      value: 0.87371445
+      objectReference: {fileID: 0}
+    - target: {fileID: 9219360126884417707, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: m_Size.y
+      value: 0.99685645
+      objectReference: {fileID: 0}
+    - target: {fileID: 9219360126884417707, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.93870354
+      objectReference: {fileID: 0}
+    - target: {fileID: 9219360126884417707, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.00014913082
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4888,7 +4900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1609372818
 Grid:
   m_ObjectHideFlags: 0
@@ -4979,7 +4991,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1, y: 0.2}

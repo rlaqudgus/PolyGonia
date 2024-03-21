@@ -9,8 +9,8 @@ public class ShieldBox : MonoBehaviour
 
     public void Shield()
     {
-        //shieldbox´Â Shield ÇÏÀ§·Î Á¸Àç Shield ÀÎÅÍÆäÀÌ½º¸¦ µû·Î ¸¸µéÀÚ!
-        //parent parent´Â ½Ô¿¡¹Ù´Ù
+        //shieldboxëŠ” Shield í•˜ìœ„ë¡œ ì¡´ì¬ Shield ì¸í„°í˜ì´ìŠ¤ë¥¼ ë”°ë¡œ ë§Œë“¤ì!
+        //parent parentëŠ” ìŒ‰ì—ë°”ë‹¤
         if (transform.parent.parent.TryGetComponent<IAttackable>(out IAttackable a))
         {
             var shield = this.GetComponentInParent<Shield>();
@@ -21,7 +21,7 @@ public class ShieldBox : MonoBehaviour
 
     //private void OnTriggerEnter2D(Collider2D col)
     //{
-    //    // ShieldBox°¡ HitBox¿Í trigger µÇ¾úÀ» °æ¿ì 
+    //    // ShieldBoxê°€ HitBoxì™€ trigger ë˜ì—ˆì„ ê²½ìš° 
     //    if (col.TryGetComponent<HitBox>(out HitBox h))
     //    {
     //        var parent = col.transform.parent;
