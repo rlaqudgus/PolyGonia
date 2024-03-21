@@ -4802,6 +4802,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: dashForce
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: dashDistance
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2226717205164945350, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.57
