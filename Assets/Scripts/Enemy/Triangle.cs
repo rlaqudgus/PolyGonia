@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utilities;
 
@@ -78,52 +79,54 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     protected override IEnumerator Detect()
     {
         yield return null;
-        //방향 설정
-        CalculateDir();
 
-        ////meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
-        //if (TargetDistance(target) < meeleeRange)
-        //{
-        //    StateChange(EnemyState.Attack);
-        //}
+        //target이 없을 경우 Detect가 계속 돌아서는 안되고 Idle로 전환해주어야 한다
+        if (!target) StateChange(EnemyState.Idle);
 
-        //state가 바뀌지 않았다면 이동
-        isMoving = true;
-
-        //타입에 따른 이동 로직
-        switch (enemyType)
+        else if(target)
         {
-            case EnemyType.Civilian:
-                //meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
-                if (TargetDistance(target) < meeleeRange)
-                {
-                    StateChange(EnemyState.Attack);
-                }
-                Vector2 newPos = (Vector2)transform.position + (runDir * moveSpd * Time.deltaTime);
-                transform.position = newPos;
-                break;
-            case EnemyType.Soldier:
-                //meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
-                if (TargetDistance(target) < meeleeRange)
-                {
-                    StateChange(EnemyState.Attack);
-                }
-                Vector2 newPoss = (Vector2)transform.position - (runDir * moveSpd * Time.deltaTime);
-                transform.position = newPoss;
-                break;
-            case EnemyType.Jumper:
-                if (TargetDistance(target) < meeleeRange)
-                {
-                    StateChange(EnemyState.Attack);
-                }
-                Vector2 runPos = (Vector2)transform.position - (runDir * (moveSpd * 1.5f) * Time.deltaTime);
-                transform.position = runPos;
-                
-                break;
+            //방향 설정
+            CalculateDir();
 
-            default:
-                break;
+            //state가 바뀌지 않았다면 이동
+            isMoving = true;
+
+            //타입에 따른 이동 로직
+            switch (enemyType)
+            {
+                case EnemyType.Civilian:
+                    //meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
+                    if (TargetDistance(target) < meeleeRange)
+                    {
+                        StateChange(EnemyState.Attack);
+                    }
+                    Vector2 newPos = (Vector2)transform.position + (runDir * moveSpd * Time.deltaTime);
+                    transform.position = newPos;
+                    break;
+                case EnemyType.Soldier:
+                    //meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
+                    if (TargetDistance(target) < meeleeRange)
+                    {
+                        StateChange(EnemyState.Attack);
+                    }
+                    Vector2 newPoss = (Vector2)transform.position - (runDir * moveSpd * Time.deltaTime);
+                    transform.position = newPoss;
+                    break;
+                case EnemyType.Jumper:
+                    if (TargetDistance(target) < meeleeRange)
+                    {
+                        StateChange(EnemyState.Attack);
+                    }
+                    Vector2 runPos = (Vector2)transform.position - (runDir * (moveSpd * 1.5f) * Time.deltaTime);
+                    transform.position = runPos;
+
+                    break;
+
+                default:
+                    break;
+            }
         }
+        
 
 
     }
@@ -169,7 +172,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         anim.SetTrigger("Attack");
 
         //애니메이션과 이동 맞추기 위해 시간 조정
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
 
         //공격할때 앞으로 돌진하는 모션
         // Old Model: Change Position
@@ -177,16 +180,16 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         // gameObject.transform.position = attack;
         
         // New Model with AddForce
-        // float attackForce = 2.5f;
-        // rb.AddForce(-runDir * attackForce, ForceMode2D.Impulse);
+        //float attackForce = 2.5f;
+        //rb.AddForce(-runDir * attackForce, ForceMode2D.Impulse);
 
         // New Model with Rigidbody.velocity
         StartCoroutine(Dash(-runDir * 0.63f, 5f));
 
         yield return new WaitForSeconds(.3f);
         
-        //아직도 범위 안에 있으면 2타 실행
-        if (TargetDistance(target) < meeleeRange)
+        //target이 null이 아니고 아직도 범위 안에 있으면 2타 실행
+        if (target && TargetDistance(target) < meeleeRange)
         {
             anim.SetTrigger("Attack");
 
@@ -200,6 +203,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     void CalculateDir()
     {
+        if (!target) return;
         //방향 설정
         detectPoint = target.position;
         var curPoint = (Vector2)transform.position;
@@ -212,6 +216,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     float TargetDistance(Transform target)
     {
+        
         float dis = Vector2.Distance(transform.position, target.position);
         isMeeleeRange = dis < meeleeRange;
         return dis;
@@ -238,6 +243,8 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
         else
         {
+            this.target = target;
+            isMeeleeRange = false;
             this.Log($"{target} Out of Sight");
             //state 바꾸기
             StateChange(EnemyState.Idle);

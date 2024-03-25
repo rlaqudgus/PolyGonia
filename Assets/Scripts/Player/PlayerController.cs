@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     Shield shield;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         // Do not put Move() inside the OnMove()
         // OnMove() is invoked when the input is changed - i.e. pressed or released
         Move();
+        
     }
 
     //Event를 통해 호출되는 함수
@@ -272,7 +274,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //하위 모든 오브젝트 invincible로 변경
         foreach (Transform child in transform)
         {
-            child.gameObject.layer = LayerMask.NameToLayer("Invincible");
+            child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
         }
         while (isInvincible)
         {   
@@ -281,6 +283,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = true;
         }
+        //최상위 콜라이더 invincible로 변경
+        gameObject.layer = LayerMask.NameToLayer("Player1");
+
         //하위 모든 오브젝트 
         foreach (Transform child in transform)
         {
