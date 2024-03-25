@@ -153,38 +153,41 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
    
     // shield 상태일때와 아닐 때 구분
-        public void OnAttack(InputAction.CallbackContext input)
+    public void OnAttack(InputAction.CallbackContext input)
     {
         isAttacking = input.ReadValueAsButton();
         Attack();
     }
 
     private void Attack() {
-        if (isAttacking)
-        {
-            // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
-            if (isShield)
-            {
-                this.Log($"isParry: {isParry}");
-                anim.SetTrigger("Parry");
-                StartCoroutine(CheckParry());
-                shield.ShieldParry();
+        if (!isAttacking) return; 
+        if (isShield) return; // Parry 에서 처리
+        
+        this.Log("Attack");
+        anim.SetTrigger("Attack");
+    }
 
-            }
-            else
-            {
-                this.Log("Attack");
-                anim.SetTrigger("Attack");
-            }
-        }
-
-        ////너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
-        else
+    public void OnParry(InputAction.CallbackContext input)
+    {
+        if (input.performed)
         {
-            anim.ResetTrigger("Parry");
+            // Attack 키를 눌렀을 경우 만약 isShield 상태가 아니라면 Parry 함수는 실행되지 않도록 한다
+            // 처음 Parry가 실행되면 0.5초 동안 isParry는 true 상태가 된다
+            // isParry가 true인 동안에는 다시 Parry가 실행되는 것을 막아 SetTrigger 가 여러 번 일어나지 않도록 한다
+            if (!isShield || isParry) return;
+
+            StartCoroutine(CheckParry());
+            Parry();
         }
     }
 
+    private void Parry()
+    {
+        // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
+        this.Log($"isParry: {isParry}");
+        anim.SetTrigger("Parry");
+        shield.ShieldParry();
+    }
 
     // responsive 하게 만들고싶다
     // hold 하는 시간에 따라 점프 높이 달라지게 (Jump Cut)
