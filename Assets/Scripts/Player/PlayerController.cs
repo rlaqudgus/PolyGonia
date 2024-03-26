@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Utilities;
 
 
@@ -155,7 +156,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
    
     // shield 상태일때와 아닐 때 구분
-        public void OnAttack(InputAction.CallbackContext input)
+    public void OnAttack(InputAction.CallbackContext input)
     {
         isAttacking = input.ReadValueAsButton();
         Attack();
@@ -194,6 +195,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     public void OnJump(InputAction.CallbackContext input)
     {
         this.Log("Jump executed");
+        SceneTest();
 
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
@@ -321,5 +323,11 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     public void BySpear()
     {
         throw new System.NotImplementedException();
+    }
+
+    void SceneTest()
+    {
+        //대충 씬 전환 확인하는코드
+        SceneManager.LoadScene(0);
     }
 }
