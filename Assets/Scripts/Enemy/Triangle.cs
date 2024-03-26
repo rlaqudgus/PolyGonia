@@ -59,6 +59,17 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         StateChange(EnemyState.Detect);
     }
 
+    protected IEnumerator Dash(float dashForce, float dashDistance)
+    {
+        if (dashForce < Mathf.Epsilon) yield break;
+
+        rb.AddForce(-runDir * dashForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(dashDistance / dashForce);
+        rb.velocity = Vector2.zero;
+
+        yield break;
+    }
+
     protected IEnumerator AttackCombo()
     {
         anim.SetTrigger("Attack");
@@ -67,9 +78,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         yield return new WaitForSeconds(.5f);
 
         //공격할때 앞으로 돌진하는 모션
-        rb.AddForce(-runDir * dashForce, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(dashDistance / dashForce);
-        rb.velocity = Vector2.zero;
+        yield return Dash(dashForce, dashDistance);
         
         yield return new WaitForSeconds(.3f);
         
@@ -77,6 +86,12 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         if (TargetDistance(target) < meeleeRange)
         {
             anim.SetTrigger("Attack");
+
+            //애니메이션과 이동 맞추기 위해 시간 조정
+            yield return new WaitForSeconds(.25f);
+
+            //공격할때 앞으로 돌진하는 모션
+            yield return Dash(dashForce * 0.5f, dashDistance * 0.5f);
 
             this.Log("attack2");
         }
