@@ -4757,17 +4757,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1019432559 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1505387070067383723, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-  m_PrefabInstance: {fileID: 1279425942}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd5e867c483ef04a9123fad52874ce8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1072144105
 GameObject:
   m_ObjectHideFlags: 0
@@ -4827,20 +4816,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: dashForce
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: dashDistance
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      propertyPath: enemyController
-      value: 
-      objectReference: {fileID: 1564671990}
     - target: {fileID: 2226717205164945350, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.57
@@ -4916,131 +4897,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1564671990}
-    - targetCorrespondingSourceObject: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1564671989}
-    - targetCorrespondingSourceObject: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1564671992}
-    - targetCorrespondingSourceObject: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1564671993}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
 --- !u!4 &1533113976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7426926776001111270, guid: 8a57dcfb3268d294db563ae34a5b63c1, type: 3}
   m_PrefabInstance: {fileID: 503171754}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1564671982 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3815524353190494961, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-  m_PrefabInstance: {fileID: 1279425942}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1564671989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564671982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfa4bb4de07b79c4381ac357db9f1d6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyState: 0
-  enemyType: 1
-  enemyController: {fileID: 1564671990}
-  maxHp: 3
-  hp: 3
-  dmg: 1
-  moveSpd: 3
-  meeleeRange: 2
-  runDir: {x: 0, y: 0}
-  level: 1
-  disArmCnt: -3
-  target: {fileID: 920711037}
-  ray: {fileID: 1019432559}
-  jumpPower: 2
-  dashForce: 6
-  dashDistance: 1.5
-  hitBox: {fileID: 1712714184}
---- !u!114 &1564671990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564671982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6f51f33f775c6c43bb68c5005502390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemy: {fileID: 1564671989}
-  enemyState: 0
---- !u!114 &1564671992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564671982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96e274e6fd009484183e46903fd2c85d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyState: 0
-  enemyType: 0
-  enemyController: {fileID: 0}
-  maxHp: 3
-  hp: 3
-  dmg: 1
-  moveSpd: 3
-  meeleeRange: 2
-  runDir: {x: 0, y: 0}
-  level: 1
-  disArmCnt: 2
-  target: {fileID: 920711037}
-  ray: {fileID: 1019432559}
-  jumpPower: 0
-  dashForce: 0
-  dashDistance: 0
-  hitBox: {fileID: 1712714184}
---- !u!114 &1564671993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564671982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 046d86825522f0e4e9216ef84c0dbbc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyState: 0
-  enemyType: 0
-  enemyController: {fileID: 1564671990}
-  maxHp: 3
-  hp: 3
-  dmg: 1
-  moveSpd: 3
-  meeleeRange: 2
-  runDir: {x: 0, y: 0}
-  level: 1
-  disArmCnt: -3
-  target: {fileID: 920711037}
-  ray: {fileID: 1019432559}
-  jumpPower: 5
-  dashForce: 6
-  dashDistance: 1.5
-  hitBox: {fileID: 0}
 --- !u!1 &1609372817
 GameObject:
   m_ObjectHideFlags: 0
@@ -5177,11 +5040,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 920711034}
---- !u!1 &1712714184 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 557977376792306081, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
-  m_PrefabInstance: {fileID: 1279425942}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2144588276
 GameObject:
   m_ObjectHideFlags: 0
