@@ -4827,7 +4827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: dashForce
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: m_Enabled
@@ -4966,7 +4966,7 @@ MonoBehaviour:
   target: {fileID: 920711037}
   ray: {fileID: 1019432559}
   jumpPower: 2
-  dashForce: 8
+  dashForce: 4
   dashDistance: 1.5
   hitBox: {fileID: 1712714184}
 --- !u!114 &1564671990
@@ -5009,7 +5009,7 @@ MonoBehaviour:
   target: {fileID: 920711037}
   ray: {fileID: 1019432559}
   jumpPower: 2
-  dashForce: 8
+  dashForce: 4
   dashDistance: 1.5
   hitBox: {fileID: 1712714184}
 --- !u!114 &1564671993

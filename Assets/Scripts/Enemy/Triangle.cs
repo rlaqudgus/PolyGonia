@@ -40,7 +40,6 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         Vector2 newPos = (Vector2)transform.position + (moveDir * moveSpd * Time.deltaTime);
         transform.position = newPos;
 
-        // localScale 방향 착각 가능성 있음
         transform.localScale = (moveDir == Vector2.left) ? new Vector2(1, 1) : new Vector2(-1, 1);
     }
 
@@ -162,7 +161,8 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     void ParryKnockBack()
     {
-        transform.position = (Vector2)transform.position + new Vector2(transform.localScale.x * 0.5f, 0);
+        var parryEffect = (Vector2)gameObject.transform.position + runDir;
+        gameObject.transform.position = parryEffect;
     }
 
     void ParryDisarm()
