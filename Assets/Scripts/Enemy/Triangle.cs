@@ -287,8 +287,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     void ParryKnockBack()
     {
-        var parryEffect = (Vector2)gameObject.transform.position + runDir;
-        gameObject.transform.position = parryEffect;
+        transform.position = (Vector2)transform.position + new Vector2(transform.localScale.x * 0.5f, 0);
     }
 
     void ParryDisarm()
