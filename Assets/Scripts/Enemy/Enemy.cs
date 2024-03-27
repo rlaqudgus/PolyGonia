@@ -6,9 +6,9 @@ public abstract class Enemy : MonoBehaviour
 {
     //하위 클래스에서 type 구현?
     
-    [SerializeField] public EnemyState enemyState;
-    [SerializeField] public EnemyType enemyType;
-    [SerializeField] public EnemyController enemyController;
+    [SerializeField] protected enum EnemyState {Idle, Detect, Attack, Die }
+    [SerializeField] protected EnemyState enemyState;
+
     [SerializeField] protected int maxHp;
     [SerializeField] protected int hp;
     [SerializeField] protected int dmg;
@@ -28,21 +28,27 @@ public abstract class Enemy : MonoBehaviour
 
     protected Rigidbody2D rb;
 
+    protected IEnumerator EnemyStateHandler()
+    {
+        while (hp > 0)
+        {
+            yield return StartCoroutine(enemyState.ToString());   
+        }
+
+        StartCoroutine(Die());
+    }
+
     protected void StateChange(EnemyState state)
     {
         enemyState = state;
-        enemyController.enemyState = state;
     }
 
-    protected void EnemyChange(EnemyType type)
-    {
-        enemyType = type;
-        enemyController.EnemyChange(type);
-    }
-
-    // Enemy 초기 세팅
-    public abstract void InitSetting();
-
-    // Enemy 행동 전략 - Idle, Detect, Attack, Die
-    public abstract IEnumerator Behaviour(EnemyState enemyState);
+    //플레이어 감지 전 behaviour
+    protected abstract IEnumerator Idle();
+    //플레이어 감지 후 공격 전까지의 behaviour
+    protected abstract IEnumerator Detect();
+    //공격 behaviour
+    protected abstract IEnumerator Attack();
+    //사망 behaviour
+    protected abstract IEnumerator Die();
 }
