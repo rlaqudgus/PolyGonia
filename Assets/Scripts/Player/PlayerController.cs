@@ -162,32 +162,48 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         Attack();
     }
 
-    private void Attack() {
+    private void Attack() 
+    {
+        //흠.. 공격은 방패 안들고있을때만 나오게 하기 위해 분기 추가
+        if (isShield) return;
         if (isAttacking)
         {
-            // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
-            if (isShield)
-            {
-                this.Log($"isParry: {isParry}");
-                anim.SetTrigger("Parry");
-                StartCoroutine(CheckParry());
-                shield.ShieldParry();
-
-            }
-            else
-            {
-                this.Log("Attack");
-                anim.SetTrigger("Attack");
-            }
-        }
-
-        ////너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
-        else
-        {
-            anim.ResetTrigger("Parry");
+            this.Log("Attack");
+            anim.SetTrigger("Attack");
         }
     }
 
+    public void OnParry(InputAction.CallbackContext input)
+    {
+        switch (input.action.phase)
+        {
+            // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
+            case InputActionPhase.Started:
+                this.Log("Parry start");
+                break;
+
+            case InputActionPhase.Performed:
+                Parry();
+                break;
+
+            //너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
+            case InputActionPhase.Canceled:
+                anim.ResetTrigger("Parry");
+                this.Log("Parry stop");
+                break;
+            
+            default:
+                break;
+        }
+    }
+
+    void Parry()
+    {
+        this.Log("Parry");
+        anim.SetTrigger("Parry");
+        StartCoroutine(CheckParry());
+        shield.ShieldParry();
+    }
 
     // responsive 하게 만들고싶다
     // hold 하는 시간에 따라 점프 높이 달라지게 (Jump Cut)
@@ -195,8 +211,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     public void OnJump(InputAction.CallbackContext input)
     {
         this.Log("Jump executed");
-        SceneTest();
-
+        //SceneTest();
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
     }

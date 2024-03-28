@@ -123,37 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &2608452
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2608453}
-  m_Layer: 0
-  m_Name: CameraController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2608453
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2608452}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1688973424}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &144858270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +1462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 425743088}
+  - component: {fileID: 425743089}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -1515,6 +1485,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1688973424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &425743089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425743087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e29c18dbb77ce64fbd96e24a5d96899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &483770665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2987,6 +2969,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 552713824}
+  - component: {fileID: 552713825}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3009,6 +2992,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1688973424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &552713825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552713823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1e47d992a92b9499d2f1aa78f270ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &627578887
 GameObject:
   m_ObjectHideFlags: 0
@@ -4786,6 +4781,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 09ff4861-23eb-4204-89bd-caac80128dab
     m_ActionName: Player/Jump
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 920711034}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnParry
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dcb2a0cf-9dc9-4dc9-93ca-6d42d028f734
+    m_ActionName: Player/Parry[/Keyboard/c,/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: Player
@@ -5212,10 +5223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a888f4e7d41bb429aaf773d67847b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundManager: {fileID: 0}
-  uiManager: {fileID: 0}
-  playerController: {fileID: 0}
-  cameraController: {fileID: 0}
+  soundManager: {fileID: 425743089}
+  uiManager: {fileID: 552713825}
+  playerController: {fileID: 920711034}
+  cameraController: {fileID: 519420033}
 --- !u!4 &1688973424
 Transform:
   m_ObjectHideFlags: 0
@@ -5231,40 +5242,7 @@ Transform:
   m_Children:
   - {fileID: 425743088}
   - {fileID: 552713824}
-  - {fileID: 1864431454}
-  - {fileID: 2608453}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1864431453
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1864431454}
-  m_Layer: 0
-  m_Name: PlayerController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1864431454
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1864431453}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1688973424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2144588276
 GameObject:
