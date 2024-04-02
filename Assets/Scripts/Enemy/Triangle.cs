@@ -12,6 +12,11 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     [SerializeField] Transform target;
     [SerializeField] RayBox ray;
     [SerializeField] float jumpPower;
+    
+    [Header("Dash")]
+    [SerializeField] float dashForce;
+    [SerializeField] float dashDistance;
+
     public enum EnemyType { Civilian, Soldier, Jumper}
     public EnemyType enemyType;
     [SerializeField] GameObject hitBox;
@@ -172,16 +177,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         yield return new WaitForSeconds(.5f);
 
         //공격할때 앞으로 돌진하는 모션
-        // Old Model: Change Position
-        // var attack = (Vector2)gameObject.transform.position - (runDir) * 0.63f;
-        // gameObject.transform.position = attack;
-        
-        // New Model with AddForce
-        // float attackForce = 2.5f;
-        // rb.AddForce(-runDir * attackForce, ForceMode2D.Impulse);
-
-        // New Model with Rigidbody.velocity
-        StartCoroutine(Dash(-runDir * 0.63f, 5f));
+        yield return Dash(-runDir * dashDistance, dashForce);
 
         yield return new WaitForSeconds(.3f);
         
@@ -189,6 +185,12 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         if (TargetDistance(target) < meeleeRange)
         {
             anim.SetTrigger("Attack");
+
+            //애니메이션과 이동 맞추기 위해 시간 조정
+            yield return new WaitForSeconds(.25f);
+
+            //공격할때 앞으로 돌진하는 모션
+            yield return Dash(-runDir * dashDistance * 0.5f, dashForce * 0.5f);
 
             this.Log("attack2");
         }
@@ -307,24 +309,14 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         throw new System.NotImplementedException();
     }
 
-    IEnumerator Dash(Vector2 dir, float dashForce)
+    IEnumerator Dash(Vector2 vector, float dashForce)
     {
-        Vector2 lastVelocity = rb.velocity;
-        bool arrived = false;
+        if (dashForce < Mathf.Epsilon) yield break;
+        
+        rb.AddForce(vector.normalized * dashForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(vector.magnitude / dashForce);
+        rb.velocity = Vector2.zero;
 
-        Vector2 initPos = new Vector2(transform.position.x, transform.position.y);
-        Vector2 targetPos = initPos + dir;
-        Vector2 curPos = initPos;
-
-        rb.velocity = dir * dashForce;
-        while (!arrived)
-        {   
-            curPos = new Vector2(transform.position.x, transform.position.y);
-            Vector2 check = (targetPos - initPos) * (targetPos - curPos);
-            if (check.x < 0 && check.y < 0)
-            arrived = true;
-            
-            yield return new WaitForFixedUpdate();
-        }
+        yield break;
     }
 }
