@@ -5,7 +5,7 @@ using UnityEngine;
 public class DetectBox : MonoBehaviour
 {
     [SerializeField] string detectTag;
-    //tag³ª ·¹ÀÌ¾î¿¡ µû¶ó °¨ÁöÇÑ °á°ú¸¦ ´ã°í ÀÖ´Â °´Ã¼
+    //tagë‚˜ ë ˆì´ì–´ì— ë”°ë¼ ê°ì§€í•œ ê²°ê³¼ë¥¼ ë‹´ê³  ìˆëŠ” ê°ì²´
 
 
     private void OnTriggerEnter2D(Collider2D col)
