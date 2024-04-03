@@ -1,120 +1,101 @@
-using System;
+using Cinemachine;
 using System.Collections;
-using System.Drawing;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Camera cam;
-    GameObject target;
-    Vector3 cameraPos;
-    [SerializeField] Vector3 offset;
-    [SerializeField] float cameraSpeed;
+    CinemachineVirtualCamera _virtualCamera;
+    CinemachineTransposer _transposer;
+    CinemachineBasicMultiChannelPerlin _multiChannelPerlin;
 
-    float height;
-    float width;
+    [SerializeField] Vector3 _startOffset;
+    [SerializeField] float _cameraDamping;
+    [Header("Shake")]
+    [SerializeField] float _shakeTime;
+    [SerializeField] float _shakeAmount;
 
     Vector3 defaultOffset;
     float defaultSize;
 
-    public float shakeAmount = 1.0f;
-    public float shakeTime = 1.0f;
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        target= GameObject.Find("Player");
-        cam = this.GetComponent<Camera>();
+        _virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>(); //offset
+        _multiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); //shake
 
-        defaultOffset = offset;
-        defaultSize = cam.orthographicSize;
-        
-        height = cam.orthographicSize;
-        width = height * Screen.width / Screen.height;
+        defaultOffset = _startOffset + new Vector3(0, 0, -10);
+        defaultSize = _virtualCamera.m_Lens.OrthographicSize;
+
+        _transposer.m_FollowOffset = defaultOffset;
+        _transposer.m_XDamping = _cameraDamping;
+        _transposer.m_YDamping = _cameraDamping;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //z°ªÀº ³öµÎ±â
-        cameraPos = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
-        cameraPos += offset;
-        transform.position = Vector3.Lerp(transform.position, cameraPos, Time.deltaTime * cameraSpeed);
-
-        Debug.DrawRay(transform.position + new Vector3(width, 0, 0), transform.forward * 10f);
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position + new Vector3(width, 0, 0), transform.forward, out hit, 20))
-        {
-            if(hit.transform.name == "WALL")
-            {
-
-            }
-        }
-    }
-
-    public void Shake() => StartCoroutine(IEShake());
+    public void Shake(float amount, float freq, float time) => StartCoroutine(IEShake(amount, freq, time));
     public void Zoom(float size, float time) => StartCoroutine(IEZoom(size, time));
-    public void Look(Vector3 offset, float time)=>StartCoroutine(IELook(offset, time));
-    public void ResetCamera(float time)=>StartCoroutine(IEReset(time));
+    public void Look(Vector3 offset, float time) => StartCoroutine(IELook(offset, time));
+    public void ResetCamera(float time) => StartCoroutine(IEReset(time));
 
-    private IEnumerator IEShake()
+    private IEnumerator IEShake(float amount, float freq, float time)
     {
-        float timer = 0;
-        while (timer <= shakeTime)
-        {
-            transform.position =
-                transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * shakeAmount;
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        _multiChannelPerlin.m_AmplitudeGain = amount;
+        _multiChannelPerlin.m_FrequencyGain = freq;
+
+        yield return new WaitForSeconds(time);
+        
+        _multiChannelPerlin.m_AmplitudeGain = 0f;
+        _multiChannelPerlin.m_FrequencyGain = 0f;
     }
+
     private IEnumerator IEZoom(float size, float time)
     {
         float elapsedTime = 0f;
-        float startSize = cam.orthographicSize;
+        float startSize = _virtualCamera.m_Lens.OrthographicSize;
         float targetSize = size;
 
         while (elapsedTime < time)
         {
-            cam.orthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
+            _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
-        cam.orthographicSize = targetSize;
+        _virtualCamera.m_Lens.OrthographicSize = targetSize;
     }
-    private IEnumerator IELook(Vector3 newOffset, float time)
+    private IEnumerator IELook(Vector3 targetOffset, float time)
     {
         float elapsedTime = 0f;
-        Vector3 startOffset = this.offset;
-        Vector3 targetOffset = newOffset;
+        Vector3 startOffset = _transposer.m_FollowOffset;
+        targetOffset += new Vector3(0, 0, -10);
 
         while (elapsedTime < time)
         {
-            this.offset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
+            _transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
-        this.offset = targetOffset;
+        _transposer.m_FollowOffset = targetOffset;
     }
     private IEnumerator IEReset(float time)
     {
         float elapsedTime = 0f;
-        Vector3 startOffset = this.offset;
+        Vector3 startOffset = _transposer.m_FollowOffset;
         Vector3 targetOffset = defaultOffset;
-        float startSize = cam.orthographicSize;
+        float startSize = _virtualCamera.m_Lens.OrthographicSize;
         float targetSize = defaultSize;
 
 
         while (elapsedTime < time)
         {
-            this.offset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
-            cam.orthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
+            _transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
+            _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
-        cam.orthographicSize = targetSize;
-        this.offset = targetOffset;
+        _virtualCamera.m_Lens.OrthographicSize = targetSize;
+        _transposer.m_FollowOffset = targetOffset;
     }
 }

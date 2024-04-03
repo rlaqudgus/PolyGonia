@@ -8,7 +8,6 @@ using Utilities;
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
-    public CameraController cam;
     [SerializeField] RayBox ray;
     [SerializeField] float moveSpd;
     [SerializeField] float jumpForce;
@@ -126,10 +125,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         anim.SetBool("isLookUp", isLookUp);
         anim.SetBool("isLookDown", isLookDown);
-
-        if (isLookUp) CameraManager.Look(new Vector3(0f, 5f, 0f), 0.1f);
-        else if (isLookDown) CameraManager.Look(new Vector3(0f, 0f, 0f), 0.1f);
-        else CameraManager.Look(new Vector3(0f, 2.5f, 0f), 0.1f);
     }
 
     // Axis는 눌렀을 때 1, 뗐을 때 0으로 변하는 float return
