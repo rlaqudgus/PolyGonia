@@ -9,18 +9,18 @@ using Utilities;
 
 public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 {
-    [SerializeField] Transform target;
-    [SerializeField] RayBox ray;
+    [SerializeField] protected Transform target;
+    [SerializeField] protected RayBox ray;
     [SerializeField] float jumpPower;
     
     [Header("Dash")]
     [SerializeField] float dashForce;
     [SerializeField] float dashDistance;
 
-    public enum EnemyType { Civilian, Soldier, Jumper}
-    public EnemyType enemyType;
+    // public enum EnemyType { Civilian, Soldier, Jumper }
+    // public EnemyType enemyType;
     [SerializeField] GameObject hitBox;
-    Vector2 moveDir;
+    protected Vector2 moveDir;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,6 +28,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         enemyState = EnemyState.Idle;
         moveDir = Vector2.left;
         StartCoroutine(EnemyStateHandler());
+        EnemyManager.instance.AddEnemy(gameObject);
     }
 
     //매 프레임마다 확인해야 할 것? bool 애니메이션은 애니메이션 함수로 따로 처리하기 파편화되어있으니 보기 싫다
@@ -39,128 +40,46 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     protected override IEnumerator Idle()
     {
-        switch (enemyType)
-        {
-            case EnemyType.Civilian:
-                isMoving = false;
-                yield break;
-
-            case EnemyType.Soldier:
-                isMoving = false;
-                yield break;
-
-            case EnemyType.Jumper:
-                isMoving = true;
-                Move();
-                if (!ray.CheckWithRay(Vector2.down, 5) || ray.CheckWithRay(moveDir, .5f))
-                {
-                    isMoving = false;
-                    yield return new WaitForSeconds(2f);
-                    TurnAround();
-                    isMoving = true;
-                }
-                yield break;
-        }
-
         //triangle 기사는 가만히 있는 컨셉(근위병 같은 느낌?)
 
         yield return null;
     }
 
-    void Move()
+    protected override IEnumerator Detect()
     {
+        yield return null;
+    }
+
+    protected override IEnumerator Attack()
+    {   
+        yield return null;  
+    }   
+
+    protected override IEnumerator Die()
+    {
+        throw new System.NotImplementedException();
+    }
+    
+    protected virtual void TriangleAnim()
+    {
+        
+    }
+
+    protected void Move()
+    {   
         Vector2 newPos = (Vector2)transform.position + (moveDir * moveSpd * Time.deltaTime);
         transform.position = newPos;
 
         transform.localScale = (moveDir == Vector2.left) ? new Vector2(1, 1) : new Vector2(-1, 1);
     }
 
-    void TurnAround()
+    protected void TurnAround()
     {
         moveDir = -moveDir;
         transform.localScale = new Vector2(-transform.localScale.x,transform.localScale.y);
     }
-    protected override IEnumerator Detect()
-    {
-        yield return null;
-        //방향 설정
-        CalculateDir();
 
-        ////meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
-        //if (TargetDistance(target) < meeleeRange)
-        //{
-        //    StateChange(EnemyState.Attack);
-        //}
-
-        //state가 바뀌지 않았다면 이동
-        isMoving = true;
-
-        //타입에 따른 이동 로직
-        switch (enemyType)
-        {
-            case EnemyType.Civilian:
-                //meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
-                if (TargetDistance(target) < meeleeRange)
-                {
-                    StateChange(EnemyState.Attack);
-                }
-                Vector2 newPos = (Vector2)transform.position + (runDir * moveSpd * Time.deltaTime);
-                transform.position = newPos;
-                break;
-            case EnemyType.Soldier:
-                //meelee range인지 아닌지 체크하고 Attack state로 전환해야한다
-                if (TargetDistance(target) < meeleeRange)
-                {
-                    StateChange(EnemyState.Attack);
-                }
-                Vector2 newPoss = (Vector2)transform.position - (runDir * moveSpd * Time.deltaTime);
-                transform.position = newPoss;
-                break;
-            case EnemyType.Jumper:
-                if (TargetDistance(target) < meeleeRange)
-                {
-                    StateChange(EnemyState.Attack);
-                }
-                Vector2 runPos = (Vector2)transform.position - (runDir * (moveSpd * 1.5f) * Time.deltaTime);
-                transform.position = runPos;
-                
-                break;
-
-            default:
-                break;
-        }
-
-
-    }
-    protected override IEnumerator Attack()
-    {
-        
-
-        // 거리에 들어오면 수행할 동작
-        switch (enemyType)
-        {
-            case EnemyType.Civilian:
-                isMoving = false;
-                this.Log("dosth");
-                StateChange(EnemyState.Idle);
-                break;
-            case EnemyType.Soldier:
-                isMoving = false;
-                yield return AttackCombo();
-                break;
-            case EnemyType.Jumper:
-                isMoving = true;
-                yield return Jump();
-                break;
-        }
-
-    }
-    protected override IEnumerator Die()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    IEnumerator Jump()
+    protected IEnumerator Jump()
     {
         var jumpDir = new Vector2(-runDir.x, 1);
         rb.AddForce(jumpDir * jumpPower, ForceMode2D.Impulse);
@@ -169,7 +88,18 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
         StateChange(EnemyState.Detect);
     }
-    IEnumerator AttackCombo()
+
+    protected IEnumerator Dash(Vector2 vector, float dashForce)
+    {
+        if (dashForce < Mathf.Epsilon) yield break;
+        
+        rb.AddForce(vector.normalized * dashForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(vector.magnitude / dashForce);
+        rb.velocity = Vector2.zero;
+        yield break;
+    }   
+
+    protected IEnumerator AttackCombo()
     {
         anim.SetTrigger("Attack");
 
@@ -199,8 +129,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         StateChange(EnemyState.Detect);
     }
 
-
-    void CalculateDir()
+    protected void CalculateDir()
     {
         //방향 설정
         detectPoint = target.position;
@@ -211,14 +140,14 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         transform.localScale = dir ? new Vector2(1, 1) : new Vector2(-1, 1);
     }
    
-
-    float TargetDistance(Transform target)
+    protected float TargetDistance(Transform target)
     {
         float dis = Vector2.Distance(transform.position, target.position);
         isMeeleeRange = dis < meeleeRange;
         return dis;
     }
 
+    // IDetectable
     //얘는 감지하는 놈 - DetectBox가 호출
     public void Detect(Transform target)
     {
@@ -247,24 +176,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         
     }
 
-    void TriangleAnim()
-    {
-        switch (enemyType) 
-        {
-            case EnemyType.Civilian:
-                anim.SetBool("isRun", isMoving);
-                break;
-
-            case EnemyType.Soldier:
-                anim.SetBool("isChase", isMoving);
-                break;
-            case EnemyType.Jumper:
-                anim.SetBool("isChase", isMoving);
-                break;
-        }
-        anim.SetBool("isMeelee", isMeeleeRange);
-    }
-
+    // IAttackable
     public void ByParry(Shield shield)
     {
         //패링하면 disarm 컨셉 - 시민으로 돌아감
@@ -275,21 +187,26 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         
     }
 
-    void ParryKnockBack()
+    // IAttackable - ByParry
+    protected void ParryKnockBack()
     {
         var parryEffect = (Vector2)gameObject.transform.position + runDir;
         gameObject.transform.position = parryEffect;
     }
 
-    void ParryDisarm()
+    // IAttackable - ByParry
+    protected void ParryDisarm()
     {
         disArmCnt++;
         if (disArmCnt == level)
         {
             hitBox.SetActive(false);
-            enemyType = EnemyType.Civilian;
+            //enemyType = EnemyType.Civilian;
+            EnemyManager.instance.ChangeEnemy(gameObject, "Civilian");
         }
     }
+
+    // IAttackable
     public void ByShield(Shield shield)
     {
         this.Log("Attacked by Shield");
@@ -298,25 +215,17 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //shield.ShieldEffect();
     }
 
+    // IAttackable
     public void BySpear()
     {
         this.Log("Attacked by Spear");
     }
 
+    // IDamageable
     public void Damaged(int dmg)
     {
         //blood effect?
         throw new System.NotImplementedException();
     }
 
-    IEnumerator Dash(Vector2 vector, float dashForce)
-    {
-        if (dashForce < Mathf.Epsilon) yield break;
-        
-        rb.AddForce(vector.normalized * dashForce, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(vector.magnitude / dashForce);
-        rb.velocity = Vector2.zero;
-
-        yield break;
-    }
 }
