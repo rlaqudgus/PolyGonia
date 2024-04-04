@@ -25,4 +25,5 @@ public class CameraManager : MonoBehaviour
     public static void Shake() => instance.controller.Shake(5f, 5f, 1f);
     public static void Look(Vector3 offset, float time) => instance.controller.Look(offset, time);
     public static void ResetCamera(float time) => instance.controller.ResetCamera(time);
+    public static void FollowTarget(GameObject target, float time) => instance.controller.FollowTarget(target, time);
 }

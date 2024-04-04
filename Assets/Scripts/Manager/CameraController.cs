@@ -8,12 +8,10 @@ public class CameraController : MonoBehaviour
     CinemachineVirtualCamera _virtualCamera;
     CinemachineTransposer _transposer;
     CinemachineBasicMultiChannelPerlin _multiChannelPerlin;
+    CinemachineConfiner2D _confiner2D;
 
     [SerializeField] Vector3 _startOffset;
     [SerializeField] float _cameraDamping;
-    [Header("Shake")]
-    [SerializeField] float _shakeTime;
-    [SerializeField] float _shakeAmount;
 
     Vector3 defaultOffset;
     float defaultSize;
@@ -23,6 +21,7 @@ public class CameraController : MonoBehaviour
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
         _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>(); //offset
         _multiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); //shake
+        _confiner2D = GetComponent<CinemachineConfiner2D>();
 
         defaultOffset = _startOffset + new Vector3(0, 0, -10);
         defaultSize = _virtualCamera.m_Lens.OrthographicSize;
@@ -36,6 +35,7 @@ public class CameraController : MonoBehaviour
     public void Zoom(float size, float time) => StartCoroutine(IEZoom(size, time));
     public void Look(Vector3 offset, float time) => StartCoroutine(IELook(offset, time));
     public void ResetCamera(float time) => StartCoroutine(IEReset(time));
+    public void FollowTarget(GameObject target, float time) => StartCoroutine(IEFollowTarget(target, time));
 
     private IEnumerator IEShake(float amount, float freq, float time)
     {
@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
         _multiChannelPerlin.m_FrequencyGain = 0f;
     }
 
-    private IEnumerator IEZoom(float size, float time)
+    private IEnumerator IEZoom(float size, float time) // 확대 시 confiner 초과하는 문제 발생
     {
         float elapsedTime = 0f;
         float startSize = _virtualCamera.m_Lens.OrthographicSize;
@@ -56,6 +56,7 @@ public class CameraController : MonoBehaviour
 
         while (elapsedTime < time)
         {
+
             _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
@@ -63,6 +64,8 @@ public class CameraController : MonoBehaviour
 
         _virtualCamera.m_Lens.OrthographicSize = targetSize;
     }
+
+
     private IEnumerator IELook(Vector3 targetOffset, float time)
     {
         float elapsedTime = 0f;
@@ -97,5 +100,14 @@ public class CameraController : MonoBehaviour
 
         _virtualCamera.m_Lens.OrthographicSize = targetSize;
         _transposer.m_FollowOffset = targetOffset;
+    }
+
+    private IEnumerator IEFollowTarget(GameObject target, float time)
+    {
+        _virtualCamera.m_Follow = target.transform;
+
+        yield return new WaitForSeconds(time);
+
+        _virtualCamera.m_Follow = GameObject.Find("Player").transform;
     }
 }
