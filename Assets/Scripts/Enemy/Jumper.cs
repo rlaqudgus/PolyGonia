@@ -32,10 +32,9 @@ public class Jumper : Triangle
         //이동 로직
         if (TargetDistance(target) < meeleeRange)
         {
-            isMoving = false;
             StateChange(EnemyState.Attack);
         }
-        Vector2 newPos = (Vector2)transform.position - (runDir * (moveSpd * 1.5f) * Time.deltaTime);
+        Vector2 newPos = (Vector2)transform.position - (runDir * moveSpd * Time.deltaTime);
         transform.position = newPos;
 
         yield return null;
