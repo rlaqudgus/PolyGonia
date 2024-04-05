@@ -9,15 +9,18 @@ using Utilities;
 
 public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 {
-    [SerializeField] Transform target;
-    [SerializeField] RayBox ray;
-    [SerializeField] float jumpPower;
     public enum EnemyType { Civilian, Soldier, Jumper}
     public EnemyType enemyType;
+    
+    [SerializeField] Transform target;
+    [SerializeField] RayBox ray;
     [SerializeField] GameObject hitBox;
+    [SerializeField] float jumpPower;
+    
     Vector2 moveDir;
     void Start()
     {
+        hp = maxHp;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         enemyState = EnemyState.Idle;
@@ -297,21 +300,23 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //shield.ShieldEffect();
     }
 
+    // [TG] [2024-04-04] [feat]
+    // 1. Triangle이 Player의 무기로 공격당했을 때
+    // 2. blood 효과?
     public void ByWeapon(Attack attack)
     {
-        this.Log("Attacked by Spear");
+        this.Log("Attacked by Weapon");
+        attack.AttackEffect();
         gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * attack.weaponForce * (1 / level), ForceMode2D.Impulse);
     }
 
-    public void Damaged(int dmg)
+    public void Damaged(int curDmg)
     {
         // [TG] [2024-04-04] [feat]
         // 1. Triangle이 Player에게 공격당했을 때 dmg만큼 현재 체력 감소 
-        // 2. 
-        // 3. 일정 거리 넉백 (플레이어도 같이 넉백할 지는 아직 정하지 않음)
-        // TODO : 이펙트 (플레이어 공격 이펙트 + triangle 피격 이펙트) 구현
-        hp -= dmg;
-        EnemyKnockBack(0.3f);
+        // 2. blood 효과?
+        hp -= curDmg;
+        this.Log($"currentHp : {hp} - {curDmg} = {hp-curDmg}");
     }
 
     IEnumerator Dash(Vector2 dir, float dashForce)
