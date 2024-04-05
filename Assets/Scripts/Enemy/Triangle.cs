@@ -150,20 +150,6 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         }
 
     }
-    protected override IEnumerator Die()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    IEnumerator Jump()
-    {
-        var jumpDir = new Vector2(-runDir.x, 1);
-        rb.AddForce(jumpDir * jumpPower, ForceMode2D.Impulse);
-
-        yield return new WaitForSeconds(1f);
-
-        StateChange(EnemyState.Detect);
-    }
     IEnumerator AttackCombo()
     {
         anim.SetTrigger("Attack");
@@ -196,6 +182,21 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //공격패턴 끝나면 다시 감지
         StateChange(EnemyState.Detect);
     }
+    protected override IEnumerator Die()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    IEnumerator Jump()
+    {
+        var jumpDir = new Vector2(-runDir.x, 1);
+        rb.AddForce(jumpDir * jumpPower, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1f);
+
+        StateChange(EnemyState.Detect);
+    }
+    
 
 
     void CalculateDir()
@@ -262,23 +263,23 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         }
         anim.SetBool("isMeelee", isMeeleeRange);
     }
-
+    
     public void ByParry(Shield shield)
     {
         //패링하면 disarm 컨셉 - 시민으로 돌아감
         this.Log("Attacked by Parrying");
-        ParryKnockBack();
+        EnemyKnockBack(1.0f);
         shield.ParryEffect();
         ParryDisarm();
         
     }
-
-    void ParryKnockBack()
+    // [TG] [2024-04-04] [refactor]
+    // 1. 기존 ParryKnockBack을 Parent객체의 EnemyKnockBack을 override하는 방식으로 변경 
+    protected override void EnemyKnockBack(float knockBackDist)
     {
-        var parryEffect = (Vector2)gameObject.transform.position + runDir;
-        gameObject.transform.position = parryEffect;
+        transform.position = (Vector2)transform.position + new Vector2(runDir.x * knockBackDist,0);
     }
-
+    
     void ParryDisarm()
     {
         disArmCnt++;
@@ -296,15 +297,21 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //shield.ShieldEffect();
     }
 
-    public void BySpear()
+    public void ByWeapon(Attack attack)
     {
         this.Log("Attacked by Spear");
+        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * attack.weaponForce * (1 / level), ForceMode2D.Impulse);
     }
 
     public void Damaged(int dmg)
     {
-        //blood effect?
-        throw new System.NotImplementedException();
+        // [TG] [2024-04-04] [feat]
+        // 1. Triangle이 Player에게 공격당했을 때 dmg만큼 현재 체력 감소 
+        // 2. 
+        // 3. 일정 거리 넉백 (플레이어도 같이 넉백할 지는 아직 정하지 않음)
+        // TODO : 이펙트 (플레이어 공격 이펙트 + triangle 피격 이펙트) 구현
+        hp -= dmg;
+        EnemyKnockBack(0.3f);
     }
 
     IEnumerator Dash(Vector2 dir, float dashForce)

@@ -13,6 +13,5 @@ public class HurtBox : MonoBehaviour
             this.Log("Hurtbox method");
             d.Damaged(hitPnt);
         }
-        
     }
 }

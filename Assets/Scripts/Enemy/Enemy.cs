@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    //ÇÏÀ§ Å¬·¡½º¿¡¼­ type ±¸Çö?
+    //í•˜ìœ„ í´ë˜ìŠ¤ì—ì„œ type êµ¬í˜„?
     
     [SerializeField] protected enum EnemyState {Idle, Detect, Attack, Die }
     [SerializeField] protected EnemyState enemyState;
@@ -43,12 +43,16 @@ public abstract class Enemy : MonoBehaviour
         enemyState = state;
     }
 
-    //ÇÃ·¹ÀÌ¾î °¨Áö Àü behaviour
+    //í”Œë ˆì´ì–´ ê°ì§€ ì „ behaviour
     protected abstract IEnumerator Idle();
-    //ÇÃ·¹ÀÌ¾î °¨Áö ÈÄ °ø°İ Àü±îÁöÀÇ behaviour
+    //í”Œë ˆì´ì–´ ê°ì§€ í›„ ê³µê²© ì „ê¹Œì§€ì˜ behaviour
     protected abstract IEnumerator Detect();
-    //°ø°İ behaviour
+    //ê³µê²© behaviour
     protected abstract IEnumerator Attack();
-    //»ç¸Á behaviour
+    //ì‚¬ë§ behaviour
     protected abstract IEnumerator Die();
+    // [TG] [2024-04-04] [refactor]
+    // 1. ì  ë„‰ë°± êµ¬í˜„ (PlayerKnockBackê³¼ ê°™ì€ ë¡œì§)
+    protected abstract void EnemyKnockBack(float knockBackDist);
+
 }

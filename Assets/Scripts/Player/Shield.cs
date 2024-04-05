@@ -55,10 +55,6 @@ public class Shield : MonoBehaviour
         //parryEffect.SetActive(true);
         
     }
-    public void SpearActivate()
-    {
-
-    }
 
     //이부분 때문에 방패 박스가 뒤늦게 setactive 되는 경우가 생김
     IEnumerator ParryReset()
