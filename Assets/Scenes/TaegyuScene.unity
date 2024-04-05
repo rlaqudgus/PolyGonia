@@ -1422,6 +1422,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6dd4e659da84ca42b4e96445cddfdda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &353907716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 353907717}
+  m_Layer: 0
+  m_Name: VerticalAttackEffectPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &353907717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353907716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1761707071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &392282877
 GameObject:
   m_ObjectHideFlags: 0
@@ -3223,6 +3254,37 @@ Transform:
   - {fileID: 483770666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &861226899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 861226900}
+  m_Layer: 0
+  m_Name: HorizontallAttackEffectPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &861226900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861226899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1350198516}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &876400464
 GameObject:
   m_ObjectHideFlags: 0
@@ -4466,6 +4528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14733657f64e80041ac5a40e5846acc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 26023fee9d302024a82aedb5ae4c30cd, type: 2}
   cam: {fileID: 519420033}
   _ray: {fileID: 751395397}
   _moveSpd: 4
@@ -4803,6 +4866,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: hp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1953297320576921670, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
+      propertyPath: maxHp
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2226717205164945350, guid: b3770e545d0bdeb49bd0fd2a60da0013, type: 3}
       propertyPath: m_LocalPosition.x
       value: 46.57
@@ -4884,7 +4955,7 @@ GameObject:
   - component: {fileID: 1350198518}
   - component: {fileID: 1350198517}
   m_Layer: 0
-  m_Name: VerticalAttackBox
+  m_Name: HorizontalAttackBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4899,10 +4970,11 @@ Transform:
   m_GameObject: {fileID: 1350198515}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.79, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 861226900}
   m_Father: {fileID: 1366536023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1350198517
@@ -4951,7 +5023,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.48224068, y: 0.3423912}
+  m_Offset: {x: 1.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4962,7 +5034,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.9644814, y: 1.3375686}
+  m_Size: {x: 1.8, y: 0.9}
   m_EdgeRadius: 0
 --- !u!1 &1366536022
 GameObject:
@@ -4994,8 +5066,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1350198516}
   - {fileID: 1761707071}
+  - {fileID: 1350198516}
   m_Father: {fileID: 920711037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1366536024
@@ -5010,12 +5082,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1610da6c4c06643b84679ece697d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponForce: 0
+  weaponForce: 2
   hitBoxes:
   - {fileID: 1350198515}
-  AttackEffects:
-  - {fileID: 7384019769889205270, guid: ef930d7f21d4c7b48a8e4294adf94992, type: 3}
-  attackDamage: 1
+  - {fileID: 1761707070}
+  attackEffects:
+  - {fileID: 7384019769889205270, guid: 790e2aefcc54ae24db30858072c1a0d7, type: 3}
+  - {fileID: 7384019769889205270, guid: 790e2aefcc54ae24db30858072c1a0d7, type: 3}
+  effectPositions:
+  - {fileID: 861226900}
+  - {fileID: 353907717}
 --- !u!4 &1533113976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7426926776001111270, guid: 8a57dcfb3268d294db563ae34a5b63c1, type: 3}
@@ -5169,7 +5245,7 @@ GameObject:
   - component: {fileID: 1761707073}
   - component: {fileID: 1761707072}
   m_Layer: 0
-  m_Name: HorizontalAttackBox
+  m_Name: VerticalAttackBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5187,7 +5263,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 353907717}
   m_Father: {fileID: 1366536023}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1761707072
