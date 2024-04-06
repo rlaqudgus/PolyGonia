@@ -24,7 +24,7 @@ public class ParryBox : MonoBehaviour
                 //플레이어 효과 - 넉백
                 playerController.PlayerKnockBack();
                 //플레이어 효과 - 카메라 흔들기
-                StartCoroutine(playerController.cam.Shake());
+                CameraManager.Shake();
                 
             }
         }

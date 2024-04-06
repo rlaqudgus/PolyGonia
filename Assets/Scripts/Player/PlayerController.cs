@@ -8,7 +8,6 @@ using Utilities;
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
-    public CameraController cam;
     [SerializeField] RayBox ray;
     [SerializeField] float moveSpd;
     [SerializeField] float jumpForce;
@@ -276,7 +275,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
-        StartCoroutine(cam.Shake());
+        CameraManager.Shake();
         
     }
 
