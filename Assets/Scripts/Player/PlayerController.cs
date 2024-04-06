@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 using Utilities;
 
 
@@ -35,7 +36,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     bool isJumping;
     bool isJumpingDown => rb.velocity.y < 0;
 
-    bool isInvincible; 
+    bool isInvincible;
+
+    bool joyConShield;
 
     PlayerInput playerInput;
 
@@ -88,6 +91,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         // this.Log($"isMoving : {isMoving}");
     }
 
+    
+
     private void Move()
     {
         if (isMoving)
@@ -126,6 +131,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         Look();
     }
 
+    
+
     private void Look() 
     {
         anim.SetBool("isLookUp", isLookUp);
@@ -142,7 +149,10 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
         Shield();
     }
-    
+
+   
+
+   
     private void Shield()
     {
         if (isShield)
@@ -198,6 +208,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
                 break;
         }
     }
+
+   
 
     void Parry()
     {
@@ -283,7 +295,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
         StartCoroutine(cam.Shake());
-        
+        JoyConManager.Instance.j[0].SetRumble(160, 320, 1f, 400);
     }
 
     IEnumerator InvincibleEffect()
@@ -347,4 +359,79 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //대충 씬 전환 확인하는코드
         SceneManager.LoadScene(0);
     }
+
+    #region JoyCon Functions
+
+    public void J_OnMove(Vector2 a)
+    {
+        Vector2 playerInput = a;
+
+        if (playerInput.x > Mathf.Epsilon) dir = 1;
+        else if (playerInput.x < -Mathf.Epsilon) dir = -1;
+        else dir = 0;
+
+        moveDir = Vector2.right * dir;
+        // this.Log($"Move Direction : {moveDir}");
+
+        isMoving = (dir != 0);
+        // this.Log($"isMoving : {isMoving}");
+
+    }
+
+    public void J_OnLook(Vector2 a)
+    {
+        Vector2 playerInput = a;
+
+        isLookUp = (playerInput.y > 0);
+        isLookDown = (playerInput.y < 0);
+
+        //위나 아래를 보고 있을 때 움직이면 바로 움직이게
+        //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
+        if (isMoving)
+        {
+            isLookUp = false;
+            isLookDown = false;
+        }
+
+        Look();
+    }
+
+    public void J_OnShield(bool s)
+    {
+        //조이콘에서 받은 인풋 사용
+        isShield = s;
+        this.Log($"isShield : {isShield}");
+        shield.ShieldActivate(isShield);
+        anim.SetBool("isShield", isShield);
+    }
+
+    //이건좀ㅋㅋ
+    public void J_ShieldTrigger(bool s)
+    {
+        if (!s) return;
+        this.Log("isShieldtrigger");
+        anim.SetTrigger("Shield");
+        Invoke("ResetShield", .2f);
+    }
+
+    void ResetShield()
+    {
+        anim.ResetTrigger("Shield");
+    }
+
+    public void J_OnParry()
+    {
+        this.Log("Parry");
+        anim.SetTrigger("Parry");
+        StartCoroutine(CheckParry());
+        shield.ShieldParry();
+        Invoke("ResetParry", 0.2f);
+    }
+
+    void ResetParry()
+    {
+        anim.ResetTrigger("Parry");
+    }
+
+    #endregion
 }
