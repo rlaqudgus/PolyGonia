@@ -50,7 +50,12 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
             case EnemyType.Jumper:
                 isMoving = true;
                 Move();
-                if (!ray.CheckWithRay(Vector2.down, 5) || ray.CheckWithRay(moveDir, .5f))
+                // [TG] [2024-04-06] [Refactor]
+                // 1. Raybox의 CheckWithRay에 시작 위치 매개변수를 추가하였으므로 같이 수정 
+                // 2. 기존 Raybox의 trasnform.position이 (-0.5, 0, 0) 이고 BoxCollider의 Offset이 (0, 0) 임을 반영하여 변경
+                // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
+                if (!ray.CheckWithRay(transform.position + new Vector3(-0.5f, 0, 0), Vector2.down, 5)
+                    || ray.CheckWithRay(transform.position + new Vector3(-0.5f, 0, 0), moveDir, .5f))
                 {
                     isMoving = false;
                     yield return new WaitForSeconds(2f);

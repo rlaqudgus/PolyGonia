@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     private Vector2 _moveDir;
     private int _dir;
     private bool _isMoving;
+    private bool _canTeeter;
     public bool IsLookUp { get; private set; }
     public bool IsLookDown{ get; private set; }
 
@@ -79,6 +80,28 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     void Update()
     {
         Move();
+        // [TG] [2024-04-06] [Refactor]
+        // 1. 기존 Raybox의 trasnform.position이 (0, 0, 0), BoxCollider의 offset이 (0, -0.45)
+        // 2. raybox의 왼쪽에서 아래로 raycast한 것과 오른쪽에서 raycast한 것에서 ground가 발견되지 않았을 경우 teetering 실행
+        // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
+        // 4. 따로 함수로 구현?
+        _canTeeter = !_isJumping && !_isMoving && !IsLookUp && !IsLookDown; // 흠
+        if (_canTeeter)
+        {
+            if (!_ray.CheckWithRay(transform.position + new Vector3(-0.2f, -0.45f, 0), Vector2.down, 0.1f)
+                || !_ray.CheckWithRay(transform.position + new Vector3(0.2f, -0.45f, 0), Vector2.down, 0.1f))
+            {
+                _anim.SetBool("isTeetering", true);
+            }
+            else
+            {
+                _anim.SetBool("isTeetering", false);
+            }
+        }
+        else
+        {
+            _anim.SetBool("isTeetering", false);
+        }
     }
 
     //Event를 통해 호출되는 함수
@@ -233,9 +256,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // coyote time은 가능하면?
     public void OnJump(InputAction.CallbackContext input)
     {
-        // if (PlayerOnGroundTime > )
-        // {
-        // }
         this.Log("Jump executed");
 
         if (input.performed) Jump();
@@ -288,6 +308,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
                 _isJumping = false;
                 _jumpCounter = _initJumpCounter;
                 // PlayerOnGroundTime = data.coyoteTime;
+                
             }
         }
     }
