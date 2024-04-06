@@ -6,7 +6,7 @@ namespace Utilities
 {
     public static class CustomLogger
     {
-        //È®Àå ¸Þ¼­µå »ç¿ë
+        //í™•ìž¥ ë©”ì„œë“œ ì‚¬ìš©
         //default - print Type & object name
         public static void Log(this Object obj)
         {
