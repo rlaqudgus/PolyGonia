@@ -5003,6 +5003,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jc_index: 0
+  isShouldertrigger: 0
+  isShoulderPressed: 0
+  isAttackbuttontrigger: 0
   leftStick: {x: 0, y: 0}
   JoyCon_Move:
     m_PersistentCalls:
@@ -5103,7 +5106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1136592629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 405bad29b2b998c408059182c189d9e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 57888e49e08877b4aabbfb47db1690c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EnableIMU: 1

@@ -14,15 +14,15 @@ public class JoyconInputManager : MonoBehaviour
     public Joycon leftJoyCon;
     public Joycon rightJoyCon;
 
-    private bool isShouldertrigger;
-    private bool isShoulderPressed;
-    private bool isAttackbuttontrigger;
-
+    [SerializeField] bool isShouldertrigger;
+    [SerializeField] bool isShoulderPressed;
+    [SerializeField] bool isAttackbuttontrigger;
 
     [SerializeField] Vector2 leftStick;
+
     //Callbackcontext를 그대로 이용하는 방법? inputsystem을 사용하지 않을 것이기 때문에
     //매개변수를 어떻게 넣어줄지 의문 조이콘 인풋은 따로 관리해주는 편이 좋을 듯 하다
-    public UnityEvent<Vector2> JoyCon_Move;
+    [SerializeField] UnityEvent<Vector2> JoyCon_Move;
     public UnityEvent<bool> JoyCon_Shield;
     public UnityEvent<bool> JoyCon_ShieldTrigger;
     public UnityEvent<bool> JoyCon_Attack;
@@ -31,7 +31,7 @@ public class JoyconInputManager : MonoBehaviour
     void Start()
     {
         // get the public Joycon array attached to the JoyconManager in scene
-        joycons = JoyconManager.Instance.j;
+        joycons = JoyConManager.Instance.j;
         if (joycons.Count < jc_index + 1)
         {
             Destroy(gameObject);
@@ -60,6 +60,7 @@ public class JoyconInputManager : MonoBehaviour
     void JoyConEvent()
     {
         //if (leftStick == Vector2.zero) return;
+        //분기처리에 신경을 써줘야한다 event를 update에서 부르고 있으니 너무 많이 불리면 문제생길 가능성
         JoyCon_Move.Invoke(leftStick);
         JoyCon_ShieldTrigger.Invoke(isShouldertrigger);
         JoyCon_Shield.Invoke(isShoulderPressed);
