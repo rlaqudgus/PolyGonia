@@ -25,7 +25,10 @@ public class ParryBox : MonoBehaviour
                 playerController.PlayerKnockBack();
                 //플레이어 효과 - 카메라 흔들기
                 CameraManager.Shake();
-                
+                //조이콘 효과 - 진동
+                JoyConManager.Instance.j[0].SetRumble(160, 320, 0.6f, 200);
+
+
             }
         }
     }

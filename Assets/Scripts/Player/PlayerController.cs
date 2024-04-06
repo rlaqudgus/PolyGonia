@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 using Utilities;
 
 
@@ -9,6 +11,7 @@ using Utilities;
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
     [SerializeField] RayBox ray;
+    [SerializeField] HitBox hitbox;
     [SerializeField] float moveSpd;
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCutMultiplier;
@@ -34,7 +37,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     bool isJumping;
     bool isJumpingDown => rb.velocity.y < 0;
 
-    bool isInvincible; 
+    bool isInvincible;
+
+    bool joyConShield;
 
     PlayerInput playerInput;
 
@@ -45,6 +50,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     Animator anim;
 
     Shield shield;
+
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +99,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         // this.Log($"isMoving : {isMoving}");
     }
 
+    
+
     private void Move()
     {
         if (isMoving)
@@ -131,6 +139,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         Look();
     }
 
+    
+
     private void Look() 
     {
         anim.SetBool("isLookUp", isLookUp);
@@ -147,7 +157,10 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
         Shield();
     }
-    
+
+   
+
+   
     private void Shield()
     {
         if (isShield)
@@ -162,38 +175,57 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
    
     // shield 상태일때와 아닐 때 구분
-        public void OnAttack(InputAction.CallbackContext input)
+    public void OnAttack(InputAction.CallbackContext input)
     {
         isAttacking = input.ReadValueAsButton();
         Attack();
     }
 
-    private void Attack() {
+    private void Attack() 
+    {
+        //흠.. 공격은 방패 안들고있을때만 나오게 하기 위해 분기 추가
+        if (isShield) return;
         if (isAttacking)
         {
-            // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
-            if (isShield)
-            {
-                this.Log($"isParry: {isParry}");
-                anim.SetTrigger("Parry");
-                StartCoroutine(CheckParry());
-                shield.ShieldParry();
-
-            }
-            else
-            {
-                this.Log("Attack");
-                anim.SetTrigger("Attack");
-            }
-        }
-
-        ////너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
-        else
-        {
-            anim.ResetTrigger("Parry");
+            this.Log("Attack");
+            anim.SetTrigger("Attack");
         }
     }
 
+   
+    public void OnParry(InputAction.CallbackContext input)
+    {
+        switch (input.action.phase)
+        {
+            // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
+            case InputActionPhase.Started:
+                this.Log("Parry start");
+                break;
+
+            case InputActionPhase.Performed:
+                Parry();
+                break;
+
+            //너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
+            case InputActionPhase.Canceled:
+                anim.ResetTrigger("Parry");
+                this.Log("Parry stop");
+                break;
+            
+            default:
+                break;
+        }
+    }
+
+   
+
+    void Parry()
+    {
+        this.Log("Parry");
+        anim.SetTrigger("Parry");
+        StartCoroutine(CheckParry());
+        shield.ShieldParry();
+    }
 
     // responsive 하게 만들고싶다
     // hold 하는 시간에 따라 점프 높이 달라지게 (Jump Cut)
@@ -201,7 +233,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     public void OnJump(InputAction.CallbackContext input)
     {
         this.Log("Jump executed");
-
+        //SceneTest();
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
     }
@@ -276,7 +308,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
         CameraManager.Shake();
-        
+        JoyConManager.Instance.j[0].SetRumble(160, 320, 1f, 400);
     }
 
     IEnumerator InvincibleEffect()
@@ -286,7 +318,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //하위 모든 오브젝트 invincible로 변경
         foreach (Transform child in transform)
         {
-            child.gameObject.layer = LayerMask.NameToLayer("Invincible");
+            child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
         }
         while (isInvincible)
         {   
@@ -295,6 +327,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = true;
         }
+        //최상위 콜라이더 invincible로 변경
+        gameObject.layer = LayerMask.NameToLayer("Player1");
+
         //하위 모든 오브젝트 
         foreach (Transform child in transform)
         {
@@ -331,4 +366,85 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         throw new System.NotImplementedException();
     }
+
+    void SceneTest()
+    {
+        //대충 씬 전환 확인하는코드
+        SceneManager.LoadScene(0);
+    }
+
+    #region JoyCon Functions
+
+    public void J_OnMove(Vector2 a)
+    {
+        Vector2 playerInput = a;
+
+        if (playerInput.x > Mathf.Epsilon) dir = 1;
+        else if (playerInput.x < -Mathf.Epsilon) dir = -1;
+        else dir = 0;
+
+        moveDir = Vector2.right * dir;
+        // this.Log($"Move Direction : {moveDir}");
+
+        isMoving = (dir != 0);
+        // this.Log($"isMoving : {isMoving}");
+
+    }
+
+    public void J_OnLook(Vector2 a)
+    {
+        Vector2 playerInput = a;
+
+        isLookUp = (playerInput.y > 0);
+        isLookDown = (playerInput.y < 0);
+
+        //위나 아래를 보고 있을 때 움직이면 바로 움직이게
+        //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
+        if (isMoving)
+        {
+            isLookUp = false;
+            isLookDown = false;
+        }
+
+        Look();
+    }
+
+    public void J_OnShield(bool s)
+    {
+        //조이콘에서 받은 인풋 사용
+        isShield = s;
+        this.Log($"isShield : {isShield}");
+        shield.ShieldActivate(isShield);
+        anim.SetBool("isShield", isShield);
+    }
+
+    //이건좀ㅋㅋ
+    public void J_ShieldTrigger(bool s)
+    {
+        if (!s) return;
+        this.Log("isShieldtrigger");
+        anim.SetTrigger("Shield");
+        Invoke("ResetShield", .2f);
+    }
+
+    void ResetShield()
+    {
+        anim.ResetTrigger("Shield");
+    }
+
+    public void J_OnParry()
+    {
+        this.Log("Parry");
+        anim.SetTrigger("Parry");
+        StartCoroutine(CheckParry());
+        shield.ShieldParry();
+        Invoke("ResetParry", 0.2f);
+    }
+
+    void ResetParry()
+    {
+        anim.ResetTrigger("Parry");
+    }
+
+    #endregion
 }
