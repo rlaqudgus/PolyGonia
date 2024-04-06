@@ -164,6 +164,17 @@
                 },
                 {
                     "name": "",
+                    "id": "318e6e0f-2122-43a3-801f-c0ff61fe4f8a",
+                    "path": "<HID::Nintendo Wireless Gamepad>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5a84a78a-5aa4-4217-bdcd-45a1f5fcb286",
                     "path": "<Keyboard>/c",
                     "interactions": "",
@@ -175,8 +186,30 @@
                 },
                 {
                     "name": "",
+                    "id": "fb1c3737-0301-444a-b4fe-50383b0c643f",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dd7be078-8635-49c6-8bc8-6d7d9da6e98e",
                     "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "24328822-e915-4a1e-bd83-65c234b9129f",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -196,7 +229,18 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "One Modifier",
+                    "name": "",
+                    "id": "5f160b4d-2b2f-472e-a17c-67c8dc738353",
+                    "path": "<HID::Nintendo Wireless Gamepad>/{Back}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "PC",
                     "id": "bde74416-0f8a-4f97-b91d-33447fad6aea",
                     "path": "OneModifier",
                     "interactions": "",
@@ -227,6 +271,39 @@
                     "action": "Parry",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "GamePad",
+                    "id": "e4242c8f-f0fb-481d-8443-97ed36bf2b5c",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Parry",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "cbd86d04-4c9b-4b88-b8b5-c453a11b9559",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "7ee810be-9d55-40d7-8625-f9241f11a10f",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
@@ -251,6 +328,11 @@
         {
             "name": "Mobile",
             "bindingGroup": "Mobile",
+            "devices": []
+        },
+        {
+            "name": "GamePad",
+            "bindingGroup": "GamePad",
             "devices": []
         }
     ]

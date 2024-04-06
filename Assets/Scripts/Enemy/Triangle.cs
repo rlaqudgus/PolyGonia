@@ -126,14 +126,9 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
                     break;
             }
         }
-        
-
-
     }
     protected override IEnumerator Attack()
     {
-        
-
         // 거리에 들어오면 수행할 동작
         switch (enemyType)
         {
@@ -155,7 +150,9 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     }
     protected override IEnumerator Die()
     {
-        throw new System.NotImplementedException();
+        yield return null;
+        this.Log("Died");
+        Destroy(gameObject);
     }
 
     IEnumerator Jump()
@@ -169,6 +166,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     }
     IEnumerator AttackCombo()
     {
+        
         anim.SetTrigger("Attack");
 
         //애니메이션과 이동 맞추기 위해 시간 조정
@@ -310,8 +308,23 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     public void Damaged(int dmg)
     {
-        //blood effect?
-        throw new System.NotImplementedException();
+        //여기서 분기처리?
+        //코루틴 최상위에서 hp가 0이 되면 자동으로 Death 코루틴이 실행되도록 했으나, Attack 하위 코루틴이 실행될때는 코드 흐름 중지,
+        //최상위 코루틴은 딜레이되어서 0.n초간 딜레이가 있음;
+        //
+        this.Log($"currentHp : {hp} - {dmg} = {hp -= dmg}");
+        
+        if (hp<=0)
+        {
+            //Death effect
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            //blood effect?
+            //dosth
+        }
+
     }
 
     IEnumerator Dash(Vector2 dir, float dashForce)

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
     public CameraController cam;
     [SerializeField] RayBox ray;
+    [SerializeField] HitBox hitbox;
     [SerializeField] float moveSpd;
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCutMultiplier;
@@ -173,6 +174,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         }
     }
 
+   
     public void OnParry(InputAction.CallbackContext input)
     {
         switch (input.action.phase)
