@@ -39,6 +39,7 @@ public class CameraController : MonoBehaviour
 
     private IEnumerator IEShake(float amount, float freq, float time)
     {
+
         _multiChannelPerlin.m_AmplitudeGain = amount;
         _multiChannelPerlin.m_FrequencyGain = freq;
 
@@ -48,7 +49,7 @@ public class CameraController : MonoBehaviour
         _multiChannelPerlin.m_FrequencyGain = 0f;
     }
 
-    private IEnumerator IEZoom(float size, float time) // È®´ë ½Ã confiner ÃÊ°úÇÏ´Â ¹®Á¦ ¹ß»ý
+    private IEnumerator IEZoom(float size, float time) // È®ï¿½ï¿½ ï¿½ï¿½ confiner ï¿½Ê°ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½
     {
         float elapsedTime = 0f;
         float startSize = _virtualCamera.m_Lens.OrthographicSize;

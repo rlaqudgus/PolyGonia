@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //instance°¡ ÃÊ±âÈ­µÇÁö ¾Ê¾Ò´Ù¸é
+        //instanceê°€ ì´ˆê¸°í™”ë˜ì§€ ì•Šì•˜ë‹¤ë©´
         if (instance == null)
         {
-            //ÀÚ½ÅÀ¸·Î ÃÊ±âÈ­
+            //ìì‹ ìœ¼ë¡œ ì´ˆê¸°í™”
             instance = this;
 
             DontDestroyOnLoad(gameObject);

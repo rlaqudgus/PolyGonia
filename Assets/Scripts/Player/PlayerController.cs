@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     [SerializeField] int jumpCounter;
     [SerializeField] int maxHP;
     [SerializeField] int HP;
+    private float coyoteTimeDuration = 0.2f; // Coyote time 기간을 설정
+    [SerializeField] private float coyoteTime; // 지면을 떠난 후 남은 시간을 추적
 
     int initJumpCounter;
 
@@ -64,6 +66,14 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         // Do not put Move() inside the OnMove()
         // OnMove() is invoked when the input is changed - i.e. pressed or released
         Move();
+        if (!ray.CheckWithBox())
+        {
+            coyoteTime -= Time.deltaTime;
+        }
+        else
+        {
+            coyoteTime = coyoteTimeDuration;
+        }
     }
 
     //Event를 통해 호출되는 함수
@@ -198,10 +208,14 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     void Jump()
     {
-        if (jumpCounter <= 0) return;
+        if (jumpCounter <= 0 || coyoteTime <= 0) return;
 
         this.Log("Performed");
         isJumping = true;
+        if (coyoteTime > 0)
+        {
+            jumpCounter = Mathf.Max(jumpCounter, 1); // 최소한 한 번의 점프는 보장
+        }
         jumpCounter--;
 
         // Y velocity after adding force is the same as the initial jump velocity
@@ -240,6 +254,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         if (col.gameObject.CompareTag("Ground"))
         {
+            coyoteTime = coyoteTimeDuration;
             if (ray.CheckWithBox()) 
             {
                 isJumping = false;
