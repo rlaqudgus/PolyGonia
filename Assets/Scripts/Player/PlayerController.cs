@@ -295,6 +295,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
         StartCoroutine(cam.Shake());
+        if (!JoyConManager.Instance) return;
         JoyConManager.Instance.j[0].SetRumble(160, 320, 1f, 400);
     }
 

@@ -6,23 +6,27 @@ namespace Utilities
 {
     public static class CustomLogger
     {
+        
         //확장 메서드 사용
         //default - print Type & object name
         public static void Log(this Object obj)
         {
+            if(!DebugManager.CheckDebugName(obj.GetType().Name)) return;
             Debug.Log($"[{obj.GetType()}] [{obj.name}]");
         }
 
         //overload 1 - log message print & custom color to the msg if u want to
         public static void Log(this Object obj, object print, string msgColor)
         {
+            if (!DebugManager.CheckDebugName(obj.GetType().Name)) return;
             Debug.Log($"[{obj.GetType()}] [{obj.name}] : <color={msgColor}>{print}</color>\n", obj);
         }
 
         //overload 2 - colorbyType default - true
         public static void Log(this Object obj, object print, bool colorByType=true)
         {
-            if(colorByType)
+            if (!DebugManager.CheckDebugName(obj.GetType().Name)) return;
+            if (colorByType)
             {
                 switch (obj)
                 {
