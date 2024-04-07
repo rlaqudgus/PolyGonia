@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utilities;
 
@@ -101,18 +102,19 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     protected IEnumerator AttackCombo()
     {
+        
         anim.SetTrigger("Attack");
 
         //애니메이션과 이동 맞추기 위해 시간 조정
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.2f);
 
         //공격할때 앞으로 돌진하는 모션
         yield return Dash(-runDir * dashDistance, dashForce);
 
         yield return new WaitForSeconds(.3f);
         
-        //아직도 범위 안에 있으면 2타 실행
-        if (TargetDistance(target) < meeleeRange)
+        //target이 null이 아니고 아직도 범위 안에 있으면 2타 실행
+        if (target && TargetDistance(target) < meeleeRange)
         {
             anim.SetTrigger("Attack");
 
@@ -131,6 +133,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     protected void CalculateDir()
     {
+        if (!target) return;
         //방향 설정
         detectPoint = target.position;
         var curPoint = (Vector2)transform.position;
@@ -142,6 +145,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
    
     protected float TargetDistance(Transform target)
     {
+        
         float dis = Vector2.Distance(transform.position, target.position);
         isMeeleeRange = dis < meeleeRange;
         return dis;
@@ -169,6 +173,8 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
         else
         {
+            this.target = target;
+            isMeeleeRange = false;
             this.Log($"{target} Out of Sight");
             //state 바꾸기
             StateChange(EnemyState.Idle);
@@ -224,8 +230,23 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     // IDamageable
     public void Damaged(int dmg)
     {
-        //blood effect?
-        throw new System.NotImplementedException();
+        //여기서 분기처리?
+        //코루틴 최상위에서 hp가 0이 되면 자동으로 Death 코루틴이 실행되도록 했으나, Attack 하위 코루틴이 실행될때는 코드 흐름 중지,
+        //최상위 코루틴은 딜레이되어서 0.n초간 딜레이가 있음;
+        //
+        this.Log($"currentHp : {hp} - {dmg} = {hp -= dmg}");
+        
+        if (hp<=0)
+        {
+            //Death effect
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            //blood effect?
+            //dosth
+        }
+
     }
 
 }
