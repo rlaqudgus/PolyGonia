@@ -153,20 +153,6 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //공격패턴 끝나면 다시 감지
         StateChange(EnemyState.Detect);
     }
-    protected override IEnumerator Die()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    IEnumerator Jump()
-    {
-        var jumpDir = new Vector2(-runDir.x, 1);
-        rb.AddForce(jumpDir * jumpPower, ForceMode2D.Impulse);
-
-        yield return new WaitForSeconds(1f);
-
-        StateChange(EnemyState.Detect);
-    }
     
 
     protected void CalculateDir()

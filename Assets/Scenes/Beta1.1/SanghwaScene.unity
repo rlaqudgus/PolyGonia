@@ -2993,9 +2993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4621b730efdc68a48882473639203871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 2.5, z: 0}
-  shakeAmount: 0.5
-  shakeTime: 0.3
 --- !u!1001 &522948405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4628,16 +4625,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14733657f64e80041ac5a40e5846acc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 519420033}
-  ray: {fileID: 751395397}
-  moveSpd: 4
-  jumpForce: 15
-  jumpCutMultiplier: 0.5
-  invincibleTime: 2
-  jumpCounter: 3
-  maxHP: 5
-  HP: 0
-  isShield: 0
+  data: {fileID: 0}
+  _ray: {fileID: 751395397}
+  _moveSpd: 5
+  _jumpForce: 10
+  _jumpCutMultiplier: 0.5
+  _invincibleTime: 2
+  _jumpCounter: 1
+  _maxHP: 5
+  _HP: 0
+  coyoteTime: 0.2
+  _isShield: 0
 --- !u!61 &920711035
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4854,6 +4852,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 09ff4861-23eb-4204-89bd-caac80128dab
     m_ActionName: Player/Jump
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dcb2a0cf-9dc9-4dc9-93ca-6d42d028f734
+    m_ActionName: Player/Parry[/Keyboard/c,/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: Player
@@ -4952,63 +4954,6 @@ Transform:
   - {fileID: 144858271}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1159632347
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 55.29988
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.1943202
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1151207191944342253, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3226152026477420986, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
-      propertyPath: m_Name
-      value: Jumper
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
 --- !u!4 &1533113976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7426926776001111270, guid: 8a57dcfb3268d294db563ae34a5b63c1, type: 3}
@@ -5260,5 +5205,4 @@ SceneRoots:
   - {fileID: 920711037}
   - {fileID: 154921675}
   - {fileID: 46592810}
-  - {fileID: 1159632347}
   - {fileID: 429136990}

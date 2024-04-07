@@ -64,7 +64,7 @@ public class Shield : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         shieldParry.SetActive(false);
 
-        if (!player.isShield)
+        if (!player._isShield)
         yield break;
         shieldBox.SetActive(true);
     }

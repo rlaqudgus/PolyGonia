@@ -31,11 +31,11 @@ public class Attack : MonoBehaviour
 
     private void Update()
     {
-        if (_playerController.IsLookUp)
+        if (_playerController._isLookUp)
         {
             transform.localScale = new Vector2(1, 1); // 윗공격을 위한 콜라이더
         }
-        else if (_playerController.IsLookDown)
+        else if (_playerController._isLookDown)
         {
             transform.localScale = new Vector2(1, -1); // 하단 공격을 위한 콜라이더 뒤집기
         }

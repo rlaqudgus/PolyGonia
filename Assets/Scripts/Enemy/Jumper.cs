@@ -10,7 +10,7 @@ public class Jumper : Triangle
     {
         isMoving = true;
         Move();
-        if (!ray.CheckWithRay(Vector2.down, 5) || ray.CheckWithRay(moveDir, .5f))
+        if (!ray.CheckWithRay(transform.position, Vector2.down, 5) || ray.CheckWithRay(transform.position, moveDir, .5f))
         {
             isMoving = false;
             yield return new WaitForSeconds(2f);

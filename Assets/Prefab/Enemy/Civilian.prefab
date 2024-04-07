@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 218343488202682740}
   - component: {fileID: 3826837063368268570}
   - component: {fileID: 8950384550033678486}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HitBox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1327911436604140726}
   - component: {fileID: 7798098809895311461}
   - component: {fileID: 3643341108709978275}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Civilian
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6065800053467761080}
   - component: {fileID: 2815917766705626435}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ParryBox
   m_TagString: Parry
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &718019499091495246
 Transform:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 1546198596951099569}
   - component: {fileID: 7614586911858439898}
   - component: {fileID: 4114072587048219340}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HitBox1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -635,6 +635,10 @@ PrefabInstance:
     - target: {fileID: 4031733330897388345, guid: e5555c3185a132045b164bd40f7e9fac, type: 3}
       propertyPath: m_Name
       value: DetectBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031733330897388345, guid: e5555c3185a132045b164bd40f7e9fac, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
