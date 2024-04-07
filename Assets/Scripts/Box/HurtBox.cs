@@ -15,4 +15,14 @@ public class HurtBox : MonoBehaviour
         }
         
     }
+
+    // [TG] [2024-04-05] [feat]
+    // 피격되었을 때  ByWeapon 호출
+    public void Attacked(Attack attack)
+    {
+        if (transform.parent.TryGetComponent<IAttackable>(out IAttackable attackTarget))
+        {
+            attackTarget.ByWeapon(attack);
+        }
+    }
 }

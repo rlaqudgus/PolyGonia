@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,14 @@ public class HitBox : MonoBehaviour
     public bool isBody;
     [SerializeField] int hitPoint;
 
+    // hurtbox의 Attacked 매개변수를 위해 할당
+    private Attack _attack;
+
+    private void Start()
+    {
+        _attack = GetComponentInParent<Attack>();
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         // HitBox가 HurtBox와 trigger 되었을 경우 
@@ -15,6 +24,7 @@ public class HitBox : MonoBehaviour
         {
             this.Log($"{this.gameObject.name} collided with {hbox.gameObject.name}");
             hbox.Damage(hitPoint);
+            hbox.Attacked(_attack);
         }
 
         // HitBox가 패리 오브젝트와 trigger 되었을 경우 패링되게 할 것인가?
