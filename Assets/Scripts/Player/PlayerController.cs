@@ -10,76 +10,109 @@ using Utilities;
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 {
-    [SerializeField] RayBox ray;
-    [SerializeField] HitBox hitbox;
-    [SerializeField] float moveSpd;
-    [SerializeField] float jumpForce;
-    [SerializeField] float jumpCutMultiplier;
-    [SerializeField] float invincibleTime;
-    [SerializeField] int jumpCounter;
-    [SerializeField] int maxHP;
-    [SerializeField] int HP;
-    private float coyoteTimeDuration = 0.2f; // Coyote time 기간을 설정
+    
+    // [TG] [2024-04-01] [Refactor]
+    // 1. private 변수명 _camelCase로 변경
+    // 2. 접근 제한자 private 명시
+    // 3. 프로퍼티 이름 PascalCase로 변경
+    // 4. 변수명 sr이 직관성이 떨어져 _spriteRenderer로 변경 (_rb는 관례에 따라 수정x)
+    // 5. PlayerData를 따로 만들어서 Scriptable Object로 관리하는 것이 편해 보여서 일부분 사용해봄(좋으면 전부 수정)
+    
+    public PlayerData data;
+    public enum AttackType { HorizontalAttack = 0, VerticalAttack, }
+    
+    
+    // [TG] [2024-04-05] [feat]
+    // 1. private 변수명 _camelCase로 변경
+    [SerializeField] private RayBox _ray;
+    [SerializeField] private float _moveSpd;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _jumpCutMultiplier;
+    [SerializeField] private float _invincibleTime;
+    [SerializeField] private int _jumpCounter;
+    [SerializeField] private int _maxHP;
+    [SerializeField] private int _HP;
     [SerializeField] private float coyoteTime; // 지면을 떠난 후 남은 시간을 추적
+    private float coyoteTimeDuration = 0.2f; // Coyote time 기간을 설정
 
-    int initJumpCounter;
+    private int _initJumpCounter;
 
-    Vector2 moveDir;
-    int dir;
-    bool isMoving;
-    bool isLookUp;
-    bool isLookDown;
+    private Vector2 _moveDir;
+    private int _dir;
+    private bool _isMoving;
+    private bool _canTeeter;
+    public bool IsLookUp { get; private set; }
+    public bool IsLookDown{ get; private set; }
 
     public bool isShield;
-    bool isAttacking;
-    bool isParry;
+    private bool _isParry;
+    public bool IsAttacking { get; private set; }
     
-    bool isJumping;
-    bool isJumpingDown => rb.velocity.y < 0;
+    public bool IsWallJumping { get; private set; }
+    private bool _isJumping;
+    private bool IsJumpingDown => _rb.velocity.y < 0;
 
-    bool isInvincible;
+    private bool _isInvincible; 
 
-    bool joyConShield;
+    private PlayerInput _playerInput;
 
-    PlayerInput playerInput;
+    private Rigidbody2D _rb;
 
-    Rigidbody2D rb;
+    private SpriteRenderer _spriteRenderer;
 
-    SpriteRenderer sr;
+    private Animator _anim;
 
-    Animator anim;
+    private Shield _shield;
 
-    Shield shield;
+    private Attack _attack;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-        anim = GetComponent<Animator>();
-        shield = GetComponentInChildren<Shield>(true);
+        _playerInput = GetComponent<PlayerInput>();
+        _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
+        _shield = GetComponentInChildren<Shield>(true);
+        _attack = GetComponentInChildren<Attack>();
 
-        initJumpCounter = jumpCounter;
-        HP = maxHP;
+        _initJumpCounter = _jumpCounter;
+        _HP = _maxHP;
     }
-
-
-    // Update is called once per frame
+    
     void Update()
     {
-        // Do not put Move() inside the OnMove()
-        // OnMove() is invoked when the input is changed - i.e. pressed or released
         Move();
-
-        if (!ray.CheckWithBox())
+        
+        if (!_ray.CheckWithBox())
         {
             coyoteTime -= Time.deltaTime;
         }
         else
         {
             coyoteTime = coyoteTimeDuration;
+        }
+
+        // [TG] [2024-04-06] [Refactor]
+        // 1. 기존 Raybox의 trasnform.position이 (0, 0, 0), BoxCollider의 offset이 (0, -0.45)
+        // 2. raybox의 왼쪽에서 아래로 raycast한 것과 오른쪽에서 raycast한 것에서 ground가 발견되지 않았을 경우 teetering 실행
+        // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
+        // 4. 따로 함수로 구현?
+        _canTeeter = !_isJumping && !_isMoving && !IsLookUp && !IsLookDown; // 흠
+        if (_canTeeter)
+        {
+            if (!_ray.CheckWithRay(transform.position + new Vector3(-0.2f, -0.45f, 0), Vector2.down, 0.1f)
+                || !_ray.CheckWithRay(transform.position + new Vector3(0.2f, -0.45f, 0), Vector2.down, 0.1f))
+            {
+                _anim.SetBool("isTeetering", true);
+            }
+            else
+            {
+                _anim.SetBool("isTeetering", false);
+            }
+        }
+        else
+        {
+            _anim.SetBool("isTeetering", false);
         }
     }
 
@@ -89,14 +122,14 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         Vector2 playerInput = input.ReadValue<Vector2>();
 
-        if (playerInput.x > Mathf.Epsilon) dir = 1;
-        else if (playerInput.x < -Mathf.Epsilon) dir = -1;
-        else dir = 0;
+        if (playerInput.x > Mathf.Epsilon) _dir = 1;
+        else if (playerInput.x < -Mathf.Epsilon) _dir = -1;
+        else _dir = 0;
         
-        moveDir = Vector2.right * dir;
+        _moveDir = Vector2.right * _dir;
         // this.Log($"Move Direction : {moveDir}");
 
-        isMoving = (dir != 0);
+        _isMoving = (_dir != 0);
         // this.Log($"isMoving : {isMoving}");
     }
 
@@ -104,37 +137,37 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     private void Move()
     {
-        if (isMoving)
+        if (_isMoving)
         {
             //방어상태 이동 그냥 이동 차이
             float moveAmount = 1.0f;
             if (isShield) moveAmount *= 0.25f;
-            if (isParry) moveAmount *= 0.25f;
+            if (_isParry) moveAmount *= 0.25f;
             
             // Move
-            transform.Translate(moveDir * moveSpd * moveAmount * Time.deltaTime);
+            transform.Translate(_moveDir * _moveSpd * moveAmount * Time.deltaTime);
             
             //x축 부호 바꾸기 (좌우반전)
-            transform.localScale = new Vector2(dir, transform.localScale.y);;
+            transform.localScale = new Vector2(_dir, transform.localScale.y);
         }
         
         // Animation Transition
-        anim.SetBool("isMoving", isMoving);
+        _anim.SetBool("isMoving", _isMoving);
     }
 
     public void OnLook(InputAction.CallbackContext input)
     {
         Vector2 playerInput = input.ReadValue<Vector2>();
 
-        isLookUp = (playerInput.y > 0);
-        isLookDown = (playerInput.y < 0);
+        IsLookUp = (playerInput.y > 0);
+        IsLookDown = (playerInput.y < 0);
 
         //위나 아래를 보고 있을 때 움직이면 바로 움직이게
         //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
-        if (isMoving) 
+        if (_isMoving) 
         {
-            isLookUp = false;
-            isLookDown = false;
+            IsLookUp = false;
+            IsLookDown = false;
         }
 
         Look();
@@ -144,8 +177,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     private void Look() 
     {
-        anim.SetBool("isLookUp", isLookUp);
-        anim.SetBool("isLookDown", isLookDown);
+        _anim.SetBool("isLookUp", IsLookUp);
+        _anim.SetBool("isLookDown", IsLookDown);
     }
 
     // Axis는 눌렀을 때 1, 뗐을 때 0으로 변하는 float return
@@ -166,66 +199,78 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         if (isShield)
         {
-            anim.SetTrigger("Shield");
+            _anim.SetTrigger("Shield");
         }
 
-        shield.ShieldActivate(isShield);
-        anim.SetBool("isShield", isShield);
+        _shield.ShieldActivate(isShield);
+        _anim.SetBool("isShield", isShield);
 
     }
+    
+    // [TG] [2024-04-04] [Refactor]
+    // 1. OnAttack을 switch문으로 변경
+    // 2. 수동 리셋 위치 옮김
+    // 3. Attack Script 제작
 
-   
-    // shield 상태일때와 아닐 때 구분
     public void OnAttack(InputAction.CallbackContext input)
     {
-        isAttacking = input.ReadValueAsButton();
-        Attack();
-    }
-
-    private void Attack() 
-    {
-        //흠.. 공격은 방패 안들고있을때만 나오게 하기 위해 분기 추가
-        if (isShield) return;
-        if (isAttacking)
+        switch (input.phase)
         {
-            this.Log("Attack");
-            anim.SetTrigger("Attack");
-        }
-    }
-
-   
-    public void OnParry(InputAction.CallbackContext input)
-    {
-        switch (input.action.phase)
-        {
-            // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
-            case InputActionPhase.Started:
-                this.Log("Parry start");
-                break;
-
             case InputActionPhase.Performed:
-                Parry();
-                break;
-
-            //너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
-            case InputActionPhase.Canceled:
-                anim.ResetTrigger("Parry");
-                this.Log("Parry stop");
                 break;
             
-            default:
+            case InputActionPhase.Started:
+                IsAttacking = true;
+                Attack();
+                break;
+            
+            case InputActionPhase.Canceled:
+                IsAttacking = false;
+                // 너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
+                _anim.ResetTrigger("Parry");
                 break;
         }
     }
 
-   
 
-    void Parry()
+    // [TG] [2024-04-04] [Refactor]
+    // 1. 윗 공격, 하단 공격, 좌우 공격 추가
+    // 2. 상 하 공격은 디버깅을 위해 일단 합치지 않았음
+    // 2. 마음에 안듬 => input system의 one modifier..?
+    private void Attack() {
+        // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
+        if (isShield)
+        {
+            this.Log($"isParry: {_isParry}");
+            _anim.SetTrigger("Parry");
+            StartCoroutine(CheckParry());
+            _shield.ShieldParry();
+        }
+        else if(IsLookUp && !IsLookDown)
+        {
+            this.Log("Up Attack");
+            _anim.SetTrigger("Attack");
+            _attack.DoAttack((int)AttackType.VerticalAttack);
+        }
+        else if(!IsLookUp && IsLookDown)
+        {
+            this.Log("Down Attack");
+            _anim.SetTrigger("Attack");
+            _attack.DoAttack((int)AttackType.VerticalAttack);
+        }
+        else
+        {
+            this.Log("Attack");
+            _anim.SetTrigger("Attack");
+            _attack.DoAttack((int)AttackType.HorizontalAttack);
+        }
+    }
+
+    IEnumerator CheckParry()
     {
-        this.Log("Parry");
-        anim.SetTrigger("Parry");
-        StartCoroutine(CheckParry());
-        shield.ShieldParry();
+        _isParry = true;
+        yield return new WaitForSeconds(.5f);
+        _isParry = false;
     }
 
     // responsive 하게 만들고싶다
@@ -237,23 +282,25 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //SceneTest();
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
+        
     }
 
     void Jump()
     {
-        if (jumpCounter <= 0 || coyoteTime <= 0) return;
+
+        if (_jumpCounter <= 0 || coyoteTime <= 0) return;
 
         this.Log("Performed");
-        isJumping = true;
+        _isJumping = true;
         if (coyoteTime > 0)
         {
-            jumpCounter = Mathf.Max(jumpCounter, 1); // 최소한 한 번의 점프는 보장
+            _jumpCounter = Mathf.Max(_jumpCounter, 1); // 최소한 한 번의 점프는 보장
         }
-        jumpCounter--;
+        _jumpCounter--;
 
         // Y velocity after adding force is the same as the initial jump velocity
         // It keeps the jump height whenever the jump key is pressed
-        rb.AddForce(Vector2.up * rb.mass * (jumpForce - rb.velocity.y), ForceMode2D.Impulse);
+        _rb.AddForce(Vector2.up * _rb.mass * (_jumpForce - _rb.velocity.y), ForceMode2D.Impulse);
 
         // This is the old jump model
         // jump height does not stay the same because the net force is changing
@@ -263,45 +310,52 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     void JumpCut()
     {
         // Adjustable jump height
-        if (!isJumping) return;
-        if (isJumpingDown) return;
+        if (!_isJumping) return;
+        if (IsJumpingDown) return;
         this.Log("Jump Cut");
 
-        rb.AddForce(Vector2.down * rb.velocity.y * rb.mass * (1 - jumpCutMultiplier), ForceMode2D.Impulse);
+        _rb.AddForce(Vector2.down * _rb.velocity.y * _rb.mass * (1 - _jumpCutMultiplier), ForceMode2D.Impulse);
     }
-
-    IEnumerator CheckParry()
+    
+    public void PlayerKnockBack(float knockBackDist)
     {
-        isParry = true;
-        yield return new WaitForSeconds(.5f);
-        isParry = false;
-    }
-
-    public void PlayerKnockBack()
-    {
-        transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * 0.5f,0);
+        transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * knockBackDist,0);
     }
 
     //ㅈㄴ마음에안든다
+    // [TG] [2024-04-05] [Question]
+    // 1. OverlapBox을 쓰는 것도 괜찮아 보임
+    // 2. 땅 위에 있을 때마다 coyoteTime할당
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground"))
         {
             coyoteTime = coyoteTimeDuration;
-            if (ray.CheckWithBox()) 
+            if (_ray.CheckWithBox()) 
             {
-                isJumping = false;
-                jumpCounter = initJumpCounter;
+                _isJumping = false;
+                _jumpCounter = _initJumpCounter;
+                // PlayerOnGroundTime = data.coyoteTime;
+                
             }
         }
     }
-
-   
-
+    // 3. Ground를 벗어났을 때 coyoteTime 감소 시작
+    // 4. 코루틴 사용하여 coyoteTime동안은 isJumping이 True로 유지되게
+    // private void OnCollisionExit2D(Collision2D col)
+    // {
+    //     if (col.gameObject.CompareTag("Ground"))
+    //     {
+    //         _isJumping = false;
+    //         _jumpCounter = _initJumpCounter;
+    //         PlayerOnGroundTime = data.coyoteTime;
+    //     }
+    // }
+    
     public void Damaged(int dmg)
     {
         DamageEffect();
-        this.Log($"currentHp : {HP} - {dmg} = {HP-=dmg}");
+        this.Log($"currentHp : {_HP} - {dmg} = {_HP-=dmg}");
     }
 
     void DamageEffect()
@@ -323,7 +377,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         {
             child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
         }
-        while (isInvincible)
+        while (_isInvincible)
         {   
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = false;
@@ -344,20 +398,23 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     IEnumerator InvincibleTimer()
     {
         float timer = 0;
-        while (timer <= invincibleTime) 
+        while (timer <= _invincibleTime) 
         {
-            isInvincible = true;
+            _isInvincible = true;
             
             timer += Time.deltaTime;
             yield return null;
         }
-        isInvincible = false;
+        _isInvincible = false;
         
     }
 
+    // [TG] [2024-04-04] [question]
+    // Player의 ByShield은 단순 transform.position 변경이지만 Triangle의 ByShield는 Addforce 사용 (?)
+    // 나중에 AddForce로 통일하는 것이 좋아 보임
     public void ByShield(Shield shield)
     {
-        PlayerKnockBack();
+        PlayerKnockBack(0.5f);
     }
 
     public void ByParry(Shield shield)
@@ -365,7 +422,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         throw new System.NotImplementedException();
     }
 
-    public void BySpear()
+    public void ByWeapon(Attack attack)
     {
         throw new System.NotImplementedException();
     }

@@ -10,6 +10,7 @@ using Utilities;
 
 public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 {
+
     [SerializeField] protected Transform target;
     [SerializeField] protected RayBox ray;
     [SerializeField] float jumpPower;
@@ -22,8 +23,10 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     // public EnemyType enemyType;
     [SerializeField] GameObject hitBox;
     protected Vector2 moveDir;
+
     void Start()
     {
+        hp = maxHp;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         enemyState = EnemyState.Idle;
@@ -41,6 +44,26 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     protected override IEnumerator Idle()
     {
+
+        /*
+            case EnemyType.Jumper:
+                isMoving = true;
+                Move();
+                // [TG] [2024-04-06] [Refactor]
+                // 1. Raybox의 CheckWithRay에 시작 위치 매개변수를 추가하였으므로 같이 수정 
+                // 2. 기존 Raybox의 trasnform.position이 (-0.5, 0, 0) 이고 BoxCollider의 Offset이 (0, 0) 임을 반영하여 변경
+                // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
+                if (!ray.CheckWithRay(transform.position + new Vector3(-0.5f, 0, 0), Vector2.down, 5)
+                    || ray.CheckWithRay(transform.position + new Vector3(-0.5f, 0, 0), moveDir, .5f))
+                {
+                    isMoving = false;
+                    yield return new WaitForSeconds(2f);
+                    TurnAround();
+                    isMoving = true;
+                }
+                yield break;
+        */
+        
         //triangle 기사는 가만히 있는 컨셉(근위병 같은 느낌?)
 
         yield return null;
@@ -130,6 +153,21 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //공격패턴 끝나면 다시 감지
         StateChange(EnemyState.Detect);
     }
+    protected override IEnumerator Die()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    IEnumerator Jump()
+    {
+        var jumpDir = new Vector2(-runDir.x, 1);
+        rb.AddForce(jumpDir * jumpPower, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1f);
+
+        StateChange(EnemyState.Detect);
+    }
+    
 
     protected void CalculateDir()
     {
@@ -178,26 +216,24 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
             this.Log($"{target} Out of Sight");
             //state 바꾸기
             StateChange(EnemyState.Idle);
-        }
-        
+        }    
     }
 
-    // IAttackable
     public void ByParry(Shield shield)
     {
         //패링하면 disarm 컨셉 - 시민으로 돌아감
         this.Log("Attacked by Parrying");
-        ParryKnockBack();
+        EnemyKnockBack(1.0f);
         shield.ParryEffect();
         ParryDisarm();
         
     }
 
-    // IAttackable - ByParry
-    protected void ParryKnockBack()
+    // [TG] [2024-04-04] [refactor]
+    // 1. 기존 ParryKnockBack을 Parent객체의 EnemyKnockBack을 override하는 방식으로 변경 
+    protected override void EnemyKnockBack(float knockBackDist)
     {
-        var parryEffect = (Vector2)gameObject.transform.position + runDir;
-        gameObject.transform.position = parryEffect;
+        transform.position = (Vector2)transform.position + new Vector2(runDir.x * knockBackDist,0);
     }
 
     // IAttackable - ByParry
@@ -221,10 +257,14 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //shield.ShieldEffect();
     }
 
-    // IAttackable
-    public void BySpear()
+    // [TG] [2024-04-04] [feat]
+    // 1. Triangle이 Player의 무기로 공격당했을 때
+    // 2. blood 효과?
+    public void ByWeapon(Attack attack)
     {
-        this.Log("Attacked by Spear");
+        this.Log("Attacked by Weapon");
+        attack.AttackEffect();
+        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * attack.weaponForce * (1 / level), ForceMode2D.Impulse);
     }
 
     // IDamageable
@@ -234,7 +274,8 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         //코루틴 최상위에서 hp가 0이 되면 자동으로 Death 코루틴이 실행되도록 했으나, Attack 하위 코루틴이 실행될때는 코드 흐름 중지,
         //최상위 코루틴은 딜레이되어서 0.n초간 딜레이가 있음;
         //
-        this.Log($"currentHp : {hp} - {dmg} = {hp -= dmg}");
+        hp -= dmg;
+        this.Log($"currentHp : {hp} - {dmg} = {hp-dmg}");
         
         if (hp<=0)
         {

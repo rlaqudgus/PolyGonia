@@ -22,7 +22,7 @@ public class ParryBox : MonoBehaviour
                 //패링된놈의 ByParry 메서드
                 a.ByParry(shield);
                 //플레이어 효과 - 넉백
-                playerController.PlayerKnockBack();
+                playerController.PlayerKnockBack(0.5f);
                 //플레이어 효과 - 카메라 흔들기
 
                 CameraManager.Shake();               

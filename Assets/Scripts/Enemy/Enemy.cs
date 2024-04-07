@@ -51,4 +51,8 @@ public abstract class Enemy : MonoBehaviour
     protected abstract IEnumerator Attack();
     //사망 behaviour
     protected abstract IEnumerator Die();
+    // [TG] [2024-04-04] [refactor]
+    // 1. 적 넉백 구현 (PlayerKnockBack과 같은 로직)
+    protected abstract void EnemyKnockBack(float knockBackDist);
+
 }
