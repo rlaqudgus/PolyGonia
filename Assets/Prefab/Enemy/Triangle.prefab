@@ -412,6 +412,8 @@ MonoBehaviour:
   target: {fileID: 0}
   ray: {fileID: 1505387070067383723}
   jumpPower: 2
+  dashForce: 8
+  dashDistance: 1.5
   enemyType: 1
   hitBox: {fileID: 557977376792306081}
 --- !u!1 &7666739592935394664

@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 using Utilities;
 
 
@@ -18,7 +19,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 5. PlayerData를 따로 만들어서 Scriptable Object로 관리하는 것이 편해 보여서 일부분 사용해봄(좋으면 전부 수정)
     
     public PlayerData data;
-    public CameraController cam;
     public enum AttackType { HorizontalAttack = 0, VerticalAttack, }
     
     
@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     [SerializeField] private int _jumpCounter;
     [SerializeField] private int _maxHP;
     [SerializeField] private int _HP;
+    [SerializeField] private float coyoteTime; // 지면을 떠난 후 남은 시간을 추적
+    private float _coyoteTimeDuration = 0.2f; // Coyote time 기간을 설정
 
     private int _initJumpCounter;
 
@@ -39,16 +41,16 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     private int _dir;
     private bool _isMoving;
     private bool _canTeeter;
-    public bool IsLookUp { get; private set; }
-    public bool IsLookDown{ get; private set; }
+    public bool _isLookUp { get; private set; }
+    public bool _isLookDown{ get; private set; }
 
-    public bool isShield;
+    public bool _isShield;
     private bool _isParry;
-    public bool IsAttacking { get; private set; }
+    public bool _isAttacking { get; private set; }
     
-    public bool IsWallJumping { get; private set; }
+    public bool _isWallJumping { get; private set; }
     private bool _isJumping;
-    private bool IsJumpingDown => _rb.velocity.y < 0;
+    private bool _isJumpingDown => _rb.velocity.y < 0;
 
     private bool _isInvincible; 
 
@@ -80,12 +82,22 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     void Update()
     {
         Move();
+        
+        if (!_ray.CheckWithBox())
+        {
+            coyoteTime -= Time.deltaTime;
+        }
+        else
+        {
+            coyoteTime = _coyoteTimeDuration;
+        }
+
         // [TG] [2024-04-06] [Refactor]
         // 1. 기존 Raybox의 trasnform.position이 (0, 0, 0), BoxCollider의 offset이 (0, -0.45)
         // 2. raybox의 왼쪽에서 아래로 raycast한 것과 오른쪽에서 raycast한 것에서 ground가 발견되지 않았을 경우 teetering 실행
         // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
         // 4. 따로 함수로 구현?
-        _canTeeter = !_isJumping && !_isMoving && !IsLookUp && !IsLookDown; // 흠
+        _canTeeter = !_isJumping && !_isMoving && !_isLookUp && !_isLookDown; // 흠
         if (_canTeeter)
         {
             if (!_ray.CheckWithRay(transform.position + new Vector3(-0.2f, -0.45f, 0), Vector2.down, 0.1f)
@@ -105,7 +117,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     }
 
     //Event를 통해 호출되는 함수
-    //input에 따라 moveDir를 변경
+    //input에 따라 _moveDir를 변경
     public void OnMove(InputAction.CallbackContext input)
     {
         Vector2 playerInput = input.ReadValue<Vector2>();
@@ -115,11 +127,13 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         else _dir = 0;
         
         _moveDir = Vector2.right * _dir;
-        // this.Log($"Move Direction : {moveDir}");
+        // this.Log($"Move Direction : {_moveDir}");
 
         _isMoving = (_dir != 0);
-        // this.Log($"isMoving : {isMoving}");
+        // this.Log($"_isMoving : {_isMoving}");
     }
+
+    
 
     private void Move()
     {
@@ -127,7 +141,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         {
             //방어상태 이동 그냥 이동 차이
             float moveAmount = 1.0f;
-            if (isShield) moveAmount *= 0.25f;
+            if (_isShield) moveAmount *= 0.25f;
             if (_isParry) moveAmount *= 0.25f;
             
             // Move
@@ -145,24 +159,26 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         Vector2 playerInput = input.ReadValue<Vector2>();
 
-        IsLookUp = (playerInput.y > 0);
-        IsLookDown = (playerInput.y < 0);
+        _isLookUp = (playerInput.y > 0);
+        _isLookDown = (playerInput.y < 0);
 
         //위나 아래를 보고 있을 때 움직이면 바로 움직이게
         //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
         if (_isMoving) 
         {
-            IsLookUp = false;
-            IsLookDown = false;
+            _isLookUp = false;
+            _isLookDown = false;
         }
 
         Look();
     }
 
+    
+
     private void Look() 
     {
-        _anim.SetBool("isLookUp", IsLookUp);
-        _anim.SetBool("isLookDown", IsLookDown);
+        _anim.SetBool("isLookUp", _isLookUp);
+        _anim.SetBool("isLookDown", _isLookDown);
     }
 
     // Axis는 눌렀을 때 1, 뗐을 때 0으로 변하는 float return
@@ -170,21 +186,24 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 한번 눌렀을 때 딱 한번 실행하는 애니메이션(방패 뽑는 애니메이션)을 써야하기 때문에 trigger 변수 하나 더 만들어주자 
     public void OnShield(InputAction.CallbackContext input)
     {
-        isShield = input.ReadValueAsButton();
-        this.Log($"isShield : {isShield}");
+        _isShield = input.ReadValueAsButton();
+        this.Log($"isShield : {_isShield}");
 
         Shield();
     }
-    
+
+   
+
+   
     private void Shield()
     {
-        if (isShield)
+        if (_isShield)
         {
             _anim.SetTrigger("Shield");
         }
 
-        _shield.ShieldActivate(isShield);
-        _anim.SetBool("isShield", isShield);
+        _shield.ShieldActivate(_isShield);
+        _anim.SetBool("isShield", _isShield);
 
     }
     
@@ -192,6 +211,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 1. OnAttack을 switch문으로 변경
     // 2. 수동 리셋 위치 옮김
     // 3. Attack Script 제작
+
     public void OnAttack(InputAction.CallbackContext input)
     {
         switch (input.phase)
@@ -200,17 +220,18 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
                 break;
             
             case InputActionPhase.Started:
-                IsAttacking = true;
+                _isAttacking = true;
                 Attack();
                 break;
             
             case InputActionPhase.Canceled:
-                IsAttacking = false;
+                _isAttacking = false;
                 // 너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
                 _anim.ResetTrigger("Parry");
                 break;
         }
     }
+
 
     // [TG] [2024-04-04] [Refactor]
     // 1. 윗 공격, 하단 공격, 좌우 공격 추가
@@ -218,20 +239,20 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 2. 마음에 안듬 => input system의 one modifier..?
     private void Attack() {
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
-        if (isShield)
+        if (_isShield)
         {
             this.Log($"isParry: {_isParry}");
             _anim.SetTrigger("Parry");
             StartCoroutine(CheckParry());
             _shield.ShieldParry();
         }
-        else if(IsLookUp && !IsLookDown)
+        else if(_isLookUp && !_isLookDown)
         {
             this.Log("Up Attack");
             _anim.SetTrigger("Attack");
             _attack.DoAttack((int)AttackType.VerticalAttack);
         }
-        else if(!IsLookUp && IsLookDown)
+        else if(!_isLookUp && _isLookDown)
         {
             this.Log("Down Attack");
             _anim.SetTrigger("Attack");
@@ -244,6 +265,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             _attack.DoAttack((int)AttackType.HorizontalAttack);
         }
     }
+
     IEnumerator CheckParry()
     {
         _isParry = true;
@@ -257,7 +279,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     public void OnJump(InputAction.CallbackContext input)
     {
         this.Log("Jump executed");
-
+        //SceneTest();
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
         
@@ -265,10 +287,15 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     void Jump()
     {
-        if (_jumpCounter <= 0) return;
+
+        if (_jumpCounter <= 0 || coyoteTime <= 0) return;
 
         this.Log("Performed");
         _isJumping = true;
+        if (coyoteTime > 0)
+        {
+            _jumpCounter = Mathf.Max(_jumpCounter, 1); // 최소한 한 번의 점프는 보장
+        }
         _jumpCounter--;
 
         // Y velocity after adding force is the same as the initial jump velocity
@@ -284,7 +311,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         // Adjustable jump height
         if (!_isJumping) return;
-        if (IsJumpingDown) return;
+        if (_isJumpingDown) return;
         this.Log("Jump Cut");
 
         _rb.AddForce(Vector2.down * _rb.velocity.y * _rb.mass * (1 - _jumpCutMultiplier), ForceMode2D.Impulse);
@@ -303,6 +330,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         if (col.gameObject.CompareTag("Ground"))
         {
+            coyoteTime = _coyoteTimeDuration;
             if (_ray.CheckWithBox()) 
             {
                 _isJumping = false;
@@ -334,8 +362,10 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
-        StartCoroutine(cam.Shake());
+
+        CameraManager.Shake();
         
+        JoyConManager.Instance?.j[0].SetRumble(160, 320, 1f, 400);
     }
 
     IEnumerator InvincibleEffect()
@@ -345,7 +375,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //하위 모든 오브젝트 invincible로 변경
         foreach (Transform child in transform)
         {
-            child.gameObject.layer = LayerMask.NameToLayer("Invincible");
+            child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
         }
         while (_isInvincible)
         {   
@@ -354,6 +384,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             yield return new WaitForSeconds(.2f);
             GetComponent<SpriteRenderer>().enabled = true;
         }
+        //최상위 콜라이더 invincible로 변경
+        gameObject.layer = LayerMask.NameToLayer("Player1");
+
         //하위 모든 오브젝트 
         foreach (Transform child in transform)
         {
@@ -393,4 +426,85 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         throw new System.NotImplementedException();
     }
+
+    void SceneTest()
+    {
+        //대충 씬 전환 확인하는코드
+        SceneManager.LoadScene(0);
+    }
+
+    #region JoyCon Functions
+
+    public void J_OnMove(Vector2 a)
+    {
+        Vector2 playerInput = a;
+
+        if (playerInput.x > Mathf.Epsilon) _dir = 1;
+        else if (playerInput.x < -Mathf.Epsilon) _dir = -1;
+        else _dir = 0;
+
+        _moveDir = Vector2.right * _dir;
+        // this.Log($"Move Direction : {_moveDir}");
+
+        _isMoving = (_dir != 0);
+        // this.Log($"_isMoving : {_isMoving}");
+
+    }
+
+    public void J_OnLook(Vector2 a)
+    {
+        Vector2 playerInput = a;
+
+        _isLookUp = (playerInput.y > 0);
+        _isLookDown = (playerInput.y < 0);
+
+        //위나 아래를 보고 있을 때 움직이면 바로 움직이게
+        //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
+        if (_isMoving)
+        {
+            _isLookUp = false;
+            _isLookDown = false;
+        }
+
+        Look();
+    }
+
+    public void J_OnShield(bool s)
+    {
+        //조이콘에서 받은 인풋 사용
+        _isShield = s;
+        this.Log($"isShield : {_isShield}");
+        _shield.ShieldActivate(_isShield);
+        _anim.SetBool("isShield", _isShield);
+    }
+
+    //이건좀ㅋㅋ
+    public void J_ShieldTrigger(bool s)
+    {
+        if (!s) return;
+        this.Log("isShieldtrigger");
+        _anim.SetTrigger("Shield");
+        Invoke("ResetShield", .2f);
+    }
+
+    void ResetShield()
+    {
+        _anim.ResetTrigger("Shield");
+    }
+
+    public void J_OnParry()
+    {
+        this.Log("Parry");
+        _anim.SetTrigger("Parry");
+        StartCoroutine(CheckParry());
+        _shield.ShieldParry();
+        Invoke("ResetParry", 0.2f);
+    }
+
+    void ResetParry()
+    {
+        _anim.ResetTrigger("Parry");
+    }
+
+    #endregion
 }

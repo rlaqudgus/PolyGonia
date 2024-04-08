@@ -6,7 +6,8 @@ public class DetectBox : MonoBehaviour
 {
     [SerializeField] string detectTag;
 
-
+    //tag나 레이어에 따라 감지한 결과를 담고 있는 객체
+    
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.CompareTag(detectTag))
