@@ -46,18 +46,18 @@ public class GameManager : MonoBehaviour
     public void Adventure()
     {
         //dosth
-        //½ÇÁ¦ °ÔÀÓ ½ÇÇàÇÏ°í ÀÖÀ» ¶§
-        //°ÔÀÓ »óÈ²¿¡ µû¸¥ BGM, sound µîµî ´Ù¸£°Ô
+        //ì‹¤ì œ ê²Œìž„ ì‹¤í–‰í•˜ê³  ìžˆì„ ë•Œ
+        //ê²Œìž„ ìƒí™©ì— ë”°ë¥¸ BGM, sound ë“±ë“± ë‹¤ë¥´ê²Œ
         //
     }
 
     public void Inventory()
     {
         //dosth
-        //ÇÒ·Î¿ì³ªÀÌÆ®ÀÇ °æ¿ì ÀÎº¥Åä¸®³ª ¸ÊÀ» º¸°í ÀÖÀ» ¶§ °ÔÀÓ »óÈ²ÀÌ ´Þ¶óÁü
-        //ex ¼Óµµ°¡ ´À·ÁÁö°í Áöµµ¸¦ º¸´Â ÇÃ·¹ÀÌ¾î ¾Ö´Ï¸ÞÀÌ¼Ç ½ÇÇà
-        //Inventory¸¦ º¸°í ÀÖÀ» ¶§ player°¡ ¿òÁ÷ÀÏ ¼ö ÀÖ°Ô ÇÒ °ÍÀÎ°¡?
-        //¾Æ¿¹ °ÔÀÓ pause¸¦ ÇÒ °ÍÀÎ°¡?
+        //í• ë¡œìš°ë‚˜ì´íŠ¸ì˜ ê²½ìš° ì¸ë²¤í† ë¦¬ë‚˜ ë§µì„ ë³´ê³  ìžˆì„ ë•Œ ê²Œìž„ ìƒí™©ì´ ë‹¬ë¼ì§
+        //ex ì†ë„ê°€ ëŠë ¤ì§€ê³  ì§€ë„ë¥¼ ë³´ëŠ” í”Œë ˆì´ì–´ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+        //Inventoryë¥¼ ë³´ê³  ìžˆì„ ë•Œ playerê°€ ì›€ì§ì¼ ìˆ˜ ìžˆê²Œ í•  ê²ƒì¸ê°€?
+        //ì•„ì˜ˆ ê²Œìž„ pauseë¥¼ í•  ê²ƒì¸ê°€?
         //sound on / off?
     }
 
