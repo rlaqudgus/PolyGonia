@@ -8,7 +8,7 @@ public class Civilian : Triangle
 {
     protected override IEnumerator Idle()
     {
-        isMoving = false;
+        _isMoving = false;
         
         yield return null;
     }
@@ -19,15 +19,15 @@ public class Civilian : Triangle
         CalculateDir();
 
         //state가 바뀌지 않았다면 이동
-        isMoving = true;
+        _isMoving = true;
 
         //이동 로직
-        if (TargetDistance(target) < meeleeRange)
+        if (TargetDistance(_target) < _meeleeRange)
         {
-            isMoving = false;
+            _isMoving = false;
             StateChange(EnemyState.Attack);
         }
-        Vector2 newPos = (Vector2)transform.position + (runDir * moveSpd * Time.deltaTime);
+        Vector2 newPos = (Vector2)transform.position + (runDir * _moveSpd * Time.deltaTime);
         transform.position = newPos;
     
         yield return null;
@@ -35,7 +35,7 @@ public class Civilian : Triangle
 
     protected override IEnumerator Attack()
     {
-        isMoving = false;
+        _isMoving = false;
         this.Log("dosth");
         StateChange(EnemyState.Idle);
         
@@ -44,14 +44,14 @@ public class Civilian : Triangle
 
     protected override IEnumerator Die()
     {
-        EnemyManager.instance.RemoveEnemy(gameObject);
+        EnemyManager.Instance.Remove(this);
         
         yield return null;
     }
 
     protected override void TriangleAnim() 
     {
-        anim.SetBool("isRun", isMoving);
-        anim.SetBool("isMeelee", isMeeleeRange);
+        _anim.SetBool("isRun", _isMoving);
+        _anim.SetBool("isMeelee", _isMeeleeRange);
     }
 }
