@@ -3270,10 +3270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27014f851258594ba7239f4005a6563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyArr:
+  enemyPrefab:
   - {fileID: 2094483865986786823, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
-  - {fileID: 3226152026477420986, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
   - {fileID: 2499139819279754368, guid: e7e14d1de2e89464eaba14823c77eddc, type: 3}
+  - {fileID: 3226152026477420986, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
 --- !u!4 &642717061
 Transform:
   m_ObjectHideFlags: 0
@@ -5696,7 +5696,7 @@ Transform:
   m_GameObject: {fileID: 1253337809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.24293, y: -0.80253, z: -10}
+  m_LocalPosition: {x: 41.189583, y: -0.80152, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5797,6 +5797,10 @@ PrefabInstance:
     - target: {fileID: 3226152026477420986, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
       propertyPath: m_Name
       value: Jumper
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226152026477420986, guid: 4a190b0ad8bed32418398895308a80a3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
