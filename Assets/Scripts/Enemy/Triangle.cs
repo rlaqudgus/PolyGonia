@@ -32,7 +32,6 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         _enemyState = EnemyState.Idle;
         _moveDir = Vector2.left;
         StartCoroutine(EnemyStateHandler());
-        EnemyManager.Instance.Add(this);
     }
 
     //매 프레임마다 확인해야 할 것? bool 애니메이션은 애니메이션 함수로 따로 처리하기 파편화되어있으니 보기 싫다
@@ -76,6 +75,13 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     protected IEnumerator Dash(Vector2 vector, float _dashForce)
     {
+        // [SH] Trail Renderer 써 봐도 괜찮을 것 같다
+        // TrailRenderer trailRenderer = GetComponent<TrailRenderer>();
+        // trailRenderer.enabled = true;
+        // trailRenderer.time = vector.magnitude / _dashForce;
+        // ...
+        // trailRenderer.enabled = false;
+
         if (_dashForce < Mathf.Epsilon) yield break;
         
         _rb.AddForce(vector.normalized * _dashForce, ForceMode2D.Impulse);

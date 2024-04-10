@@ -44,7 +44,7 @@ public class Soldier : Triangle
 
     protected override IEnumerator Die()
     {
-        EnemyManager.Instance.Remove(this);
+        Destroy(gameObject);
         
         yield return null;
     }

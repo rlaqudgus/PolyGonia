@@ -1,7 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using Utilities;
 
+// EnemyManager는 Enemy보다 반드시 먼저 초기화되어야 한다
+// EnemyManager의 ExecutionOrder가 지켜지지 않으면 초기화 시 문제가 생긴다
+
+[DefaultExecutionOrder(100)]
 public abstract class Enemy : MonoBehaviour
 {
     //하위 클래스에서 type 구현?
@@ -52,5 +58,24 @@ public abstract class Enemy : MonoBehaviour
     // [TG] [2024-04-04] [refactor]
     // 1. 적 넉백 구현 (PlayerKnockBack과 같은 로직)
     protected abstract void EnemyKnockBack(float knockBackDist);
+
+    // OnEable: Instantiate, SetActive(true) 시 호출됨
+    // OnDisable: Destroy, SetActive(false) 시 호출됨
+    // EnemyManager에게 Enemy의 활성/비활성 정보를 전달하기 위해 사용
+
+    protected virtual void OnEnable() 
+    {
+        EnemyManager.Instance.Add(this);
+    }
+
+    protected virtual void OnDisable()
+    {   
+        // EnemyManager.Instance != null 임을 검사한지 않는다면
+        // 프로그램 종료 시 EnemyManger가 Enemy보다 먼저 비활성화되면 에러가 표시된다
+        if (EnemyManager.Instance != null)
+        {
+            EnemyManager.Instance.Remove(this);
+        }
+    }
 
 }

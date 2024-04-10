@@ -52,12 +52,11 @@ public class EnemyManager : MonoBehaviour
         }
     }   
 
+    // Add, Remove는 Enemy의 OnEnable / OnDisable을 통해 호출되도록 만들었다
+    // Enemy를 프로그래밍하는 사람은 평소처럼 Instantiate, Destroy, SetActive를 호출하면 된다
+    // 그러면 자동으로 OnEnable / OnDisable이 호출되면서 Enemy의 상태 정보가 EnemyManager로 전달된다
+
     // Enemy를 Set에 추가한다
-    // Enemy의 Start() 부분에서 사용된다
-
-    // Example
-    // EnemyManager.Instance.AddEnemy(this);
-
     public void Add(Enemy enemy) 
     {
         string enemyName = enemy.gameObject.name;
@@ -70,7 +69,7 @@ public class EnemyManager : MonoBehaviour
         this.Log(enemyName + " is added to the enemy list");
     }
 
-    // Enemy를 Set에서 제거하고 Destroy한다
+    // Enemy를 Set에서 제거한다
     public void Remove(Enemy enemy) 
     {
         string enemyName = enemy.gameObject.name;
@@ -80,8 +79,7 @@ public class EnemyManager : MonoBehaviour
         );
 
         _enemySet.Remove(enemy);
-        Destroy(enemy.gameObject);
-        this.Log(enemyName + " is removed and destroyed from the enemy list");
+        this.Log(enemyName + " is removed from the enemy list");
     }
 
     // 모든 Enemy를 Set에서 제거하고 Destroy한다
@@ -91,28 +89,8 @@ public class EnemyManager : MonoBehaviour
         {
             Destroy(enemy.gameObject);
         }
-        _enemySet.Clear();
+        
         this.Log("All enemies are destroyed");
-    }
-
-    // SetActive 관련 함수들
-    // 이 부분은 아직 테스트를 안 해 봤음
-    public void Activate(Enemy enemy)
-    {
-        enemy.gameObject.SetActive(true);
-        _enemySet.Add(enemy);
-    }
-
-    public void Deactivate(Enemy enemy)
-    {
-        enemy.gameObject.SetActive(false);
-        _enemySet.Remove(enemy);
-    }
-
-    public void SetActive(Enemy enemy, bool flag)
-    {
-        if (flag)   Activate(enemy);
-        else      Deactivate(enemy);
     }
 
     // Enemy의 개수를 반환한다
@@ -137,17 +115,18 @@ public class EnemyManager : MonoBehaviour
 
     // 현재 Enemy를 다른 종류의 Enemy로 바꾼다
     // Enemy의 위치는 그대로 두고 Enemy의 종류만 변경한다
-    // Name에 해당하는 prefab을 이진 탐색을 이용해서 찾는다
 
     // Example
     // EnemyManager.Instance.Replace(this, "Civilian");
 
+    // 현재까지의 Replace는 Destroy -> Instantiate 을 이용하여 구현되었다
+    // 필요하다면 SetActive를 이용한 Replace를 구현할 수도 있을 것이다
     public void Replace(Enemy curEnemy, string newEnemyName) 
     {
         Vector3 position = curEnemy.transform.position;
         Quaternion rotation = curEnemy.transform.rotation;
 
-        Remove(curEnemy);
+        Destroy(curEnemy.gameObject);
         Create(newEnemyName, position, rotation);
         this.Log(curEnemy.gameObject.name + " is changed to " + newEnemyName);
     }
