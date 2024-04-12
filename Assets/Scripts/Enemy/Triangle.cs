@@ -91,12 +91,14 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
     protected IEnumerator AttackCombo()
     {
-        
         _anim.SetTrigger("Attack");
 
         //애니메이션과 이동 맞추기 위해 시간 조정
         yield return new WaitForSeconds(.2f);
 
+        // 효과음 재생
+        SoundManager.Instance.PlaySFX("Attack1");
+        
         //공격할때 앞으로 돌진하는 모션
         yield return Dash(-runDir * _dashDistance, _dashForce);
 
@@ -109,6 +111,9 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
 
             //애니메이션과 이동 맞추기 위해 시간 조정
             yield return new WaitForSeconds(.25f);
+            
+            // 효과음 재생
+            SoundManager.Instance.PlaySFX("Attack2");
 
             //공격할때 앞으로 돌진하는 모션
             yield return Dash(-runDir * _dashDistance * 0.5f, _dashForce * 0.5f);
