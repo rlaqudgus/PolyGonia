@@ -20,7 +20,8 @@ public class SoundManager : MonoBehaviour
     [HideInInspector] 
     public List<SnapshotInfo> snapshotInfoList = new List<SnapshotInfo>();
 
-    private AudioMixerSnapshot _rawSnapshot;
+    public AudioMixerSnapshot rawSnapshot;
+    public AudioMixerSnapshot pauseSnapshot;
 
     private Dictionary<string, AudioClip> _musicSoundDict = new Dictionary<string, AudioClip>();
     private Dictionary<string, AudioClip> _sfxSoundDict   = new Dictionary<string, AudioClip>();
@@ -46,7 +47,6 @@ public class SoundManager : MonoBehaviour
 
         musicSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Music")[0];
         sfxSource.outputAudioMixerGroup   = mixer.FindMatchingGroups("SFX")[0];
-        _rawSnapshot = mixer.FindSnapshot("Default");
     }
 
     public AudioClip GetMusicClip(string name) { return _musicSoundDict[name]; }
@@ -94,7 +94,7 @@ public class SoundManager : MonoBehaviour
 
         if (n_snapshot == 0)
         {
-            _rawSnapshot.TransitionTo(timeToReach);
+            rawSnapshot.TransitionTo(timeToReach);
             return;
         }
 
@@ -109,5 +109,21 @@ public class SoundManager : MonoBehaviour
         mixer.TransitionToSnapshots(snapshots, weights, timeToReach);
 
         return;
+    }
+
+    private float convertToDecibel(float value)
+    {
+        value = Mathf.Max(value, 0.0001f);
+        return 20f * Mathf.Log10(value);
+    }
+
+    public void SetMusicVolume(float value)
+    {
+        mixer.SetFloat("Music Volume", convertToDecibel(value));
+    }
+
+    public void SetSFXVolume(float value)
+    {
+        mixer.SetFloat("SFX Volume", convertToDecibel(value));
     }
 }
