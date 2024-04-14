@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Utilities;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
+    private static GameManager _instance;
+    public  static GameManager  Instance { get { return _instance; } }
 
     public SoundManager soundManager;
     public UIManager uiManager;
+    public CameraManager cameraManager;
     public PlayerController playerController;
-    public CameraController cameraController;
+    public PlayerInput playerInput;
 
-    public enum GameState { Init, Adventure, Inventory, Pause, Cinematic, Die, CutScene }
+    public GameState currentGameState;
 
     private void Start()
     {
@@ -22,16 +26,44 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         //instance가 초기화되지 않았다면
-        if (instance == null)
+        if (_instance == null)
         {
             //자신으로 초기화
-            instance = this;
+            _instance = this;
 
             DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void UpdateGameState(GameState newGameState)
+    {
+        this.Log($"Game State is updated to {newGameState.ToString()}");
+        switch (newGameState)
+        {
+            case GameState.Init:
+                break;
+            case GameState.Adventure:
+                break;
+            case GameState.Inventory:
+                break;
+            case GameState.Pause:
+                break;
+            case GameState.Cinematic:
+                break;
+            case GameState.Die:
+                break;
+            case GameState.CutScene:
+                break;
+            default:
+                throw new ArgumentException(
+                    $"Invalid Game State: {newGameState.ToString()}", 
+                    nameof(newGameState)
+                );
+                break;
         }
     }
 
@@ -93,5 +125,19 @@ public class GameManager : MonoBehaviour
         //sound
         //UI
         //Camera
+    }
+
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        
+        #elif UNITY_WEBPLAYER
+            Application.OpenURL("http://google.com");
+        
+        #else
+            Application.Quit();
+        
+        #endif
     }
 }
