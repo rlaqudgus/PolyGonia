@@ -41,8 +41,7 @@ public class PauseManager : MonoBehaviour
         SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
 
         // UI
-        UIManager.Instance.pauseUI.SetActive(true);
-        // UIManager.Instance.pauseButton.SetActive(false);
+        UIManager.Instance.OpenMainMenu();
 
         // Input System
         GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
@@ -58,8 +57,7 @@ public class PauseManager : MonoBehaviour
         SoundManager.Instance.Transition(1f);
 
         // UI
-        UIManager.Instance.pauseUI.SetActive(false);
-        // UIManager.Instance.pauseButton.SetActive(true);
+        UIManager.Instance.CloseAllMenus();
 
         // Input System
         GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");

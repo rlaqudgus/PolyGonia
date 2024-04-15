@@ -4001,7 +4001,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 552713824}
+  m_Father: {fileID: 1688973424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &552713823
 GameObject:
@@ -4034,7 +4034,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1414600399}
-  - {fileID: 551747924}
   m_Father: {fileID: 1688973424}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &552713825
@@ -4052,9 +4051,12 @@ MonoBehaviour:
   userInterface:
   - {fileID: 832856857}
   - {fileID: 263755215}
-  pauseUI: {fileID: 1414600395}
-  MusicVolumeController: {fileID: 1418060453}
-  SFXVolumeController: {fileID: 1165511843}
+  _mainMenu: {fileID: 832856857}
+  _settingsMenu: {fileID: 263755215}
+  _mainMenuFirst: {fileID: 1242548588}
+  _settingsMenuFirst: {fileID: 1436193850}
+  _musicVolumeController: {fileID: 1418060453}
+  _sfxVolumeController: {fileID: 1165511843}
 --- !u!1 &553152402
 GameObject:
   m_ObjectHideFlags: 0
@@ -4957,12 +4959,12 @@ GameObject:
   - component: {fileID: 832856860}
   - component: {fileID: 832856859}
   m_Layer: 5
-  m_Name: Pause Menu
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &832856858
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4999,7 +5001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 871f53be2510f8642ae311a38b494cd2, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -5085,8 +5087,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 1, g: 0.40251565, b: 0.411779, a: 1}
+    m_SelectedColor: {r: 1, g: 0.5254902, b: 0.5254902, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5108,8 +5110,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 552713825}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: DisableUI
-        m_Mode: 5
+        m_MethodName: CloseAllMenus
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7601,7 +7603,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6392157, g: 0.8352941, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -7702,9 +7704,9 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+    m_PressedColor: {r: 1, g: 0.40251565, b: 0.411779, a: 1}
+    m_SelectedColor: {r: 1, g: 0.5254902, b: 0.5254902, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -8019,7 +8021,7 @@ Transform:
   m_GameObject: {fileID: 1253337809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.45501, y: 0.51383, z: -10}
+  m_LocalPosition: {x: 38.828224, y: 0.51725, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8210,12 +8212,12 @@ GameObject:
   - component: {fileID: 1414600397}
   - component: {fileID: 1414600396}
   m_Layer: 5
-  m_Name: UI / Pause
+  m_Name: Menu Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1414600396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8291,8 +8293,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 263755216}
   - {fileID: 832856858}
+  - {fileID: 263755216}
   m_Father: {fileID: 552713824}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8363,7 +8365,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.6392157, g: 0.8352941, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8415,7 +8417,7 @@ GameObject:
   - component: {fileID: 1436193853}
   - component: {fileID: 1436193852}
   m_Layer: 5
-  m_Name: Back To Pause Menu Button
+  m_Name: Back To Main Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8464,8 +8466,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 1, g: 0.40251565, b: 0.411779, a: 1}
+    m_SelectedColor: {r: 1, g: 0.5254902, b: 0.5254902, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -8487,20 +8489,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 552713825}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: DisableUI
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Settings Menu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 552713825}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: EnableUI
-        m_Mode: 5
+        m_MethodName: OpenMainMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9000,6 +8990,7 @@ Transform:
   m_Children:
   - {fileID: 275103710}
   - {fileID: 552713824}
+  - {fileID: 551747924}
   - {fileID: 973678915}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9721,8 +9712,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 1, g: 0.40251565, b: 0.411779, a: 1}
+    m_SelectedColor: {r: 1, g: 0.5254902, b: 0.5254902, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -9744,20 +9735,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 552713825}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: DisableUI
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Pause Menu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 552713825}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: EnableUI
-        m_Mode: 5
+        m_MethodName: OpenSettingsMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

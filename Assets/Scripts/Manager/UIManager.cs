@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Utilities;
 
 public class UIManager : MonoBehaviour
@@ -9,13 +10,17 @@ public class UIManager : MonoBehaviour
     private static UIManager _instance;
     public  static UIManager  Instance { get { return _instance; } }
 
-    public GameObject[] userInterface;
-    private Dictionary<string, GameObject> _uiDict = new Dictionary<string, GameObject>();
+    [Header("Menu Objects")]
+    [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _settingsMenu;
 
-    public GameObject pauseUI;
+    [Header("First Selected Options")]
+    [SerializeField] private GameObject _mainMenuFirst;
+    [SerializeField] private GameObject _settingsMenuFirst;
 
-    public Slider MusicVolumeController;
-    public Slider SFXVolumeController;
+    [Header("Sound Volume Controller")]
+    [SerializeField] private Slider _musicVolumeController;
+    [SerializeField] private Slider _sfxVolumeController;
 
     private void Awake()
     {   
@@ -30,51 +35,44 @@ public class UIManager : MonoBehaviour
         }
     }   
 
-    void Start()    
-    {   
-        foreach (GameObject ui in userInterface) 
-        {
-            _uiDict.Add(ui.name, ui);
-        }
+    void Start()
+    {
+        // Sound
+        _musicVolumeController.value = 1f;
+        _sfxVolumeController.value   = 1f;
+        
+        // UI
+        CloseAllMenus();
+    }
 
-        MusicVolumeController.value = 1f;
-        SFXVolumeController.value   = 1f;
-    }   
-
-    public bool IsActive(string name)
-    {   
-        GameObject ui = _uiDict[name];
-        return ui.activeSelf;
-    }   
-
-    public void EnableUI(string name)
-    {   
-        GameObject ui = _uiDict[name];
-        ui.SetActive(true);
-    }   
-
-    public void DisableUI(string name)
-    {   
-        GameObject ui = _uiDict[name];
-        ui.SetActive(false);
-    }   
-
-    public void ToggleUI(string name)
-    {   
-        GameObject ui = _uiDict[name];
-        ui.SetActive(!ui.activeSelf);
-
-        string state = ui.activeSelf ? "on" : "off";
-        this.Log($"{name} is {state}");
-    }   
+    public void OpenMainMenu()
+    {
+        CloseAllMenus();
+        _mainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(_mainMenuFirst);
+    }
+    
+    public void OpenSettingsMenu()
+    {
+        CloseAllMenus();
+        _settingsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(_settingsMenuFirst);
+    }
+    
+    public void CloseAllMenus()
+    {
+        _mainMenu.SetActive(false);
+        _settingsMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+    }
 
     public void MusicVolume()
     {   
-        SoundManager.Instance.SetMusicVolume(MusicVolumeController.value);
+        SoundManager.Instance.SetMusicVolume(_musicVolumeController.value);
     }   
 
     public void SFXVolume()
     {   
-        SoundManager.Instance.SetSFXVolume(SFXVolumeController.value);
+        SoundManager.Instance.SetSFXVolume(_sfxVolumeController.value);
     }   
 }
