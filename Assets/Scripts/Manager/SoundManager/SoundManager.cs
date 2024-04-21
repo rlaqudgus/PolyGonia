@@ -16,7 +16,11 @@ public class SoundManager : MonoBehaviour
     public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource;
     public AudioMixer mixer;
-    
+
+    private float _muteVolume;
+    private float _sfxVolume, _musicVolume;
+    private bool _isMusicMuted, _isSFXMuted;
+
     [HideInInspector] 
     public List<SnapshotInfo> snapshotInfoList = new List<SnapshotInfo>();
 
@@ -47,6 +51,10 @@ public class SoundManager : MonoBehaviour
 
         musicSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Music")[0];
         sfxSource.outputAudioMixerGroup   = mixer.FindMatchingGroups("SFX")[0];
+
+        _muteVolume = 1e-4f;
+        _isMusicMuted = false;
+        _isSFXMuted   = false;
     }
 
     public AudioClip GetMusicClip(string name) { return _musicSoundDict[name]; }
@@ -111,6 +119,8 @@ public class SoundManager : MonoBehaviour
         return;
     }
 
+    #region Volume
+
     private float convertToDecibel(float value)
     {
         value = Mathf.Max(value, 0.0001f);
@@ -119,11 +129,68 @@ public class SoundManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
+        _musicVolume = value;
+        if (_isMusicMuted) return;
         mixer.SetFloat("Music Volume", convertToDecibel(value));
     }
 
     public void SetSFXVolume(float value)
     {
+        _sfxVolume = value;
+        if (_isSFXMuted) return;
         mixer.SetFloat("SFX Volume", convertToDecibel(value));
     }
+
+    #endregion
+
+    #region Mute
+
+    private void MuteMusic()
+    {
+        Debug.Assert(!_isMusicMuted, "Music is trying to be muted while it is already muted");
+        
+        _isMusicMuted = true;
+        mixer.SetFloat("Music Volume", convertToDecibel(_muteVolume));
+    }
+
+    private void MuteSFX()
+    {
+        Debug.Assert(!_isSFXMuted, "SFX is trying to be muted while it is already muted");
+
+        _isSFXMuted = true;
+        mixer.SetFloat("SFX Volume", convertToDecibel(_muteVolume));
+    }
+
+    private void UnmuteMusic()
+    {
+        Debug.Assert(_isMusicMuted, "Music is trying to be unmuted while it is already unmuted");
+
+        _isMusicMuted = false;
+        mixer.SetFloat("Music Volume", convertToDecibel(_musicVolume));
+
+
+    }
+
+    private void UnmuteSFX()
+    {
+        Debug.Assert(_isSFXMuted, "SFX is trying to be unmuted while it is already unmuted");
+
+        _isSFXMuted = false;
+        mixer.SetFloat("SFX Volume", convertToDecibel(_sfxVolume));
+    }
+
+    public void ToggleMusic()
+    {
+        if (!_isMusicMuted) MuteMusic();
+        else UnmuteMusic();
+    }
+
+    public void ToggleSFX()
+    {
+        if (!_isSFXMuted) MuteSFX();
+        else UnmuteSFX();
+    }
+
+    #endregion
+
 }
