@@ -344,7 +344,7 @@ Animator:
   m_GameObject: {fileID: 2094483865986786823}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca5e8c5446264f6489f92678fa1c8b09, type: 2}
+  m_Controller: {fileID: 9100000, guid: 61b0614922f544b4f87f62062770ecfd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -373,6 +373,7 @@ MonoBehaviour:
   _dmg: 1
   _moveSpd: 3
   _meeleeRange: 2
+  chaseDir: {x: 0, y: 0}
   runDir: {x: 0, y: 0}
   level: 1
   disArmCnt: -3
