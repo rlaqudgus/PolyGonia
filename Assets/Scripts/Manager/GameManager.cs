@@ -10,13 +10,15 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public  static GameManager  Instance { get { return _instance; } }
 
+    public static event Action<GameState> gameStateChanged;
+
     public SoundManager soundManager;
     public UIManager uiManager;
     public CameraManager cameraManager;
     public PlayerController playerController;
     public PlayerInput playerInput;
 
-    public GameState currentGameState;
+    public GameState gameState;
 
     private void Start()
     {
@@ -45,26 +47,33 @@ public class GameManager : MonoBehaviour
         switch (newGameState)
         {
             case GameState.Init:
+                Init();
                 break;
             case GameState.Adventure:
+                Adventure();
                 break;
-            case GameState.Inventory:
-                break;
-            case GameState.Pause:
-                break;
+            case GameState.Inventory:   
+                Inventory();    
+                break;  
             case GameState.Cinematic:
+                Cinematic();
                 break;
             case GameState.Die:
+                Die();
                 break;
             case GameState.CutScene:
+                CutScene();
                 break;
             default:
                 throw new ArgumentException(
                     $"Invalid Game State: {newGameState.ToString()}", 
                     nameof(newGameState)
                 );
-                break;
+                // break;
+                // GameState 추가 시 break 거는 것 유의
         }
+
+        gameStateChanged?.Invoke(newGameState);
     }
 
     public void Init()
@@ -91,14 +100,6 @@ public class GameManager : MonoBehaviour
         //Inventory를 보고 있을 때 player가 움직일 수 있게 할 것인가?
         //아예 게임 pause를 할 것인가?
         //sound on / off?
-    }
-
-    public void Pause() 
-    {
-        //dosth
-        //Pause sound
-        //sound on / off
-        //Pause UI
     }
 
     public void Cinematic()

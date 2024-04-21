@@ -7,7 +7,6 @@ public enum GameState
     Init, 
     Adventure, 
     Inventory, 
-    Pause, 
     Cinematic, 
     Die, 
     CutScene, 

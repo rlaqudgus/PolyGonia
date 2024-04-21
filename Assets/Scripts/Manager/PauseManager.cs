@@ -9,7 +9,6 @@ public class PauseManager : MonoBehaviour
     private static PauseManager _instance;
     public  static PauseManager  Instance { get { return _instance; } }
 
-    private GameState _lastGameState;
     public bool isPaused;
 
     private void Awake()
@@ -32,8 +31,6 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
-        _lastGameState = GameManager.Instance.currentGameState;
-        GameManager.Instance.UpdateGameState(GameState.Pause);
         isPaused = true;
         Time.timeScale = 0;
 
@@ -49,7 +46,6 @@ public class PauseManager : MonoBehaviour
 
     public void Resume()
     {
-        GameManager.Instance.UpdateGameState(_lastGameState);
         isPaused = false;
         Time.timeScale = 1;
 
