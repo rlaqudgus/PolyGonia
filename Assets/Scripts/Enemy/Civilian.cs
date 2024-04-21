@@ -8,50 +8,39 @@ public class Civilian : Triangle
 {
     protected override IEnumerator Idle()
     {
-        _isMoving = false;
+        yield return base.Idle();
         
-        yield return null;
+        _isMoving = false;
     }
 
     protected override IEnumerator Detect()
     {
-        //방향 설정
-        CalculateDir();
-
-        //state가 바뀌지 않았다면 이동
-        _isMoving = true;
+        yield return base.Detect();
 
         //이동 로직
-        if (TargetDistance(_target) < _meeleeRange)
-        {
-            _isMoving = false;
-            StateChange(EnemyState.Attack);
-        }
-        Vector2 newPos = (Vector2)transform.position + (runDir * _moveSpd * Time.deltaTime);
-        transform.position = newPos;
-    
-        yield return null;
+        Move(runDir, _moveSpd);
+        
+        // [SH] [2024-04-16] [Refactor]
+        // 애니메이션 간소화
+        // 현재 Civilian의 Attack Animation이 없어서 IEnumerator Attack을 거치게 되면
+        // Animation 전환 없이 State만 전환되어 혼란스러울 수 있음
+        // 나중에 필요하면 Attack Animation과 함께 Attack State를 추가하는 것이 나을 것 같다
+
+        if (_isMeeleeRange)
+        {   
+            _isMoving = false;  
+            this.Log("dosth");  
+            StateChange(EnemyState.Idle);   
+        }   
     }
 
     protected override IEnumerator Attack()
     {
-        _isMoving = false;
-        this.Log("dosth");
-        StateChange(EnemyState.Idle);
-        
-        yield return null;
+        yield return base.Attack();
     }
 
     protected override IEnumerator Die()
-    {
-        Destroy(gameObject);
-        
-        yield return null;
-    }
-
-    protected override void TriangleAnim() 
-    {
-        _anim.SetBool("isRun", _isMoving);
-        _anim.SetBool("isMeelee", _isMeeleeRange);
-    }
+    {   
+        yield return base.Die();
+    }   
 }

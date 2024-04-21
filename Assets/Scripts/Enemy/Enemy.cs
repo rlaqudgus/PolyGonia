@@ -26,6 +26,7 @@ public abstract class Enemy : MonoBehaviour
     protected bool _isMeeleeRange;
     protected bool _isMoving = true;
 
+    public Vector2 chaseDir;
     public Vector2 runDir;
     protected Vector2 _detectPoint;
 
