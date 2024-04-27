@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+  
 public class CameraController : MonoBehaviour
 {
     CinemachineVirtualCamera _virtualCamera;
@@ -36,6 +36,8 @@ public class CameraController : MonoBehaviour
     public void Look(Vector3 offset, float time) => StartCoroutine(IELook(offset, time));
     public void ResetCamera(float time) => StartCoroutine(IEReset(time));
     public void FollowTarget(GameObject target, float time) => StartCoroutine(IEFollowTarget(target, time));
+
+    public void FollowTarget(GameObject target) => _virtualCamera.m_Follow = target.transform;
 
     private IEnumerator IEShake(float amount, float freq, float time)
     {

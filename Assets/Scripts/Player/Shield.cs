@@ -45,13 +45,17 @@ public class Shield : MonoBehaviour
     public void ShieldEffect()
     {
         this.Log("shieldEffect");
-        Instantiate(shieldEffect, effectPos.position, Quaternion.identity);
+        EffectManager.Instance.InstantiateEffect(ParticleColor.WHITE, effectPos.position);
+        //Instantiate(shieldEffect, effectPos.position, Quaternion.identity);
     }
 
     public void ParryEffect()
     {
         this.Log("parryEffect");
-        Instantiate(parryEffect,effectPos.position,Quaternion.identity);
+        EffectManager.Instance.InstantiateEffect(ParticleColor.YELLOW, effectPos.position);
+        CameraManager.Zoom(6f, 0);
+        CameraManager.ResetCamera(.15f);
+        //Instantiate(parryEffect,effectPos.position,Quaternion.identity);
         //parryEffect.SetActive(true);
         
     }

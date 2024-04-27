@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //instance가 초기화되지 않았다면
+        //instance가 초기?�되지 ?�았?�면
         if (instance == null)
         {
-            //자신으로 초기화
+            //?�신?�로 초기??
             instance = this;
 
             DontDestroyOnLoad(gameObject);
