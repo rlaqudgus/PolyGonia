@@ -15,7 +15,7 @@ public class ZoomBox : MonoBehaviour
         if (_size == 0) _size = 0.1f;
         if (collision.CompareTag("Player"))
         {
-            CameraManager.Zoom(_size, _time);
+            CameraManager.Instance.Zoom(_size, _time);
         }
     }
 
@@ -23,7 +23,7 @@ public class ZoomBox : MonoBehaviour
     {
         if (_changeOnBox && collision.CompareTag("Player"))
         {
-            CameraManager.ResetCamera(_time);
+            CameraManager.Instance.ResetCamera(_time);
         }
     }
 }

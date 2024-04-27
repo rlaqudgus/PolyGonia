@@ -19,9 +19,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 5. PlayerData를 따로 만들어서 Scriptable Object로 관리하는 것이 편해 보여서 일부분 사용해봄(좋으면 전부 수정)
     
     public PlayerData data;
-    public enum AttackType { HorizontalAttack = 0, VerticalAttack, }
     
-    
+
     // [TG] [2024-04-05] [feat]
     // 1. private 변수명 _camelCase로 변경
     [SerializeField] private RayBox _ray;
@@ -186,6 +185,8 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 한번 눌렀을 때 딱 한번 실행하는 애니메이션(방패 뽑는 애니메이션)을 써야하기 때문에 trigger 변수 하나 더 만들어주자 
     public void OnShield(InputAction.CallbackContext input)
     {
+        if (!WeaponController.Instance.GetWeaponType<Shield>()) return;
+
         _isShield = input.ReadValueAsButton();
         this.Log($"isShield : {_isShield}");
 
@@ -197,12 +198,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
    
     private void Shield()
     {
-        if (_isShield)
-        {
-            _anim.SetTrigger("Shield");
-        }
+        if (_isShield) _anim.SetTrigger("Shield");
 
-        _shield.ShieldActivate(_isShield);
+        WeaponController.Instance.UseShield();
         _anim.SetBool("isShield", _isShield);
 
     }
@@ -216,9 +214,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         switch (input.phase)
         {
-            case InputActionPhase.Performed:
-                break;
-            
             case InputActionPhase.Started:
                 _isAttacking = true;
                 Attack();
@@ -238,32 +233,19 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 2. 상 하 공격은 디버깅을 위해 일단 합치지 않았음
     // 2. 마음에 안듬 => input system의 one modifier..?
     private void Attack() {
+        int idx = _isLookUp ? 0 : _isLookDown ? 2 : 1; //LookUP이 true면 0, lookDown이 true면 2 다 아니면 1 위에서 아래 순
+
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
         if (_isShield)
         {
             this.Log($"isParry: {_isParry}");
             _anim.SetTrigger("Parry");
             StartCoroutine(CheckParry());
-            _shield.ShieldParry();
         }
-        else if(_isLookUp && !_isLookDown)
-        {
-            this.Log("Up Attack");
-            _anim.SetTrigger("Attack");
-            _attack.DoAttack((int)AttackType.VerticalAttack);
-        }
-        else if(!_isLookUp && _isLookDown)
-        {
-            this.Log("Down Attack");
-            _anim.SetTrigger("Attack");
-            _attack.DoAttack((int)AttackType.VerticalAttack);
-        }
-        else
-        {
-            this.Log("Attack");
-            _anim.SetTrigger("Attack");
-            _attack.DoAttack((int)AttackType.HorizontalAttack);
-        }
+
+        
+
+        WeaponController.Instance.UseWeapon(idx);
     }
 
     IEnumerator CheckParry()
@@ -363,7 +345,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
 
-        CameraManager.Shake();
+        CameraManager.Instance.Shake();
         
         JoyConManager.Instance?.j[0].SetRumble(160, 320, 1f, 400);
     }
@@ -422,7 +404,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         throw new System.NotImplementedException();
     }
 
-    public void ByWeapon(Attack attack)
+    public void ByWeapon(Weapon weapon)
     {
         throw new System.NotImplementedException();
     }
@@ -474,7 +456,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //조이콘에서 받은 인풋 사용
         _isShield = s;
         this.Log($"isShield : {_isShield}");
-        _shield.ShieldActivate(_isShield);
+        //_shield.ShieldActivate(_isShield);
         _anim.SetBool("isShield", _isShield);
     }
 
@@ -497,7 +479,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         this.Log("Parry");
         _anim.SetTrigger("Parry");
         StartCoroutine(CheckParry());
-        _shield.ShieldParry();
+        //_shield.ShieldParry();
         Invoke("ResetParry", 0.2f);
     }
 

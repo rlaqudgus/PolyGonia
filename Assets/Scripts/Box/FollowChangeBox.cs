@@ -14,8 +14,8 @@ public class FollowBox : MonoBehaviour
         if (_time == 0) _time = 0.1f;
         if (collision.CompareTag("Player"))
         {
-            if (_changeOnBox) CameraManager.FollowTarget(_target);
-            else CameraManager.FollowTarget(_target, _time);
+            if (_changeOnBox) CameraManager.Instance.FollowTarget(_target);
+            else CameraManager.Instance.FollowTarget(_target, _time);
         }
     }
 
@@ -23,7 +23,7 @@ public class FollowBox : MonoBehaviour
     {
         if (_changeOnBox && collision.CompareTag("Player"))
         {
-            CameraManager.FollowTarget(collision.gameObject);
+            CameraManager.Instance.FollowTarget(collision.gameObject);
         }
     }
 }

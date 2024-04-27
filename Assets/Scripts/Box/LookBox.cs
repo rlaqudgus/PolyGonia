@@ -15,7 +15,7 @@ public class LookBox : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             this.Log("Look in TEST");
-            CameraManager.Look(_offset, _time);
+            CameraManager.Instance.Look(_offset, _time);
         }
     }
 
@@ -23,7 +23,7 @@ public class LookBox : MonoBehaviour
     {
         if(_changeOnBox && collision.CompareTag("Player"))
         {
-            CameraManager.ResetCamera(_time);
+            CameraManager.Instance.ResetCamera(_time);
         }
     }
 }
