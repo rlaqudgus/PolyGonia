@@ -400,22 +400,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5719637b0768efb45b187061c87eeaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyState: 0
-  maxHp: 3
-  hp: 3
-  dmg: 1
-  moveSpd: 3
-  meeleeRange: 2
+  _enemyState: 0
+  _maxHp: 10
+  _hp: 3
+  _dmg: 1
+  _moveSpd: 3
+  _meeleeRange: 2
   runDir: {x: 0, y: 0}
   level: 1
   disArmCnt: -3
-  target: {fileID: 0}
-  ray: {fileID: 1505387070067383723}
-  jumpPower: 2
-  dashForce: 8
-  dashDistance: 1.5
-  enemyType: 1
-  hitBox: {fileID: 557977376792306081}
+  _target: {fileID: 0}
+  _ray: {fileID: 1505387070067383723}
+  _jumpForce: 0
+  _dashForce: 8
+  _dashDistance: 1.5
+  _hitBox: {fileID: 557977376792306081}
 --- !u!1 &7666739592935394664
 GameObject:
   m_ObjectHideFlags: 0

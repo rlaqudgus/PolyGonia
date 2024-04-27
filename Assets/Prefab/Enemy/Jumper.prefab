@@ -359,7 +359,7 @@ Animator:
   m_GameObject: {fileID: 3226152026477420986}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca5e8c5446264f6489f92678fa1c8b09, type: 2}
+  m_Controller: {fileID: 9100000, guid: 61b0614922f544b4f87f62062770ecfd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -382,21 +382,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0bb593ac4e803d4abf735480ff75eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyState: 0
-  maxHp: 3
-  hp: 3
-  dmg: 1
-  moveSpd: 4.5
-  meeleeRange: 2
+  _enemyState: 0
+  _maxHp: 10
+  _hp: 3
+  _dmg: 1
+  _moveSpd: 4.5
+  _meeleeRange: 2
+  chaseDir: {x: 0, y: 0}
   runDir: {x: 0, y: 0}
   level: 1
   disArmCnt: -3
-  target: {fileID: 0}
-  ray: {fileID: 2335072609425715962}
-  jumpPower: 2
-  dashForce: 8
-  dashDistance: 1.5
-  hitBox: {fileID: 1125555547519895968}
+  _target: {fileID: 0}
+  _ray: {fileID: 2335072609425715962}
+  _jumpForce: 2
+  _dashForce: 4
+  _dashDistance: 1.5
+  _hitBox: {fileID: 1125555547519895968}
 --- !u!1 &3497576202811605998
 GameObject:
   m_ObjectHideFlags: 0

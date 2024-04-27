@@ -8,50 +8,37 @@ public class Soldier : Triangle
 {
     protected override IEnumerator Idle()
     {
-        isMoving = false;
-        
-        yield return null;
+        yield return base.Idle();
+
+        _isMoving = false;
     }
 
     protected override IEnumerator Detect()
     {
-        //방향 설정
-        CalculateDir();
+        yield return base.Detect();
+        
+        //이동 로직 
+        Move(chaseDir, _moveSpd);
 
-        //state가 바뀌지 않았다면 이동
-        isMoving = true;
-
-        //이동 로직
-        if (TargetDistance(target) < meeleeRange)
+        if (_isMeeleeRange)
         {
-            isMoving = false;
             StateChange(EnemyState.Attack);
         }
-
-        Vector2 newPos = (Vector2)transform.position - (runDir * moveSpd * Time.deltaTime);
-        transform.position = newPos;
-
-        yield return null;
     }
 
     protected override IEnumerator Attack()
-    {
-        // 거리에 들어오면 수행할 동작
-        isMoving = false;
+    {   
+        yield return base.Attack();
         
         yield return AttackCombo();
+    
+        //공격패턴 끝나면 다시 감지
+        _anim.SetTrigger("Detect");
+        StateChange(EnemyState.Detect);
     }
 
-    protected override IEnumerator Die()
-    {
-        EnemyManager.instance.RemoveEnemy(gameObject);
-        
-        yield return null;
-    }
-
-    protected override void TriangleAnim()
-    {
-        anim.SetBool("isChase", isMoving);
-        anim.SetBool("isMeelee", isMeeleeRange);
-    }
+    protected override IEnumerator Die()    
+    {   
+        yield return base.Die();    
+    }   
 }

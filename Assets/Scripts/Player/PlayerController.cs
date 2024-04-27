@@ -316,6 +316,39 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
         _rb.AddForce(Vector2.down * _rb.velocity.y * _rb.mass * (1 - _jumpCutMultiplier), ForceMode2D.Impulse);
     }
+
+    #region Pause / Resume
+
+    // [SH] [2024-04-14]
+    // OnPause는 Player Action Map에 할당
+    // OnResume은 UI Action Map에 할당
+    // Pause 시 Action Map을 UI로 전환시켜서 Pause 상태에서 Player Input이 작동하지 못하도록 만든다
+
+    public void OnPause(InputAction.CallbackContext input)
+    {
+        bool isPaused = PauseManager.Instance.isPaused;
+        if (!isPaused) Pause();
+    }
+
+    private void Pause()
+    {
+        PauseManager.Instance.Pause();
+    }
+
+    public void OnResume(InputAction.CallbackContext input)
+    {
+        bool isPaused = PauseManager.Instance.isPaused;
+        if (isPaused) Resume();
+
+    }
+
+    public void Resume()
+    {
+        PauseManager.Instance.Resume();
+    }
+
+    #endregion
+    
     
     public void PlayerKnockBack(float knockBackDist)
     {

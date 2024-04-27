@@ -7,131 +7,174 @@ using Utilities;
 
 public class EnemyManager : MonoBehaviour
 {
-    public static EnemyManager instance { get; private set; }
+    private static EnemyManager _instance;
+    public  static EnemyManager  Instance { get { return _instance; } }
+    
+    // enemyPrefab은 prefab을 담는다
+    // 나중에 EnemySpawn 관련해서도 활용 예정
+    public GameObject[] enemyPrefab;
 
-    // enemyArr는 prefab을 담는다
-    // Dictionary<string, GameObject>를 사용하면 깔끔한데
-    // Dictionary를 사용하면 인스펙터 창에서 수정이 안 된다
-    public GameObject[] enemyArr;
-
-    // enemySet은 모든 적의 GameObject를 담는다
+    // enemySet은 모든 Enemy를 담는다
+    // 기존에는 GameObject를 담았고 각 GameObject가 Enemy에 해당하는지 검사했지만
+    // 처음부터 Enemy를 담는 것이 더 직관적인 것 같아 바꾸었다
     // index를 사용하지 않음 + 빠른 검색을 위해 Hash를 사용한다
-    private HashSet<GameObject> _enemySet = new HashSet<GameObject>();
+    private HashSet<Enemy> _enemySet = new HashSet<Enemy>();
+
+    // enemyDict는 enemy의 이름으로부터 prefab 인스턴스를 생성하기 위해 만들었다
+    private Dictionary<string, GameObject> _enemyDict = new Dictionary<string, GameObject>();
 
     // Singleton Pattern
     private void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this;
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this)
+        else
         {
             Destroy(gameObject);
         }
     }
 
     private void Start()
-    {
-        // 빠른 검색을 위한 정렬
-        Array.Sort(enemyArr, (left, right) => {
-            return left.name.CompareTo(right.name); 
-        });
-    }
+    {   
+        foreach (GameObject enemy in enemyPrefab) 
+        {
+            // enemyPrefab에 등록되는 프리팹은 Enemy 타입이어야 한다
+            Debug.Assert(
+                enemy.GetComponent<Enemy>() != null, 
+                enemy.name + " is not an enemy type"
+            );
 
-    public void Update()
-    {
-        
-    }
+            // 동일한 프리팹이 두 번 이상 등록되면 에러가 출력된다
+            _enemyDict.Add(enemy.name, enemy);
+        }
+    }   
+
+    // Add, Remove는 Enemy의 OnEnable / OnDisable을 통해 호출되도록 만들었다
+    // Enemy를 프로그래밍하는 사람은 평소처럼 Instantiate, Destroy, SetActive를 호출하면 된다
+    // 그러면 자동으로 OnEnable / OnDisable이 호출되면서 Enemy의 상태 정보가 EnemyManager로 전달된다
 
     // Enemy를 Set에 추가한다
-    // Enemy의 Start() 부분에서 사용된다
-    public void AddEnemy(GameObject enemy) 
+    public void Add(Enemy enemy) 
     {
+        string enemyName = enemy.gameObject.name;
         Debug.Assert(
             !_enemySet.Contains(enemy), 
-            enemy.name + " already exists in enemy list"
-        );
-
-        Enemy enemyComponent = enemy.GetComponent<Enemy>();
-        Debug.Assert(
-            enemyComponent != null, 
-            enemy.name + " is not an emeny type"
+            enemyName + " already exists in enemy list"
         );
 
         _enemySet.Add(enemy);
-        this.Log(enemy.name + " is added to the enemy list");
+        this.Log(enemyName + " is added to the enemy list");
     }
 
-    // Enemy를 Set에서 제거하고 Destroy한다
-    public void RemoveEnemy(GameObject enemy) {
+    // Enemy를 Set에서 제거한다
+    public void Remove(Enemy enemy) 
+    {
+        string enemyName = enemy.gameObject.name;
         Debug.Assert(
             _enemySet.Contains(enemy),
-            enemy.name + " does not exists in enemy list"
+            enemyName + " does not exists in enemy list"
         );
 
         _enemySet.Remove(enemy);
-        Destroy(enemy);
-        this.Log(enemy.name + " is removed and destroyed from the enemy list");
+        this.Log(enemyName + " is removed from the enemy list");
     }
 
     // 모든 Enemy를 Set에서 제거하고 Destroy한다
-    public void RemoveAllEnemy() {
-        foreach (GameObject enemy in _enemySet) 
+    public void Clear() 
+    {
+        foreach (Enemy enemy in _enemySet) 
         {
-            Destroy(enemy);
+            Destroy(enemy.gameObject);
         }
-        _enemySet.Clear();
+        
         this.Log("All enemies are destroyed");
+    }
+
+    // Enemy의 개수를 반환한다
+    public int Count() 
+    {
+        return _enemySet.Count;
+    }
+
+    // name에 해당하는 Enemy를 생성한다
+    public void Create(string name, Vector3 position, Quaternion rotation) 
+    {
+        // 기본적으로 Dictionary 에 존재하지 않는 이름이면 에러가 발생한다
+        // 그래도 Assert로 한 번 더 에러를 출력해 주었다
+        Debug.Assert(
+            _enemyDict.ContainsKey(name),
+            name + " prefab is not assigned to enemy prefab list"
+        );
+        
+        GameObject enemyObject = _enemyDict[name];
+        Instantiate(enemyObject, position, rotation);
     }
 
     // 현재 Enemy를 다른 종류의 Enemy로 바꾼다
     // Enemy의 위치는 그대로 두고 Enemy의 종류만 변경한다
-    // Name에 해당하는 prefab을 이진 탐색을 이용해서 찾는다
-    public void ChangeEnemy(GameObject curEnemy, string newEnemyName) {
-        Enemy curEnemyComponent = curEnemy.GetComponent<Enemy>();
-        Debug.Assert(
-            curEnemyComponent != null, 
-            curEnemy.name + " is not an emeny type"
-        );
 
-        Vector3 position = curEnemyComponent.transform.position;
-        Quaternion rotation = curEnemyComponent.transform.rotation;
+    // Example
+    // EnemyManager.Instance.Replace(this, "Civilian");
 
-        GameObject newEnemy = null;
+    // 현재까지의 Replace는 Destroy -> Instantiate 을 이용하여 구현되었다
+    // 필요하다면 SetActive를 이용한 Replace를 구현할 수도 있을 것이다
+    public void Replace(Enemy curEnemy, string newEnemyName) 
+    {
+        Vector3 position = curEnemy.transform.position;
+        Quaternion rotation = curEnemy.transform.rotation;
 
-        Debug.Assert(
-            enemyArr.Length > 0, 
-            "The Length of Enemy Array is zero"
-        );
+        Destroy(curEnemy.gameObject);
+        Create(newEnemyName, position, rotation);
+        this.Log(curEnemy.gameObject.name + " is changed to " + newEnemyName);
+    }
 
-        // Binary Search
-        int left = 0, right = enemyArr.Length-1;
-        while (left <= right)
-        {
-            int mid = (left + right) / 2;
-            string prefabName = enemyArr[mid].name;
+    // action 함수를 인자로 받아서 모든 Enemy한테 action을 공통적으로 적용한다
+    // filter를 적용하면 부분적인 Enemy에 대해 action이 적용된다
+    // action은 void를 return해야 하고 filter는 bool을 return해야 한다
 
-            if (prefabName == newEnemyName) { newEnemy = enemyArr[mid]; break; }
-            else if (enemyArr[mid].name.CompareTo(newEnemyName) < 0) { left  = mid + 1; }
-            else if (enemyArr[mid].name.CompareTo(newEnemyName) > 0) { right = mid - 1; }
+    /* Example - Triangle을 모두 위로 띄우는 코드
+    *
+    * EnemyManager.Instance.Apply(
+    *     (Enemy enemy) => {
+    *         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+    *         rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
+    *     },
+    *     (Enemy enemy) => {
+    *         bool isTriangle = (enemy.gameObject.GetComponent<Triangle>() != null);
+    *         return isTriangle;
+    *     }
+    * );
+    */
+
+    public void Apply(Action<Enemy> action)
+    {
+        foreach (Enemy enemy in _enemySet)
+        {   
+            // SetActive == false 이면 패스한다
+            bool isActive = enemy.gameObject.activeSelf;
+            if (!isActive) continue;
+            
+            // 함수 또는 람다식 적용
+            action(enemy);
         }
+    }
 
-        Debug.Assert(
-            newEnemy != null, 
-            "The Enemy Name " + newEnemyName + " is wrong"
-        );
+    public void Apply(Action<Enemy> action, Func<Enemy, bool> filter)
+    {
+        foreach (Enemy enemy in _enemySet)
+        {   
+            // SetActive == false이면 패스한다
+            bool isActive = enemy.gameObject.activeSelf;
+            if (!isActive) continue;
 
-        Enemy newEnemyComponent = newEnemy.GetComponent<Enemy>();
-        
-        Debug.Assert(
-            newEnemyComponent != null, 
-            newEnemy.name + " is not an enemy type"
-        );
-
-        RemoveEnemy(curEnemy);
-        Instantiate(newEnemy, position, rotation);
-        this.Log(curEnemy.name + " is changed to " + newEnemy.name);
+            // 조건에 해당하는 enemy를 남긴다
+            if (!filter(enemy)) continue;
+            
+            // 함수 또는 람다식 적용
+            action(enemy);
+        }
     }
 }

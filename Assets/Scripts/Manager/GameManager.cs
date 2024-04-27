@@ -1,18 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Utilities;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
+    private static GameManager _instance;
+    public  static GameManager  Instance { get { return _instance; } }
+
+    public static event Action<GameState> gameStateChanged;
 
     public SoundManager soundManager;
     public UIManager uiManager;
+    public CameraManager cameraManager;
     public PlayerController playerController;
-    public CameraController cameraController;
+    public PlayerInput playerInput;
 
-    public enum GameState { Init, Adventure, Inventory, Pause, Cinematic, Die, CutScene }
+    public GameState gameState;
 
     private void Start()
     {
@@ -22,10 +28,10 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         //instanceê°€ ì´ˆê¸°í™”ë˜ì§€ ì•Šì•˜ë‹¤ë©´
-        if (instance == null)
+        if (_instance == null)
         {
             //ìì‹ ìœ¼ë¡œ ì´ˆê¸°í™”
-            instance = this;
+            _instance = this;
 
             DontDestroyOnLoad(gameObject);
         }
@@ -33,6 +39,41 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void UpdateGameState(GameState newGameState)
+    {
+        this.Log($"Game State is updated to {newGameState.ToString()}");
+        switch (newGameState)
+        {
+            case GameState.Init:
+                Init();
+                break;
+            case GameState.Adventure:
+                Adventure();
+                break;
+            case GameState.Inventory:   
+                Inventory();    
+                break;  
+            case GameState.Cinematic:
+                Cinematic();
+                break;
+            case GameState.Die:
+                Die();
+                break;
+            case GameState.CutScene:
+                CutScene();
+                break;
+            default:
+                throw new ArgumentException(
+                    $"Invalid Game State: {newGameState.ToString()}", 
+                    nameof(newGameState)
+                );
+                // break;
+                // GameState ì¶”ê°€ ì‹œ break ê±°ëŠ” ê²ƒ ìœ ì˜
+        }
+
+        gameStateChanged?.Invoke(newGameState);
     }
 
     public void Init()
@@ -46,27 +87,19 @@ public class GameManager : MonoBehaviour
     public void Adventure()
     {
         //dosth
-        //½ÇÁ¦ °ÔÀÓ ½ÇÇàÇÏ°í ÀÖÀ» ¶§
-        //°ÔÀÓ »óÈ²¿¡ µû¸¥ BGM, sound µîµî ´Ù¸£°Ô
+        //ì‹¤ì œ ê²Œì„ ì‹¤í–‰í•˜ê³  ìˆì„ ë•Œ
+        //ê²Œì„ ìƒí™©ì— ë”°ë¥¸ BGM, sound ë“±ë“± ë‹¤ë¥´ê²Œ
         //
     }
 
     public void Inventory()
     {
         //dosth
-        //ÇÒ·Î¿ì³ªÀÌÆ®ÀÇ °æ¿ì ÀÎº¥Åä¸®³ª ¸ÊÀ» º¸°í ÀÖÀ» ¶§ °ÔÀÓ »óÈ²ÀÌ ´Ş¶óÁü
-        //ex ¼Óµµ°¡ ´À·ÁÁö°í Áöµµ¸¦ º¸´Â ÇÃ·¹ÀÌ¾î ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
-        //Inventory¸¦ º¸°í ÀÖÀ» ¶§ player°¡ ¿òÁ÷ÀÏ ¼ö ÀÖ°Ô ÇÒ °ÍÀÎ°¡?
-        //¾Æ¿¹ °ÔÀÓ pause¸¦ ÇÒ °ÍÀÎ°¡?
+        //í• ë¡œìš°ë‚˜ì´íŠ¸ì˜ ê²½ìš° ì¸ë²¤í† ë¦¬ë‚˜ ë§µì„ ë³´ê³  ìˆì„ ë•Œ ê²Œì„ ìƒí™©ì´ ë‹¬ë¼ì§
+        //ex ì†ë„ê°€ ëŠë ¤ì§€ê³  ì§€ë„ë¥¼ ë³´ëŠ” í”Œë ˆì´ì–´ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+        //Inventoryë¥¼ ë³´ê³  ìˆì„ ë•Œ playerê°€ ì›€ì§ì¼ ìˆ˜ ìˆê²Œ í•  ê²ƒì¸ê°€?
+        //ì•„ì˜ˆ ê²Œì„ pauseë¥¼ í•  ê²ƒì¸ê°€?
         //sound on / off?
-    }
-
-    public void Pause() 
-    {
-        //dosth
-        //Pause sound
-        //sound on / off
-        //Pause UI
     }
 
     public void Cinematic()
@@ -93,5 +126,19 @@ public class GameManager : MonoBehaviour
         //sound
         //UI
         //Camera
+    }
+
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        
+        #elif UNITY_WEBPLAYER
+            Application.OpenURL("http://google.com");
+        
+        #else
+            Application.Quit();
+        
+        #endif
     }
 }
