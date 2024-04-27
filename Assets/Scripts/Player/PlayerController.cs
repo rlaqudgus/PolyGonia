@@ -9,20 +9,10 @@ using Utilities;
 // PlayerInput의 Invoke Unity Events 사용
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
-{
-    
-    // [TG] [2024-04-01] [Refactor]
-    // 1. private 변수명 _camelCase로 변경
-    // 2. 접근 제한자 private 명시
-    // 3. 프로퍼티 이름 PascalCase로 변경
-    // 4. 변수명 sr이 직관성이 떨어져 _spriteRenderer로 변경 (_rb는 관례에 따라 수정x)
-    // 5. PlayerData를 따로 만들어서 Scriptable Object로 관리하는 것이 편해 보여서 일부분 사용해봄(좋으면 전부 수정)
-    
+{   
     public PlayerData data;
     
 
-    // [TG] [2024-04-05] [feat]
-    // 1. private 변수명 _camelCase로 변경
     [SerializeField] private RayBox _ray;
     [SerializeField] private float _moveSpd;
     [SerializeField] private float _jumpForce;
@@ -63,8 +53,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     private Shield _shield;
 
-    private Attack _attack;
-
     void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -72,7 +60,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _shield = GetComponentInChildren<Shield>(true);
-        _attack = GetComponentInChildren<Attack>();
 
         _initJumpCounter = _jumpCounter;
         _HP = _maxHP;
@@ -91,11 +78,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             coyoteTime = _coyoteTimeDuration;
         }
 
-        // [TG] [2024-04-06] [Refactor]
-        // 1. 기존 Raybox의 trasnform.position이 (0, 0, 0), BoxCollider의 offset이 (0, -0.45)
-        // 2. raybox의 왼쪽에서 아래로 raycast한 것과 오른쪽에서 raycast한 것에서 ground가 발견되지 않았을 경우 teetering 실행
-        // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
-        // 4. 따로 함수로 구현?
         _canTeeter = !_isJumping && !_isMoving && !_isLookUp && !_isLookDown; // 흠
         if (_canTeeter)
         {
@@ -185,8 +167,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 한번 눌렀을 때 딱 한번 실행하는 애니메이션(방패 뽑는 애니메이션)을 써야하기 때문에 trigger 변수 하나 더 만들어주자 
     public void OnShield(InputAction.CallbackContext input)
     {
-        if (!WeaponController.Instance.GetWeaponType<Shield>()) return;
-
         _isShield = input.ReadValueAsButton();
         this.Log($"isShield : {_isShield}");
 
@@ -242,8 +222,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             _anim.SetTrigger("Parry");
             StartCoroutine(CheckParry());
         }
-
-        
 
         WeaponController.Instance.UseWeapon(idx);
     }
@@ -406,7 +384,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     public void ByWeapon(Weapon weapon)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     void SceneTest()
