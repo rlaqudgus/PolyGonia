@@ -7,7 +7,7 @@ public class FollowBox : MonoBehaviour
 {
     [SerializeField] GameObject _target;
     [SerializeField] float _time;
-    [SerializeField] bool _changeOnBox;
+    [SerializeField] bool _changeOnBox; //camera가 target 영구적으로 따라갈지 time만큼 따라갈지 결정
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

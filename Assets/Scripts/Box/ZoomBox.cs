@@ -12,6 +12,7 @@ public class ZoomBox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_time == 0) _time = 0.1f;
+        if (_size == 0) _size = 0.1f;
         if (collision.CompareTag("Player"))
         {
             CameraManager.Zoom(_size, _time);
