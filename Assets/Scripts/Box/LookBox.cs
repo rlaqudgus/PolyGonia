@@ -7,7 +7,7 @@ public class LookBox : MonoBehaviour
 {
     [SerializeField] Vector3 _offset;
     [SerializeField] float _time;
-    [SerializeField] bool _changeOnBox;
+    [SerializeField] bool __resetAfterExit;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +21,7 @@ public class LookBox : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(_changeOnBox && collision.CompareTag("Player"))
+        if(__resetAfterExit && collision.CompareTag("Player"))
         {
             CameraManager.Instance.ResetCamera(_time);
         }

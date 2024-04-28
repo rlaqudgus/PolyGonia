@@ -3313,8 +3313,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponForce: 0
   player: {fileID: 0}
-  _shieldBox: {fileID: 0}
-  _shieldParry: {fileID: 0}
 --- !u!61 &627578891
 BoxCollider2D:
   m_ObjectHideFlags: 0
