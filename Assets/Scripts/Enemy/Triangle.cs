@@ -294,7 +294,10 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     {
         //패링하면 disarm 컨셉 - 시민으로 돌아감
         this.Log("Attacked by Parrying");
-        EnemyKnockBack(1.0f);
+        //넉백 이펙트 EffectManager
+        EffectManager.Instance.KnockBackEffect(this.transform, runDir, 1);
+        //EnemyKnockBack(1.0f);
+        //패링 이펙트 EffectManager
         shield.ParryEffect();
         ParryDisarm();
         

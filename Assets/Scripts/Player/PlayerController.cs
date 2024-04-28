@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     private bool _isJumping;
     private bool _isJumpingDown => _rb.velocity.y < 0;
 
-    private bool _isInvincible; 
+    public bool _isInvincible; 
 
     private PlayerInput _playerInput;
 
@@ -393,52 +393,23 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     void DamageEffect()
     {
-        StartCoroutine(InvincibleTimer());
-        StartCoroutine(InvincibleEffect());
+        //EffectManager.Instance.BoolTimer(ref _isInvincible, 2); 실패한 버전
+
+
+        Timer.Instance.StartTimer(2f, () => _isInvincible = true, () => _isInvincible = false);
+
+        
+        EffectManager.Instance.InvincibleEffect();
+        //StartCoroutine(InvincibleEffect());
+
+        EffectManager.Instance.InstantiateEffect(ParticleColor.RED, transform.position + Vector3.up);
 
         CameraManager.Shake();
-        
+
+        EffectManager.Instance.TimeStop(.2f);
+
         JoyConManager.Instance?.j[0].SetRumble(160, 320, 1f, 400);
-    }
 
-    IEnumerator InvincibleEffect()
-    {
-        //최상위 콜라이더 invincible로 변경
-        gameObject.layer = LayerMask.NameToLayer("Invincible");
-        //하위 모든 오브젝트 invincible로 변경
-        foreach (Transform child in transform)
-        {
-            child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
-        }
-        while (_isInvincible)
-        {   
-            yield return new WaitForSeconds(.2f);
-            GetComponent<SpriteRenderer>().enabled = false;
-            yield return new WaitForSeconds(.2f);
-            GetComponent<SpriteRenderer>().enabled = true;
-        }
-        //최상위 콜라이더 invincible로 변경
-        gameObject.layer = LayerMask.NameToLayer("Player1");
-
-        //하위 모든 오브젝트 
-        foreach (Transform child in transform)
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("Player1");
-        }
-
-    }
-
-    IEnumerator InvincibleTimer()
-    {
-        float timer = 0;
-        while (timer <= _invincibleTime) 
-        {
-            _isInvincible = true;
-            
-            timer += Time.deltaTime;
-            yield return null;
-        }
-        _isInvincible = false;
         
     }
 
@@ -457,7 +428,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     public void ByWeapon(Attack attack)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     void SceneTest()

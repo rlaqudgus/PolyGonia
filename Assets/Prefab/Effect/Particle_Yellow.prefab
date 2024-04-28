@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5587496234248082947}
   - component: {fileID: 5874859762920704864}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Particle_Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20.52
+      scalar: 30
       minScalar: 5
       maxCurve:
         serializedVersion: 2

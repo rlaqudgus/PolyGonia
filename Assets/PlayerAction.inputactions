@@ -173,11 +173,11 @@
                 },
                 {
                     "name": "",
-                    "id": "318e6e0f-2122-43a3-801f-c0ff61fe4f8a",
-                    "path": "<HID::Nintendo Wireless Gamepad>/stick",
+                    "id": "c17346f0-fa11-4e6e-9745-5b4594917d73",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "GamePad",
+                    "groups": "PC",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -195,17 +195,6 @@
                 },
                 {
                     "name": "",
-                    "id": "fb1c3737-0301-444a-b4fe-50383b0c643f",
-                    "path": "<HID::Nintendo Wireless Gamepad>/button7",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Shield",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "dd7be078-8635-49c6-8bc8-6d7d9da6e98e",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -217,30 +206,8 @@
                 },
                 {
                     "name": "",
-                    "id": "24328822-e915-4a1e-bd83-65c234b9129f",
-                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "c8fe0c77-8bee-4621-a1ca-5c20f59564b9",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5f160b4d-2b2f-472e-a17c-67c8dc738353",
-                    "path": "<HID::Nintendo Wireless Gamepad>/{Back}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -877,6 +844,11 @@
                 {
                     "devicePath": "<Mouse>",
                     "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": true,
                     "isOR": false
                 }
             ]

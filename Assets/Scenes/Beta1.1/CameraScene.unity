@@ -4962,6 +4962,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZoomBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5415301776030480205, guid: 6bbb9cd01835c194d89f0628eb223a98, type: 3}
+      propertyPath: _size
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5713,6 +5717,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5177062013727958174, guid: 6ba8a4ce161dc0d4896074803011bf7f, type: 3}
+      propertyPath: _size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6184951610509012805, guid: 6ba8a4ce161dc0d4896074803011bf7f, type: 3}
       propertyPath: m_Name
       value: LookAndZoomBox
@@ -5776,6 +5784,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4093329299449040513, guid: 0b17b146d0ff670409d5a601bc4a9304, type: 3}
       propertyPath: target
+      value: 
+      objectReference: {fileID: 709525789}
+    - target: {fileID: 4093329299449040513, guid: 0b17b146d0ff670409d5a601bc4a9304, type: 3}
+      propertyPath: _target
       value: 
       objectReference: {fileID: 709525789}
     m_RemovedComponents: []
