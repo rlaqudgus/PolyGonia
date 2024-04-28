@@ -7,7 +7,7 @@ public class ZoomBox : MonoBehaviour
 {
     [SerializeField] float _size;
     [SerializeField] float _time;
-    [SerializeField] bool _changeOnBox;
+    [SerializeField] bool _resetAfterExit;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,15 +15,15 @@ public class ZoomBox : MonoBehaviour
         if (_size == 0) _size = 0.1f;
         if (collision.CompareTag("Player"))
         {
-            CameraManager.Zoom(_size, _time);
+            CameraManager.Instance.Zoom(_size, _time);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (_changeOnBox && collision.CompareTag("Player"))
+        if (_resetAfterExit && collision.CompareTag("Player"))
         {
-            CameraManager.ResetCamera(_time);
+            CameraManager.Instance.ResetCamera(_time);
         }
     }
 }

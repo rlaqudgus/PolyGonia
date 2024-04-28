@@ -7,23 +7,23 @@ public class FollowBox : MonoBehaviour
 {
     [SerializeField] GameObject _target;
     [SerializeField] float _time;
-    [SerializeField] bool _changeOnBox; //camera°¡ target ¿µ±¸ÀûÀ¸·Î µû¶ó°¥Áö time¸¸Å­ µû¶ó°¥Áö °áÁ¤
+    [SerializeField] bool _resetAfterExit; //cameraï¿½ï¿½ target ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ timeï¿½ï¿½Å­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (_time == 0) _time = 0.1f;
         if (collision.CompareTag("Player"))
         {
-            if (_changeOnBox) CameraManager.FollowTarget(_target);
-            else CameraManager.FollowTarget(_target, _time);
+            if (_resetAfterExit) CameraManager.Instance.FollowTarget(_target);
+            else CameraManager.Instance.FollowTarget(_target, _time);
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (_changeOnBox && collision.CompareTag("Player"))
+        if (_resetAfterExit && collision.CompareTag("Player"))
         {
-            CameraManager.FollowTarget(collision.gameObject);
+            CameraManager.Instance.FollowTarget(collision.gameObject);
         }
     }
 }

@@ -14,8 +14,8 @@ public class ShieldBox : MonoBehaviour
         if (transform.parent.parent.TryGetComponent<IAttackable>(out IAttackable a))
         {
             var shield = this.GetComponentInParent<Shield>();
-            shield.ShieldEffect();
-            a.ByShield(shield);
+            //shield.ShieldEffect();
+            //a.ByShield(shield);
         }
     }
 

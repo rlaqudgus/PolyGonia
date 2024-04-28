@@ -8,7 +8,7 @@ using Utilities;
 // [TG] [2024-04-05] [feat]
 // 패링 공격을 제외한 일반 물리 공격들을 다루는 클래스
 // 여러 HitBox들을 참조한 뒤 Attack Type에 맞게 HitBox를 선택
-public class Attack : MonoBehaviour
+public class __Attack : MonoBehaviour
 {
     public float weaponForce;
     

@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour
     public void Look(Vector3 offset, float time) => StartCoroutine(IELook(offset, time));
     public void ResetCamera(float time) => StartCoroutine(IEReset(time));
     public void FollowTarget(GameObject target, float time) => StartCoroutine(IEFollowTarget(target, time));
+    public void FollowTarget(GameObject target) => _virtualCamera.m_Follow = target.transform;
 
     public void FollowTarget(GameObject target) => _virtualCamera.m_Follow = target.transform;
 

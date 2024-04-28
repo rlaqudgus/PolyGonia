@@ -327,18 +327,18 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
     {
         this.Log("Attacked by Shield");
 
-        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * shield.shieldForce * (1 / level), ForceMode2D.Impulse);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * shield.weaponForce * (1 / level), ForceMode2D.Impulse);
         //shield.ShieldEffect();
     }
 
     // [TG] [2024-04-04] [feat]
     // 1. Triangle이 Player의 무기로 공격당했을 때
     // 2. blood 효과?
-    public void ByWeapon(Attack attack)
+    public void ByWeapon(Weapon weapon)
     {
         this.Log("Attacked by Weapon");
-        attack.AttackEffect();
-        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * attack.weaponForce * (1 / level), ForceMode2D.Impulse);
+        //attack.AttackEffect();
+        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * weapon.weaponForce * (1 / level), ForceMode2D.Impulse);
     }
 
     // IDamageable

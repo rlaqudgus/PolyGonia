@@ -13,7 +13,7 @@ public class CameraResetBox : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             this.Log("Look in TEST");
-            CameraManager.ResetCamera(time);
+            CameraManager.Instance.ResetCamera(time);
         }
     }
 }

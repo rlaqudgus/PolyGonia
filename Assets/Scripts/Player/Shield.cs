@@ -5,7 +5,7 @@ using Utilities;
 
 //방패 관련 메서드나 오브젝트 관리해주는 클래스
 //하위 오브젝트에 방패 콜라이더나 패링 히트박스 등 담아둬야 할듯
-public class Shield : MonoBehaviour
+public class _Shield : MonoBehaviour
 {
     public float shieldForce;
     bool isColliding;
@@ -80,7 +80,7 @@ public class Shield : MonoBehaviour
     {
         if (col.gameObject.TryGetComponent<IAttackable>(out IAttackable a))
         {
-            a.ByShield(this);
+            //a.ByShield(this);
         }
     }
 }
