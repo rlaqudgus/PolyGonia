@@ -8,7 +8,7 @@ using Utilities;
 
 // PlayerInput의 Invoke Unity Events 사용
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
-public class PlayerController : MonoBehaviour,IDamageable, IAttackable
+public class PlayerController : MonoBehaviour, IAttackable
 {   
     public PlayerData data;
     
