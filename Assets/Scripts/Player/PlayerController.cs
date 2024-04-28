@@ -9,21 +9,10 @@ using Utilities;
 // PlayerInput의 Invoke Unity Events 사용
 // Action에 미리 mapping 해놓은 키가 불렸을 때 Unity Events를 호출한다. 
 public class PlayerController : MonoBehaviour,IDamageable, IAttackable
-{
-    
-    // [TG] [2024-04-01] [Refactor]
-    // 1. private 변수명 _camelCase로 변경
-    // 2. 접근 제한자 private 명시
-    // 3. 프로퍼티 이름 PascalCase로 변경
-    // 4. 변수명 sr이 직관성이 떨어져 _spriteRenderer로 변경 (_rb는 관례에 따라 수정x)
-    // 5. PlayerData를 따로 만들어서 Scriptable Object로 관리하는 것이 편해 보여서 일부분 사용해봄(좋으면 전부 수정)
-    
+{   
     public PlayerData data;
-    public enum AttackType { HorizontalAttack = 0, VerticalAttack, }
     
-    
-    // [TG] [2024-04-05] [feat]
-    // 1. private 변수명 _camelCase로 변경
+
     [SerializeField] private RayBox _ray;
     [SerializeField] private float _moveSpd;
     [SerializeField] private float _jumpForce;
@@ -64,8 +53,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
 
     private Shield _shield;
 
-    private Attack _attack;
-
     void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -73,7 +60,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _shield = GetComponentInChildren<Shield>(true);
-        _attack = GetComponentInChildren<Attack>();
 
         _initJumpCounter = _jumpCounter;
         _HP = _maxHP;
@@ -92,11 +78,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
             coyoteTime = _coyoteTimeDuration;
         }
 
-        // [TG] [2024-04-06] [Refactor]
-        // 1. 기존 Raybox의 trasnform.position이 (0, 0, 0), BoxCollider의 offset이 (0, -0.45)
-        // 2. raybox의 왼쪽에서 아래로 raycast한 것과 오른쪽에서 raycast한 것에서 ground가 발견되지 않았을 경우 teetering 실행
-        // 3. 기존 값을 확인하는 것은 비효율적이기 때문에 참조를 할 수 있게 수정이 필요해 보임
-        // 4. 따로 함수로 구현?
         _canTeeter = !_isJumping && !_isMoving && !_isLookUp && !_isLookDown; // 흠
         if (_canTeeter)
         {
@@ -197,12 +178,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
    
     private void Shield()
     {
-        if (_isShield)
-        {
-            _anim.SetTrigger("Shield");
-        }
+        if (_isShield) _anim.SetTrigger("Shield");
 
-        _shield.ShieldActivate(_isShield);
+        WeaponController.Instance.UseShield();
         _anim.SetBool("isShield", _isShield);
 
     }
@@ -216,9 +194,6 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     {
         switch (input.phase)
         {
-            case InputActionPhase.Performed:
-                break;
-            
             case InputActionPhase.Started:
                 _isAttacking = true;
                 Attack();
@@ -238,32 +213,17 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
     // 2. 상 하 공격은 디버깅을 위해 일단 합치지 않았음
     // 2. 마음에 안듬 => input system의 one modifier..?
     private void Attack() {
+        int idx = _isLookUp ? 0 : _isLookDown ? 2 : 1; //LookUP이 true면 0, lookDown이 true면 2 다 아니면 1 위에서 아래 순
+
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
         if (_isShield)
         {
             this.Log($"isParry: {_isParry}");
             _anim.SetTrigger("Parry");
             StartCoroutine(CheckParry());
-            _shield.ShieldParry();
         }
-        else if(_isLookUp && !_isLookDown)
-        {
-            this.Log("Up Attack");
-            _anim.SetTrigger("Attack");
-            _attack.DoAttack((int)AttackType.VerticalAttack);
-        }
-        else if(!_isLookUp && _isLookDown)
-        {
-            this.Log("Down Attack");
-            _anim.SetTrigger("Attack");
-            _attack.DoAttack((int)AttackType.VerticalAttack);
-        }
-        else
-        {
-            this.Log("Attack");
-            _anim.SetTrigger("Attack");
-            _attack.DoAttack((int)AttackType.HorizontalAttack);
-        }
+
+        WeaponController.Instance.UseWeapon(idx);
     }
 
     IEnumerator CheckParry()
@@ -396,7 +356,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         StartCoroutine(InvincibleTimer());
         StartCoroutine(InvincibleEffect());
 
-        CameraManager.Shake();
+        CameraManager.Instance.Shake();
         
         JoyConManager.Instance?.j[0].SetRumble(160, 320, 1f, 400);
     }
@@ -455,9 +415,9 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         throw new System.NotImplementedException();
     }
 
-    public void ByWeapon(Attack attack)
+    public void ByWeapon(Weapon weapon)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     void SceneTest()
@@ -507,7 +467,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         //조이콘에서 받은 인풋 사용
         _isShield = s;
         this.Log($"isShield : {_isShield}");
-        _shield.ShieldActivate(_isShield);
+        //_shield.ShieldActivate(_isShield);
         _anim.SetBool("isShield", _isShield);
     }
 
@@ -530,7 +490,7 @@ public class PlayerController : MonoBehaviour,IDamageable, IAttackable
         this.Log("Parry");
         _anim.SetTrigger("Parry");
         StartCoroutine(CheckParry());
-        _shield.ShieldParry();
+        //_shield.ShieldParry();
         Invoke("ResetParry", 0.2f);
     }
 
