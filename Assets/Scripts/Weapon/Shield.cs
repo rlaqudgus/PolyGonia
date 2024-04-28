@@ -28,6 +28,11 @@ public class Shield : Weapon
 
     public override void UseShield() => _collider.enabled = player._isShield;
 
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    EffectManager.Instance.InstantiateEffect(ParticleColor.WHITE, transform.position);
+    //}
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         //패링 오브젝트가 검출되었다면(패링 성공)
@@ -41,16 +46,28 @@ public class Shield : Weapon
                 var shield = this.GetComponentInParent<Shield>();
 
                 //패링된놈의 ByParry 메서드
-                a.ByParry(shield);
+                //a.ByParry(shield);
+
+                EffectManager.Instance.InstantiateEffect(ParticleColor.YELLOW, (transform.position + col.transform.position) * .5f);
                 //플레이어 효과 - 넉백
                 player.PlayerKnockBack(0.5f);
                 //플레이어 효과 - 카메라 흔들기
 
                 CameraManager.Instance.Shake();
+
+                //카메라 zoom 왔다 갔다 하는 이펙트 만들ㅇ주셈
+                CameraManager.Instance.Zoom(6, 0);
+
+                CameraManager.Instance.ResetCamera(.15f);
                 //조이콘 효과 - 진동
                 JoyConManager.Instance?.j[0].SetRumble(160, 320, 0.6f, 200);
 
             }
+        }
+
+        else if(col.CompareTag("Parry") && !_isParrying)
+        {
+            EffectManager.Instance.InstantiateEffect(ParticleColor.WHITE, transform.position);
         }
     }
 }

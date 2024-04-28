@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using Utilities;
-
+ 
 public class PauseManager : MonoBehaviour
 {
     private static PauseManager _instance;
@@ -42,6 +42,8 @@ public class PauseManager : MonoBehaviour
 
         // Input System
         GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
+
+        this.Log("Pause");
     }
 
     public void Resume()
@@ -57,5 +59,7 @@ public class PauseManager : MonoBehaviour
 
         // Input System
         GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
+
+        this.Log("Resume");
     }
 }

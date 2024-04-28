@@ -8,7 +8,7 @@ using Utilities;
 //기본적인 상태 구조는 상위 스크립트에서 해결
 //여기서는 각 상태 세부 구현 및 애니메이션 짜기
 
-public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
+public class Triangle : Enemy, IAttackable, IDetectable
 {
 
     [SerializeField] protected Transform _target;
@@ -298,7 +298,7 @@ public class Triangle : Enemy, IAttackable, IDetectable, IDamageable
         EffectManager.Instance.KnockBackEffect(this.transform, runDir, 1);
         //EnemyKnockBack(1.0f);
         //패링 이펙트 EffectManager
-        shield.ParryEffect();
+        
         ParryDisarm();
         
     }

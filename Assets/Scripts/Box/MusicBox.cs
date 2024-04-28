@@ -36,6 +36,7 @@ public class MusicBox : MonoBehaviour
         // 이는 maxDistance가 z값도 고려하여 계산되기 때문이므로 z값은 적당한 크기로 조절한다
         transform.position = new Vector3(transform.position.x, transform.position.y, -radius * 0.2f);
 
+        this.Log("playmusic");
         // 음악 재생
         _musicSource.clip = SoundManager.Instance.GetMusicClip(musicName);
         _musicSource.loop = true;
