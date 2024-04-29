@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1800897b-b620-46bc-b046-70891d26bab2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Player.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Player.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Triangle.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Triangle.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Triangle_Attack.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Triangle_Attack.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Triangle_Idle.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Triangle_Idle.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Box/DetectBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/DetectBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +19,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Attack.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bases/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/SoundManager/SoundManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerController_AF.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -42,18 +42,20 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;taegyu&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Beta1.2__Taegyu&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\klye1\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\klye1\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\klye1\\AppData\\Local\\Symbols\\src&quot;
+      &quot;C:\\Users\\m0nosummer\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\m0nosummer\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\m0nosummer\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
 }</component>
@@ -111,6 +113,8 @@
       <workItem from="1712277944588" duration="18813000" />
       <workItem from="1712318886014" duration="6333000" />
       <workItem from="1712370669066" duration="9225000" />
+      <workItem from="1714360895840" duration="5338000" />
+      <workItem from="1714390477732" duration="3205000" />
     </task>
     <servers />
   </component>
@@ -118,6 +122,11 @@
     <option name="version" value="3" />
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+    <option name="unityProject" value="true" />
+    <option name="unityProjectFolder" value="true" />
+  </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
