@@ -11,7 +11,11 @@ using TMPro;
 public class DialogueManager : Singleton<DialogueManager>
 {
     private string _sentence;
+    private string _speaker;
+
     private Queue<string> _sentences;
+    private Queue<string> _speakers;
+
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
 
@@ -32,25 +36,24 @@ public class DialogueManager : Singleton<DialogueManager>
     private void Start()
     {
         _sentences = new Queue<string>();
+        _speakers = new Queue<string>();
+
         _typeSpeed = Mathf.Max(_typeSpeed, 1);
         _isTyping = false;
     }
 
-    private void Update()
-    {
-        Debug.Log(_isTyping);
-    }
-
     public void StartDialogue(Dialogue dialogue)
     {
-
-        nameText.text = dialogue.name;
-
         _sentences.Clear();
+        _speakers.Clear();
 
-        foreach (string sentence in dialogue.sentences)
+        foreach (Utterance utterance in dialogue.utterances)
         {
-            _sentences.Enqueue(sentence);
+            foreach (string sentence in utterance.sentences)
+            {
+                _sentences.Enqueue(sentence);
+                _speakers.Enqueue(utterance.speaker);
+            }
         }
         
         UIManager.Instance.OpenDialogueWindow();
@@ -74,6 +77,9 @@ public class DialogueManager : Singleton<DialogueManager>
             }
             
             _sentence = _sentences.Dequeue();
+            _speaker = _speakers.Dequeue();
+
+            nameText.text = _speaker;
             StartCoroutine(TypeSentence(_sentence));
             
         }
@@ -81,7 +87,6 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             FinishTypingEarly(_sentence);
         }
-        
     }
 
     IEnumerator TypeSentence(string sentence)

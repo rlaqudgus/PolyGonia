@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class Dialogue
+[CreateAssetMenu(menuName = "Dialogue Data")]
+public class Dialogue : ScriptableObject
 {
-    public string name;
-
-    [TextArea]
-    public string[] sentences;
+    public string eventName;
+    
+    public Utterance[] utterances;
 }

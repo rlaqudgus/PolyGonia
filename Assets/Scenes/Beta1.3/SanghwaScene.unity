@@ -8170,7 +8170,7 @@ GameObject:
   - component: {fileID: 1101406736}
   - component: {fileID: 1101406741}
   m_Layer: 11
-  m_Name: NPC
+  m_Name: NPC KBH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8350,15 +8350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a059830d4924cba459743da887a4491e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    name: rlaqudgus
-    sentences:
-    - hello
-    - 'how are you? how are you? how are you? how are you? how are you? how are you?
-      how are you? how are you? how are you? how are you? how are you? how are you?
-      how are you? how are you? how are you? how are you? how are you? how are you?
-      how are you? how are you? how are you? how are you? '
-    - asdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdfasdfghjasdffgfssdf
+  dialogue: {fileID: 11400000, guid: 01fa736c7e9e1864aa1b87cda72371a3, type: 2}
 --- !u!1 &1136592629
 GameObject:
   m_ObjectHideFlags: 0
@@ -8898,7 +8890,7 @@ Transform:
   m_GameObject: {fileID: 1253337809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.73281, y: -2.96287, z: -10}
+  m_LocalPosition: {x: 39.2345, y: -2.96061, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10570,7 +10562,7 @@ GameObject:
   - component: {fileID: 2081462799}
   - component: {fileID: 2081462798}
   m_Layer: 11
-  m_Name: NPC (1)
+  m_Name: NPC RHC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10588,11 +10580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a059830d4924cba459743da887a4491e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    name: fbgmlcjf
-    sentences:
-    - good morning
-    - welcome to polygonia
+  dialogue: {fileID: 11400000, guid: a53dfd2b03f5ad9499c128b8c096672c, type: 2}
 --- !u!61 &2081462799
 BoxCollider2D:
   m_ObjectHideFlags: 0
