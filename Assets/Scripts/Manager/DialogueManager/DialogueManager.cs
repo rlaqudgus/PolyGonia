@@ -10,9 +10,17 @@ using TMPro;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
+    private string _sentence;
     private Queue<string> _sentences;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
+
+    // Make a Dialogue System (that types letter-by-letter with NO line overflow) | Unity Tutorial
+    // https://www.youtube.com/watch?v=jTPOCglHejE
+    private bool _isTyping;
+    private const float _MAX_TYPE_TIME = 1f;
+    private const string _HTML_ALPHA = "<color=#00000000>";
+    [SerializeField] [Range(1, 100)] int _typeSpeed;
 
     public Animator animator;
 
@@ -24,6 +32,13 @@ public class DialogueManager : Singleton<DialogueManager>
     private void Start()
     {
         _sentences = new Queue<string>();
+        _typeSpeed = Mathf.Max(_typeSpeed, 1);
+        _isTyping = false;
+    }
+
+    private void Update()
+    {
+        Debug.Log(_isTyping);
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -47,29 +62,56 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     public void DisplayNextSentence()
-    {
-        if (_sentences.Count == 0)
-        {
-            EndDialogue();
-            return;
-        }
-
-        string sentence = _sentences.Dequeue();
-
+    {   
         StopAllCoroutines();
-        StartCoroutine(TypeSentence(sentence));
+
+        if (!_isTyping)
+        {
+            if (_sentences.Count == 0)
+            {
+                EndDialogue();
+                return;
+            }
+            
+            _sentence = _sentences.Dequeue();
+            StartCoroutine(TypeSentence(_sentence));
+            
+        }
+        else
+        {
+            FinishTypingEarly(_sentence);
+        }
+        
     }
 
-    // Enter 키를 누르면 빠르게 완성되도록 하기
-    // Enter 키를 다시 누르면 넘어가도록 하기
     IEnumerator TypeSentence(string sentence)
     {
+        _isTyping = true;
+
         dialogueText.text = "";
+
+        string originalText = sentence;
+        string displayedText = "";
+        int alphaIndex = 0;
+
         foreach (char letter in sentence.ToCharArray())
         {
-            dialogueText.text += letter;
-            yield return null;
+            alphaIndex++;
+            dialogueText.text = originalText;
+            displayedText = dialogueText.text.Insert(alphaIndex, _HTML_ALPHA);
+
+            dialogueText.text = displayedText;
+            
+            yield return new WaitForSeconds(_MAX_TYPE_TIME / _typeSpeed);
         }
+
+        _isTyping = false;
+    }
+
+    private void FinishTypingEarly(string sentence)
+    {
+        dialogueText.text = sentence;
+        _isTyping = false;
     }
 
     public void EndDialogue()
@@ -78,5 +120,8 @@ public class DialogueManager : Singleton<DialogueManager>
         GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
 
         animator.SetBool("IsOpen", false);
+        
+        _sentence = null;
+        Debug.Assert(!_isTyping, "The dialogue already ended but _isTyping is true");
     }
 }
