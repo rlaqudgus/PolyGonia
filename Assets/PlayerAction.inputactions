@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Scan",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "5daaa515-9520-486c-acb4-2b06a36b037b",
                     "expectedControlType": "Button",
@@ -308,7 +308,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Scan",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

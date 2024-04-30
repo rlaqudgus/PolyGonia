@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -21,7 +22,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     [SerializeField] private int _jumpCounter;
     [SerializeField] private int _maxHP;
     [SerializeField] private int _HP;
-    [SerializeField] private float _scanDistance;
     [SerializeField] private float coyoteTime; // 지면을 떠난 후 남은 시간을 추적
     private float _coyoteTimeDuration = 0.2f; // Coyote time 기간을 설정
 
@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     public bool _isInvincible; 
 
-    [HideInInspector] public GameObject scannedObject;
+    // InteractBox에서 사용
+    [HideInInspector] public List<GameObject> scannedObjects = new List<GameObject>();
 
     private PlayerInput _playerInput;
 
@@ -307,61 +308,77 @@ public class PlayerController : MonoBehaviour, IAttackable
     #endregion
 
 
-    #region Scan
+    #region Interact
     
-    // [SH] [2024-04-29]
-    // 주변에 있는 오브젝트를 스캔
-    // 물체를 조사하거나 NPC에게 말을 걸기 위한 용도
-    // 여러 가지로 활용이 가능할 것 같아서 Scan을 실시간으로 돌리는 것도 생각중
+    // [SH] [2024-04-30]
+    // 주변에 있는 오브젝트와 상호작용
+    // 상호작용 가능한 물체는 InteractBox를 가지며
+    // InteractBox와 Trigger 될 경우 Player의 scannedObjects 에 해당 물체가 추가됨
+    // scan이 된 여러 개의 물체 중에 가장 가까운 것을 선택해서 상호작용
+ 
+    public void OnInteract(InputAction.CallbackContext input)
+    {
+        if (input.started) Interact();
+    }    
+ 
+    GameObject FindClosestObject(GameObject origin, List<GameObject> objects)
+    {       
+        if (objects == null || objects.Count == 0)
+        { 
+            Debug.LogWarning("List is null or empty");
+            return null;
+        } 
+ 
+        int minIndex = -1;
+        float minValue = float.MaxValue;
 
-    public void OnScan(InputAction.CallbackContext input)
-    {   
-        if (input.started) 
-        {
-            Scan();
-            Interact();
-        }
-    }   
-
-    private void Scan()
-    {   
-        Vector2 rayDir;
-        int layerMask = LayerMask.GetMask("NPC");
-
-        if (_isLookUp) rayDir = Vector2.up;
-        else if (_isLookDown) rayDir = Vector2.down;
-        else rayDir = new Vector2(transform.localScale.x, 0);
-        
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDir, _scanDistance, layerMask);
-
-        // 양방향으로 물체 탐지 
-        if (hit.collider == null && !(_isLookUp || _isLookDown))
-        {
-            hit = Physics2D.Raycast(transform.position, -rayDir, _scanDistance * 0.5f, layerMask);
-        }
-        
-        if (hit.collider == null) scannedObject = null;
-        else scannedObject = hit.collider.gameObject;
-        
-    }   
-
-    private void Interact()
-    {   
-        if (scannedObject == null) return;
-
-        this.Log(scannedObject.name);
-
-        if (scannedObject.layer == LayerMask.NameToLayer("NPC"))
-        {
-            // Do Something ...
-
-            GameObject npc = scannedObject;
-            DialogueTrigger dialogueTrigger = npc.GetComponent<DialogueTrigger>();
-            Debug.Assert(dialogueTrigger != null);
-
-            dialogueTrigger.TriggerDialogue();
-        }
-    }   
+        for (int i = 0; i < objects.Count; i++) 
+        {   
+            GameObject obj = objects[i];
+            float dx = origin.transform.position.x - obj.transform.position.x;
+            float dy = origin.transform.position.y - obj.transform.position.y;
+            float r2 = dx * dx + dy * dy;
+ 
+            if (r2 < minValue)
+            {
+                minValue = r2;
+                minIndex = i;
+            }
+        }   
+        Debug.Assert(minIndex >= 0);
+        return objects[minIndex];
+    }
+ 
+    private void Interact() 
+    {
+        if (scannedObjects.Count == 0) return;
+ 
+        // 가장 가까운 scan된 물체 사용
+        GameObject scannedObject = FindClosestObject(gameObject, scannedObjects);
+        Debug.Assert(scannedObject != null, "Scanned object must not be null for interaction");
+ 
+        // Interact 처리 수행
+        if (scannedObject.layer == LayerMask.NameToLayer("NPC")) 
+        { 
+            // Do Something ... 
+ 
+            NPC npc = scannedObject.GetComponent<NPC>();
+            Debug.Assert(npc != null);
+ 
+            npc.Interact();
+        }           
+ 
+        // Debug용 출력
+        string scannedObjectsList = "";
+        foreach (GameObject obj in scannedObjects) 
+        {           
+            scannedObjectsList += obj.name;    
+            scannedObjectsList += " / ";
+        }           
+                    
+        this.Log($"All Scanned Objects: " + scannedObjectsList);
+        this.Log($"Currently Scanned Object: " + scannedObject.name);
+    }
 
     #endregion
     
