@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     [SerializeField] private int _jumpCounter;
     [SerializeField] private int _maxHP;
     [SerializeField] private int _HP;
+    [SerializeField] private float _scanDistance;
     [SerializeField] private float coyoteTime; // 지면을 떠난 후 남은 시간을 추적
     private float _coyoteTimeDuration = 0.2f; // Coyote time 기간을 설정
 
@@ -42,6 +43,8 @@ public class PlayerController : MonoBehaviour, IAttackable
     private bool _isJumpingDown => _rb.velocity.y < 0;
 
     public bool _isInvincible; 
+
+    [HideInInspector] public GameObject scannedObject;
 
     private PlayerInput _playerInput;
 
@@ -284,28 +287,81 @@ public class PlayerController : MonoBehaviour, IAttackable
     // OnResume은 UI Action Map에 할당
     // Pause 시 Action Map을 UI로 전환시켜서 Pause 상태에서 Player Input이 작동하지 못하도록 만든다
 
+    // [SH] [2024-04-29]
+    // Dialogue 상황에서는 UI Action Map을 사용하는데
+    // UI Action Map 상태에서도 Pause를 처리하기 위해 수정함
+
     public void OnPause(InputAction.CallbackContext input)
     {
-        bool isPaused = PauseManager.Instance.isPaused;
-        if (!isPaused) Pause();
+        if (input.started)
+        {
+            Pause();
+        }
     }
 
     private void Pause()
     {
-        PauseManager.Instance.Pause();
+        PauseManager.Instance.TogglePause();
     }
+    
+    #endregion
 
-    public void OnResume(InputAction.CallbackContext input)
-    {
-        bool isPaused = PauseManager.Instance.isPaused;
-        if (isPaused) Resume();
 
-    }
+    #region Scan
+    
+    // [SH] [2024-04-29]
+    // 주변에 있는 오브젝트를 스캔
+    // 물체를 조사하거나 NPC에게 말을 걸기 위한 용도
+    // 여러 가지로 활용이 가능할 것 같아서 Scan을 실시간으로 돌리는 것도 생각중
 
-    public void Resume()
-    {
-        PauseManager.Instance.Resume();
-    }
+    public void OnScan(InputAction.CallbackContext input)
+    {   
+        if (input.started) 
+        {
+            Scan();
+            Interact();
+        }
+    }   
+
+    private void Scan()
+    {   
+        Vector2 rayDir;
+        int layerMask = LayerMask.GetMask("NPC");
+
+        if (_isLookUp) rayDir = Vector2.up;
+        else if (_isLookDown) rayDir = Vector2.down;
+        else rayDir = new Vector2(transform.localScale.x, 0);
+        
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDir, _scanDistance, layerMask);
+
+        // 양방향으로 물체 탐지 
+        if (hit.collider == null && !(_isLookUp || _isLookDown))
+        {
+            hit = Physics2D.Raycast(transform.position, -rayDir, _scanDistance * 0.5f, layerMask);
+        }
+        
+        if (hit.collider == null) scannedObject = null;
+        else scannedObject = hit.collider.gameObject;
+        
+    }   
+
+    private void Interact()
+    {   
+        if (scannedObject == null) return;
+
+        this.Log(scannedObject.name);
+
+        if (scannedObject.layer == LayerMask.NameToLayer("NPC"))
+        {
+            // Do Something ...
+
+            GameObject npc = scannedObject;
+            DialogueTrigger dialogueTrigger = npc.GetComponent<DialogueTrigger>();
+            Debug.Assert(dialogueTrigger != null);
+
+            dialogueTrigger.TriggerDialogue();
+        }
+    }   
 
     #endregion
     
