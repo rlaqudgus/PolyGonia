@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1800897b-b620-46bc-b046-70891d26bab2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayerData.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayerData.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/Beta1.3_TG.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/Beta1.3_TG.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController_AF.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController_AF.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +117,10 @@
       <workItem from="1712318886014" duration="6333000" />
       <workItem from="1712370669066" duration="9225000" />
       <workItem from="1714360895840" duration="5338000" />
-      <workItem from="1714390477732" duration="3205000" />
+      <workItem from="1714390477732" duration="6794000" />
+      <workItem from="1714407006075" duration="39000" />
+      <workItem from="1714447729949" duration="9543000" />
+      <workItem from="1714474537719" duration="8210000" />
     </task>
     <servers />
   </component>

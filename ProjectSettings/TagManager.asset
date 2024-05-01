@@ -38,7 +38,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Terrain
   - Invincible
   m_SortingLayers:
   - name: Default

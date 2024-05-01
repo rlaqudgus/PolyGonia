@@ -7,15 +7,16 @@ using UnityEngine.Serialization;
 public class PlayerData : ScriptableObject
 {
 	[Header("Gravity")]
-	[HideInInspector] public float gravityStrength; // jumpHeight and jumpTimeToApex.
+	[HideInInspector] public float gravityStrength;
 	[HideInInspector] public float gravityScale; // 프로젝트 중력값을 고려한 실제 게임 상의 중력값 = RigidBody의 중력값
-										 
+	
+	[Header("Gravity")]
 	[Space(5)]
 	public float fallGravityMult; // 낙하 시 중력 값에 대한 Multiflier값
 	public float maxFallSpeed; // 낙하 시 최대 종단 속도
 	
 	[Space(5)]
-	public float fastFallGravityMult; // fallGravityMult보다 더 큰 Multiflier값 : 점프 후 아래 키를 누를 시 더 빠른 낙하
+	public float fastFallGravityMult; // fallGravityMult보다 더 큰 Multiflier : 점프 후 아래 키를 누를 시 더 빠른 낙하
 	public float maxFastFallSpeed; // 빠른 낙하를 할 시 최대 종단 속도
 	
 	[Space(20)]
@@ -27,14 +28,15 @@ public class PlayerData : ScriptableObject
 	[HideInInspector] public float runDeccelAmount;
 	
 	[Space(5)]
-	[Range(0f, 1)] public float accelInAir; //Multipliers applied to acceleration rate when airborne.
-	[Range(0f, 1)] public float deccelInAir;
+	[Range(0f, 1f)] public float accelInAir; // 공중에 있을 시 가속도 값에 대한 Multiflier
+	[Range(0f, 1f)] public float deccelInAir;
 	
 	[Space(5)]
 	public bool doConserveMomentum = true;
 
 	[Space(20)]
 	[Header("Jump")]
+	public int jumpAmount; // Jump 가능 횟수
 	public float jumpHeight; // 플레이어 최대 점프 높이
 	public float jumpTimeToApex; // 최대 점프 높이에 도달하기까지의 시간 : 중력 값과 jump force값에 영향을 줌.
 	[HideInInspector] public float jumpForce; // 점프 시 위쪽으로 작용하는 힘
@@ -42,7 +44,7 @@ public class PlayerData : ScriptableObject
 	[Header("Both Jumps")]
 	public float jumpCutGravityMult; // 점프 버튼을 누르던 도중에 일찍 release한 경우 gravity 값을 증가시키는 Multiplier
 	[Range(0f, 1)] public float jumpHangGravityMult; // 최고 높이 근처에서 gravity 값을 줄이는 Multiplier
-	public float jumpHangTimeThreshold; // 최고 높이에 도달했을 때 얼마나 jumpHang을 수행하는 시간
+	public float jumpHangThreshold; // 최고 높이에 도달했을 때 얼마나 jumpHang을 수행하는 시간
 	
 	[Space(0.5f)]
 	public float jumpHangAccelerationMult;
@@ -50,7 +52,6 @@ public class PlayerData : ScriptableObject
 
 	[Header("Wall Jump")]
 	public Vector2 wallJumpForce; // 벽점프 시 플레이어에 가해지는 힘의 크기
-	[Space(5)]
 	[Range(0f, 1f)] public float wallJumpRunLerp; // 벽점프 시 플레이어의 다른 이동 제한
 	[Range(0f, 1.5f)] public float wallJumpTime; // 벽점프 후 플레이어의 움직임이 느려지는 시간
 	public bool doTurnOnWallJump; // Player will rotate to face wall jumping direction
