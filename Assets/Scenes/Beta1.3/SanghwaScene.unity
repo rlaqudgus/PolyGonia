@@ -1984,7 +1984,7 @@ GameObject:
   - component: {fileID: 159927243}
   m_Layer: 6
   m_Name: GameObject (2)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2724,7 +2724,7 @@ Transform:
   m_GameObject: {fileID: 468698458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.74, y: -2.95, z: -10}
+  m_LocalPosition: {x: 35.25, y: -3.03, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3958,7 +3958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5274949301422370364, guid: 8a57dcfb3268d294db563ae34a5b63c1, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7426926776001111270, guid: 8a57dcfb3268d294db563ae34a5b63c1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4023,7 +4023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2096733249180477558, guid: 717b026114318cd4ebd38b6ba0de76c1, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6231918848145811859, guid: 717b026114318cd4ebd38b6ba0de76c1, type: 3}
       propertyPath: m_Size.x
@@ -4690,7 +4690,7 @@ GameObject:
   - component: {fileID: 602175364}
   - component: {fileID: 602175366}
   - component: {fileID: 602175365}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: InteractSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4876,7 +4876,7 @@ GameObject:
   - component: {fileID: 627578890}
   m_Layer: 6
   m_Name: Shield
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5149,7 +5149,7 @@ GameObject:
   - component: {fileID: 667438870}
   m_Layer: 6
   m_Name: Sword
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7309,7 +7309,7 @@ GameObject:
   - component: {fileID: 920711040}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7445,7 +7445,7 @@ Transform:
   m_GameObject: {fileID: 920711033}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.74, y: -2.95, z: 0}
+  m_LocalPosition: {x: 35.25, y: -3.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9020,7 +9020,7 @@ Transform:
   m_GameObject: {fileID: 1253337809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.94455, y: -2.9614098, z: -10}
+  m_LocalPosition: {x: 44.405758, y: -3.0437598, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9037,7 +9037,7 @@ GameObject:
   - component: {fileID: 1285234951}
   - component: {fileID: 1285234953}
   - component: {fileID: 1285234952}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: InteractSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9963,7 +9963,7 @@ GameObject:
   - component: {fileID: 1683619706}
   - component: {fileID: 1683619705}
   - component: {fileID: 1683619704}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: InteractBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10354,6 +10354,63 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1859868445
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 50.88567
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.7632029
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715921161623306326, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094483865986786823, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
+      propertyPath: m_Name
+      value: Soldier
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
 --- !u!1 &1918885928
 GameObject:
   m_ObjectHideFlags: 0
@@ -10396,7 +10453,7 @@ GameObject:
   - component: {fileID: 1926315902}
   m_Layer: 6
   m_Name: GameObject (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10427,7 +10484,7 @@ GameObject:
   - component: {fileID: 1983164658}
   m_Layer: 6
   m_Name: GameObject
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10458,7 +10515,7 @@ GameObject:
   - component: {fileID: 1989562510}
   - component: {fileID: 1989562512}
   - component: {fileID: 1989562511}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: InteractBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11044,3 +11101,4 @@ SceneRoots:
   - {fileID: 2095837624}
   - {fileID: 2137263293}
   - {fileID: 1360041061}
+  - {fileID: 1859868445}

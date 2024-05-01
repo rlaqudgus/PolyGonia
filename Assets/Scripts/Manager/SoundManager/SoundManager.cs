@@ -60,6 +60,8 @@ public class SoundManager : MonoBehaviour
         _isMusicMuted = false;
         _isSFXMuted   = false;
         _isVoiceMuted = false;
+
+        _savedVoiceTime = -1f;
     }
 
     public AudioClip GetMusicClip(string name) { return _musicSoundDict[name]; }
@@ -127,9 +129,9 @@ public class SoundManager : MonoBehaviour
         if (voiceSource.clip == null) return;
 
         // Voice가 재생 중이면 현재 재생 위치를 저장
-        // Voice의 재생이 모두 끝난 이후에 Pause를 하고 Resume을 했을 때 다시 재생되는 것을 방지
+        // Voice의 재생이 모두 끝난 이후에 sentinel을 사용해서 Pause를 하고 Resume을 했을 때 다시 재생되는 것을 방지
         if (voiceSource.isPlaying) _savedVoiceTime = voiceSource.time;
-        else _savedVoiceTime = voiceSource.clip.length;
+        else _savedVoiceTime = -1f;
 
         voiceSource.Stop();
     }
@@ -137,6 +139,8 @@ public class SoundManager : MonoBehaviour
     public void ResumeVoice()
     {
         if (voiceSource.clip == null) return;
+        if (_savedVoiceTime < 0f) return;
+
         voiceSource.time = _savedVoiceTime;
         voiceSource.Play();
     }

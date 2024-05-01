@@ -148,6 +148,7 @@ public class DialogueManager : Singleton<DialogueManager>
         animator.SetBool("IsOpen", false);
         
         _sentence = null;
+        _speaker = null;
         Debug.Assert(!_isTyping, "The dialogue already ended but _isTyping is true");
     }
 }
