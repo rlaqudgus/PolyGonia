@@ -40,6 +40,7 @@ public class PauseManager : MonoBehaviour
 
         // Sound
         SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
+        SoundManager.Instance.PauseVoice();
 
         // UI
         UIManager.Instance.OpenMainMenu();
@@ -60,6 +61,7 @@ public class PauseManager : MonoBehaviour
 
         // Sound
         SoundManager.Instance.Transition(1f);
+        SoundManager.Instance.ResumeVoice();
 
         // UI
         UIManager.Instance.CloseAllMenus();
