@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2abd936d3fb80438e0d51be94e77db, type: 3}
   m_Name: CollectCoinsQuest
   m_EditorClassIdentifier: 
-  id: CollectCoinsQuest
   displayName: Collect the coins!
-  levelRequirement: 1
-  questPrerequisite: []
-  questStepPrefabs: []
+  levelRequirement: -1
+  questPrerequisites: []
+  questStepPrefabs:
+  - {fileID: 3662732728201052000, guid: 2ea49cda24f78e442b9938d5c2cbf519, type: 3}
   goldReward: 50
   experienceReward: 250
