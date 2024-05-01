@@ -14,12 +14,15 @@ public class SoundManager : MonoBehaviour
     public  static SoundManager  Instance { get { return _instance; } }
 
     public Sound[] musicSounds, sfxSounds;
-    public AudioSource musicSource, sfxSource;
+    public AudioSource musicSource, sfxSource, voiceSource;
     public AudioMixer mixer;
 
     private float _muteVolume;
-    private float _sfxVolume, _musicVolume;
-    private bool _isMusicMuted, _isSFXMuted;
+    private float _sfxVolume, _musicVolume, _voiceVolume;
+    private bool _isMusicMuted, _isSFXMuted, _isVoiceMuted;
+    public  bool  isVoiceMuted { get { return _isVoiceMuted; } }
+
+    private float _savedVoiceTime;
 
     [HideInInspector] 
     public List<SnapshotInfo> snapshotInfoList = new List<SnapshotInfo>();
@@ -51,10 +54,12 @@ public class SoundManager : MonoBehaviour
 
         musicSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Music")[0];
         sfxSource.outputAudioMixerGroup   = mixer.FindMatchingGroups("SFX")[0];
+        voiceSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Voice")[0];
 
         _muteVolume = 1e-4f;
         _isMusicMuted = false;
         _isSFXMuted   = false;
+        _isVoiceMuted = false;
     }
 
     public AudioClip GetMusicClip(string name) { return _musicSoundDict[name]; }
@@ -91,6 +96,49 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = _sfxSoundDict[name];
         sfxSource.clip = clip;
         sfxSource.PlayOneShot(clip);
+    }
+
+    // [SH] [2024-05-01]
+    // Voice 채널 분리
+    // Music, SFX 와 모두 다른 특성을 가지고 있다고 판단
+    // AudioClip 은 Dialogue 시 Sentence 클래스에서 바로 가져옴
+
+    public void PlayVoice(AudioClip clip)
+    {
+        if (clip == null) return;
+        if (voiceSource.isPlaying) StopVoice();
+
+        voiceSource.clip = clip;
+        voiceSource.loop = false;
+
+        voiceSource.Play();
+    }
+
+    public void StopVoice()
+    {
+        if (voiceSource.clip == null) return;
+
+        voiceSource.Stop();
+        voiceSource.clip = null;
+    }
+
+    public void PauseVoice()
+    {
+        if (voiceSource.clip == null) return;
+
+        // Voice가 재생 중이면 현재 재생 위치를 저장
+        // Voice의 재생이 모두 끝난 이후에 Pause를 하고 Resume을 했을 때 다시 재생되는 것을 방지
+        if (voiceSource.isPlaying) _savedVoiceTime = voiceSource.time;
+        else _savedVoiceTime = voiceSource.clip.length;
+
+        voiceSource.Stop();
+    }
+
+    public void ResumeVoice()
+    {
+        if (voiceSource.clip == null) return;
+        voiceSource.time = _savedVoiceTime;
+        voiceSource.Play();
     }
 
     public void Transition(float timeToReach)
@@ -141,6 +189,13 @@ public class SoundManager : MonoBehaviour
         mixer.SetFloat("SFX Volume", convertToDecibel(value));
     }
 
+    public void SetVoiceVolume(float value)
+    {
+        _voiceVolume = value;
+        if (_isVoiceMuted) return;
+        mixer.SetFloat("Voice Volume", convertToDecibel(value));
+    }
+
     #endregion
 
     #region Mute
@@ -161,14 +216,20 @@ public class SoundManager : MonoBehaviour
         mixer.SetFloat("SFX Volume", convertToDecibel(_muteVolume));
     }
 
+    private void MuteVoice()
+    {
+        Debug.Assert(!_isVoiceMuted, "Voice is trying to be muted while it is already muted");
+
+        _isVoiceMuted = true;
+        mixer.SetFloat("Voice Volume", convertToDecibel(_muteVolume));
+    }
+
     private void UnmuteMusic()
     {
         Debug.Assert(_isMusicMuted, "Music is trying to be unmuted while it is already unmuted");
 
         _isMusicMuted = false;
         mixer.SetFloat("Music Volume", convertToDecibel(_musicVolume));
-
-
     }
 
     private void UnmuteSFX()
@@ -177,6 +238,14 @@ public class SoundManager : MonoBehaviour
 
         _isSFXMuted = false;
         mixer.SetFloat("SFX Volume", convertToDecibel(_sfxVolume));
+    }
+
+    private void UnmuteVoice()
+    {
+        Debug.Assert(_isVoiceMuted, "Voice is trying to be unmuted while it is already unmuted");
+
+        _isVoiceMuted = false;
+        mixer.SetFloat("Voice Volume", convertToDecibel(_voiceVolume));
     }
 
     public void ToggleMusic()
@@ -189,6 +258,12 @@ public class SoundManager : MonoBehaviour
     {
         if (!_isSFXMuted) MuteSFX();
         else UnmuteSFX();
+    }
+
+    public void ToggleVoice()
+    {
+        if (!_isVoiceMuted) MuteVoice();
+        else UnmuteVoice();
     }
 
     #endregion

@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapshotInformation:
-    snapshot: {fileID: 0}
+    snapshot: {fileID: 324459059694174173, guid: 55803f94dc58dd04e998a21c76483d2f, type: 2}
     weight: 1
   timeToReach: 1
   resetAfterExit: 1

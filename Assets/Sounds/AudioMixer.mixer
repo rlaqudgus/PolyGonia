@@ -88,6 +88,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &-2578144961218151917
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Voice
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 63f31b9558b3aa2468993018c176c468
+  m_Children: []
+  m_Volume: 061bf2355246c484896a6c438780c740
+  m_Pitch: 1d02a3fea2dac5e459bff89d886f15c5
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -1761412378921393058}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &-2491326648742186184
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -103,6 +122,20 @@ AudioMixerEffectController:
     m_GUID: fc62de6604b123644aefe9fedd98e3dc
   - m_ParameterName: Resonance
     m_GUID: fe2f08de763113d4c9159369ec26b694
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!244 &-1761412378921393058
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: f315e4dc912d36b40ae1a82f9209940c
+  m_EffectName: Attenuation
+  m_MixLevel: 77e98096e3028a0499e256cb2a4ee52d
+  m_Parameters: []
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
@@ -168,14 +201,17 @@ AudioMixerController:
     name: Music Volume
   - guid: dfa61221e7957424da1eac2464a01562
     name: SFX Volume
+  - guid: 061bf2355246c484896a6c438780c740
+    name: Voice Volume
   m_AudioMixerGroupViews:
   - guids:
     - 76161d415c1f6094f9e3d9221c98999d
     - 8a759e417cd01d844b1a9d52d0a4ee95
     - e72f54c9ee1358d4180fe89941952831
+    - 63f31b9558b3aa2468993018c176c468
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 324459059694174173}
+  m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -188,6 +224,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -350436395676930518}
   - {fileID: 4980893641767736955}
+  - {fileID: -2578144961218151917}
   m_Volume: 98ea7647b2afa3844884e3e6fbdfeb70
   m_Pitch: 108490ff663ba814a8d9952d22d617fa
   m_Send: 00000000000000000000000000000000
