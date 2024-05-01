@@ -10,10 +10,10 @@ using TMPro;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
-    private string _sentence;
+    private Sentence _sentence;
     private string _speaker;
 
-    private Queue<string> _sentences;
+    private Queue<Sentence> _sentences;
     private Queue<string> _speakers;
 
     public TextMeshProUGUI nameText;
@@ -22,9 +22,10 @@ public class DialogueManager : Singleton<DialogueManager>
     // Make a Dialogue System (that types letter-by-letter with NO line overflow) | Unity Tutorial
     // https://www.youtube.com/watch?v=jTPOCglHejE
     private bool _isTyping;
-    private const float _MAX_TYPE_TIME = 1f;
     private const string _HTML_ALPHA = "<color=#00000000>";
-    [SerializeField] [Range(1, 100)] int _typeSpeed;
+    [SerializeField] [Range(1f, 1000f)] float _typeSpeed;
+    float _initTypeSpeed;
+    [SerializeField] private bool _syncTextToVoice;
 
     public Animator animator;
 
@@ -35,10 +36,12 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private void Start()
     {
-        _sentences = new Queue<string>();
+        _sentences = new Queue<Sentence>();
         _speakers = new Queue<string>();
 
-        _typeSpeed = Mathf.Max(_typeSpeed, 1);
+        _typeSpeed = Mathf.Max(_typeSpeed, 1f);
+        _initTypeSpeed = _typeSpeed;
+
         _isTyping = false;
     }
 
@@ -49,7 +52,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         foreach (Utterance utterance in dialogue.utterances)
         {
-            foreach (string sentence in utterance.sentences)
+            foreach (Sentence sentence in utterance.sentences)
             {
                 _sentences.Enqueue(sentence);
                 _speakers.Enqueue(utterance.speaker);
@@ -66,7 +69,12 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void DisplayNextSentence()
     {   
+        // Initialize Voice
+        SoundManager.Instance.StopVoice();
+
+        // Initialize Text and Typing
         StopAllCoroutines();
+        _typeSpeed = _initTypeSpeed;
 
         if (!_isTyping)
         {
@@ -79,27 +87,40 @@ public class DialogueManager : Singleton<DialogueManager>
             _sentence = _sentences.Dequeue();
             _speaker = _speakers.Dequeue();
 
+            // Voice
+            if (!SoundManager.Instance.isVoiceMuted && _sentence.voice != null)
+            {
+                SoundManager.Instance.PlayVoice(_sentence.voice);
+
+                if (_syncTextToVoice)
+                {
+                    // TypeText yield return WaitForSeconds(1f / _typeSpeed);
+                    // _sentence.text.Length * 1f / _typeSpeed == _sentence.voice.Length
+                    _typeSpeed = (float) _sentence.text.Length / _sentence.voice.length;
+                }
+            }
+
+            // Text
             nameText.text = _speaker;
-            StartCoroutine(TypeSentence(_sentence));
-            
+            StartCoroutine(TypeText(_sentence.text));
         }
         else
         {
-            FinishTypingEarly(_sentence);
+            FinishTypingEarly(_sentence.text);
         }
     }
 
-    IEnumerator TypeSentence(string sentence)
+    IEnumerator TypeText(string text)
     {
         _isTyping = true;
 
         dialogueText.text = "";
 
-        string originalText = sentence;
+        string originalText = text;
         string displayedText = "";
         int alphaIndex = 0;
 
-        foreach (char letter in sentence.ToCharArray())
+        foreach (char letter in text.ToCharArray())
         {
             alphaIndex++;
             dialogueText.text = originalText;
@@ -107,15 +128,15 @@ public class DialogueManager : Singleton<DialogueManager>
 
             dialogueText.text = displayedText;
             
-            yield return new WaitForSeconds(_MAX_TYPE_TIME / _typeSpeed);
+            yield return new WaitForSeconds(1f / _typeSpeed);
         }
 
         _isTyping = false;
     }
 
-    private void FinishTypingEarly(string sentence)
+    private void FinishTypingEarly(string text)
     {
-        dialogueText.text = sentence;
+        dialogueText.text = text;
         _isTyping = false;
     }
 

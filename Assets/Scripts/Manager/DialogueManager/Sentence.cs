@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Utterance
+public class Sentence
 {
-    public string speaker;
-    public Sentence[] sentences;
+    public AudioClip voice;
+
+    [TextArea(5, 10)]
+    public string text;
 }
