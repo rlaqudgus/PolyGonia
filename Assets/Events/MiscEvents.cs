@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class MiscEvents
 {
-    public event Action OnCoinCollected;
+    public event Action<Item> OnItemCollected;
 
-    public void CoinCollected()
+    public void ItemCollected(Item item)
     {
-        if (OnCoinCollected != null)
+        if (OnItemCollected != null) 
         {
-            OnCoinCollected();
+            OnItemCollected(item);
         }
-    }   
+    }
 }
