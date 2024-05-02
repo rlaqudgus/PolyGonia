@@ -41,8 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3662732728201052000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07af20b7c4808df4cafdf4472567a7df, type: 3}
+  m_Script: {fileID: 11500000, guid: c5bb4ffc8ecf1c544b2005bac1e04c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinsCollected: 0
-  _coinsToComplete: 3
+  _itemType: 0
+  _itemsCollected: 0
+  _itemsToComplete: 3
