@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,11 @@ using TMPro;
 // How to make a Dialogue System in Unity
 // https://www.youtube.com/watch?v=_nRzoTzeyxU
 
-public class DialogueManager : Singleton<DialogueManager>
-{
+public class DialogueManager : MonoBehaviour
+{   
+    private static DialogueManager _instance;
+    public  static DialogueManager  Instance { get { return _instance; } }
+
     private Sentence _sentence;
     private string _speaker;
 
@@ -29,9 +33,19 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public Animator animator;
 
+    public event Action OnDialogueEnded;
+
     private void Awake()
     {
-        CreateSingleton(this);
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -47,6 +61,12 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void StartDialogue(Dialogue dialogue)
     {
+        if (dialogue == null)
+        {
+            Debug.LogWarning("There is no dialogue data assigned");
+            return;
+        }
+
         _sentences.Clear();
         _speakers.Clear();
 
@@ -150,5 +170,7 @@ public class DialogueManager : Singleton<DialogueManager>
         _sentence = null;
         _speaker = null;
         Debug.Assert(!_isTyping, "The dialogue already ended but _isTyping is true");
+        
+        if (OnDialogueEnded != null) OnDialogueEnded();
     }
 }
