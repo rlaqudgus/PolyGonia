@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     // coyote time은 가능하면?
     public void OnJump(InputAction.CallbackContext input)
     {
-        this.Log("Jump executed");
+        //this.Log("Jump executed");
         //SceneTest();
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
 
         if (_jumpCounter <=0 || (!_isJumping && coyoteTime <= 0)) return; 
-        this.Log("Performed");
+        //this.Log("Performed");
 
         if (_isJumping) coyoteTime = 1.0f;
         else _isJumping = true;
@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         // Adjustable jump height
         if (!_isJumping) return;
         if (_isJumpingDown) return;
-        this.Log("Jump Cut");
+        //this.Log("Jump Cut");
 
         _rb.AddForce(Vector2.down * _rb.velocity.y * _rb.mass * (1 - _jumpCutMultiplier), ForceMode2D.Impulse);
     }
@@ -326,7 +326,9 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         if (col.gameObject.CompareTag("Ground"))
         {
+        
             coyoteTime = _coyoteTimeDuration;
+
             if (_ray.CheckWithBox()) 
             {
                 _isJumping = false;
