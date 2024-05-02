@@ -30,21 +30,16 @@ public class QuestManager : Singleton<QuestManager>
 
     private void Start()
     {
+        // UpdateQuest 를 돌린다
+        // 현재 Requirement 를 체크하는 조건은 Level 과 이전 퀘스트 Prerequisite 이다
+        // 초기에는 Finish 된 퀘스트가 없으므로 Player Level Change 만 이용해서 Requirement 를 체크한다
+        GameManager.Instance.playerEvents.PlayerLevelChange(_currentPlayerLevel);
+
+        // QuestPoint 들은 OnEnable 에서 QuestEvents 를 구독하고 있음
+        // QuestPoint 들의 초기 current quest state 를 업데이트
         foreach (Quest quest in questMap.Values)
         {
             GameManager.Instance.questEvents.QuestStateChange(quest);
-        }
-    }
-
-    private void Update()
-    {
-        foreach (Quest quest in questMap.Values)
-        {
-            // if we're now meeting the requirements, switch over to the CAN_START state
-            if (quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
-            {
-                ChangeQuestState(quest.info.id, QuestState.CAN_START);
-            }
         }
     }
 
@@ -66,6 +61,17 @@ public class QuestManager : Singleton<QuestManager>
         }
 
         return idToQuestMap;
+    }
+
+    private void UpdateQuest()
+    {
+        foreach (Quest quest in questMap.Values)
+        {
+            if (quest.state == QuestState.REQUIREMENTS_NOT_MET && CheckRequirementsMet(quest))
+            {
+                ChangeQuestState(quest.info.id, QuestState.CAN_START);
+            }
+        }
     }
 
     private Quest GetQuestById(string id)
@@ -91,6 +97,7 @@ public class QuestManager : Singleton<QuestManager>
     private void PlayerLevelChange(int level)
     {
         _currentPlayerLevel = level;
+        UpdateQuest();
     }
 
     public void StartQuest(string id)
@@ -130,6 +137,7 @@ public class QuestManager : Singleton<QuestManager>
         Quest quest = GetQuestById(id);
         ClaimRewards(quest);
         ChangeQuestState(quest.info.id, QuestState.FINISHED);
+        UpdateQuest();
     }
 
     private bool CheckRequirementsMet(Quest quest)
