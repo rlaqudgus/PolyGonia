@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
-public class QuestPoint : MonoBehaviour
+public class QuestPoint : NPC, ITalkable
 {
     [Header("Quest")]
     [SerializeField] QuestInfo questInfoForPoint;
@@ -12,28 +12,49 @@ public class QuestPoint : MonoBehaviour
     [SerializeField] private bool _startPoint = true;
     [SerializeField] private bool _finishPoint = true;
 
-    private bool _playerIsNear = false;
-
     private string _questId;
 
     private QuestState _currentQuestState;
-    [SerializeField] private QuestIcon questIcon;
+
+    [Header("Quest Icon")]
+    [SerializeField] QuestIcon _questIcon;
+
+    [Header("Dialogue")]
+    [SerializeField] Dialogue _requirementsNotMetDialogue;
+    [SerializeField] Dialogue _canStartDialogue;
+    [SerializeField] Dialogue _inProgressDialogue;
+    [SerializeField] Dialogue _canFinishDialogue;
+    [SerializeField] Dialogue _finishedDialogue;
+
+    Dialogue[] _questDialogues;
+    Dialogue _currentDialogue;
+
+    private bool _visit;
 
     private void Awake()
     {
         _questId = questInfoForPoint.id;
+
+        _questDialogues = new Dialogue[] 
+        { 
+            _requirementsNotMetDialogue, 
+            _canStartDialogue,
+            _inProgressDialogue,
+            _canFinishDialogue,
+            _finishedDialogue
+        };
     }
 
     private void OnEnable()
     {
         GameManager.Instance.questEvents.OnQuestStateChange += QuestStateChange;
-        GameManager.Instance.inputEvents.OnSubmitPressed += SubmitPressed;
+        DialogueManager.Instance.OnDialogueEnded += DialogueEnded;
     }
 
     private void OnDisable()
     {
         GameManager.Instance.questEvents.OnQuestStateChange -= QuestStateChange;
-        GameManager.Instance.inputEvents.OnSubmitPressed -= SubmitPressed;
+        DialogueManager.Instance.OnDialogueEnded -= DialogueEnded;
     }
 
     private void QuestStateChange(Quest quest)
@@ -42,13 +63,36 @@ public class QuestPoint : MonoBehaviour
         if (quest.info.id == _questId)
         {
             _currentQuestState = quest.state;
-            questIcon.SetState(_currentQuestState, _startPoint, _finishPoint);
+            _currentDialogue = _questDialogues[(int) _currentQuestState];
+            _questIcon.SetState(_currentQuestState, _startPoint, _finishPoint);
         }
     }
 
-    private void SubmitPressed()
+    // Implement ITalkable Interface
+    public void Talk()
     {
-        if (!_playerIsNear) return;
+        DialogueManager.Instance.StartDialogue(_currentDialogue);
+    }
+
+    // Implement IInteractable Interface in NPC
+    public override void Interact()
+    {   
+        _visit = true;
+
+        // 모든 QuestState 에 대해 반드시 대화 데이터가 존재해서 대화할 필요는 없다
+        // 가령 REQUIREMENTS_NOT_MET 일 때 대화 불가능하도록 하려면 대화 데이터를 할당하지 않으면 된다
+        if (_currentDialogue == null) _visit = false;
+        else Talk(); // EndDialogue 시 _visit 을 false 로 만든다
+    }
+
+    private void DialogueEnded()
+    {
+        // Dialogue가 끝났다는 소식을 들었는데
+        // 그것이 QuestPoint 본인의 Dialogue가 아니면 return
+        if (!_visit) return;
+
+        // Dialogue 가 끝났으면 _visit 을 false로 바꾼다
+        _visit = false;
 
         if ((_currentQuestState == QuestState.CAN_START) && _startPoint)
         {
@@ -58,16 +102,5 @@ public class QuestPoint : MonoBehaviour
         {
             QuestManager.Instance.FinishQuest(_questId);
         }
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) _playerIsNear = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) _playerIsNear = false;
     }
 }
