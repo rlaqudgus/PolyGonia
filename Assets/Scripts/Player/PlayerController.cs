@@ -351,8 +351,6 @@ public class PlayerController : MonoBehaviour, IAttackable
  
     private void Interact() 
     {
-        GameManager.Instance.inputEvents.SubmitPressed();
-
         if (scannedObjects.Count == 0) return;
  
         // 가장 가까운 scan된 물체 사용

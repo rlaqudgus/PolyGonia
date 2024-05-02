@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
 
     public GameState gameState;
 
-    public InputEvents inputEvents;
     public PlayerEvents playerEvents;
     public MiscEvents miscEvents;
     public QuestEvents questEvents;
@@ -45,7 +44,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        inputEvents = new InputEvents();
         miscEvents = new MiscEvents();
         playerEvents = new PlayerEvents();
         questEvents = new QuestEvents();
