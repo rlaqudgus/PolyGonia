@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
     public void UpdateGameState(GameState newGameState)
     {
         this.Log($"Game State is updated to {newGameState.ToString()}");
+
+        gameState = newGameState;
+
         switch (newGameState)
         {
             case GameState.Init:
