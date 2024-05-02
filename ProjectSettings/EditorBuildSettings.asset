@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Beta1.3/TestScene.unity
     guid: cd2f7393ace2ed040a7b47412b502604
+  - enabled: 1
+    path: Assets/Scenes/Beta1.3/KBHMAPScene.unity
+    guid: 9d16bbc4e970f9c47a0240b277083adc
   m_configObjects: {}
