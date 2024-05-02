@@ -248,14 +248,17 @@ public class PlayerController : MonoBehaviour, IAttackable
     void Jump()
     {
 
-        if (_jumpCounter <= 0 || coyoteTime <= 0) return;
-
+        if (_jumpCounter <=0 || (!_isJumping && coyoteTime <= 0)) return; 
         this.Log("Performed");
-        _isJumping = true;
-        if (coyoteTime > 0)
+
+        if (_isJumping) coyoteTime = 1.0f;
+        else _isJumping = true;
+
+        /*if (coyoteTime > 0)
         {
-            _jumpCounter = Mathf.Max(_jumpCounter, 1); // 최소한 한 번의 점프는 보장
-        }
+            _jumpCounter = Mathf.Max(_jumpCounter, 2); // 최소한 한 번의 점프는 보장
+        }   > 이 코드는 이제 없어도 되지 않을까요? 5/2 이광영 */ 
+
         _jumpCounter--;
 
         // Y velocity after adding force is the same as the initial jump velocity
