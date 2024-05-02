@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Hello World
   utterances:
-  - speaker: KBH
+  - speaker: Mejiro Mcqueen
     sentences:
     - voice: {fileID: 8300000, guid: d5f4c415a5e06ea498f9025d238a3ae1, type: 3}
       text: If I let it out during class, my school life will be over...
-  - speaker: Me
+  - speaker: Grass Wonder
     sentences:
     - voice: {fileID: 8300000, guid: fe095b75945fb86428981ca82d673cec, type: 3}
       text: Why are you so used to it, even though you liked me first?
