@@ -51,7 +51,7 @@ public class QuestIcon : MonoBehaviour
                 if (startPoint) { canStartIcon.SetActive(true); }
                 break;
             case QuestState.IN_PROGRESS:
-                if (finishPoint) { inProgressIcon.SetActive(true); }
+                inProgressIcon.SetActive(true);
                 break;
             case QuestState.CAN_FINISH:
                 if (finishPoint) { canFinishIcon.SetActive(true); }

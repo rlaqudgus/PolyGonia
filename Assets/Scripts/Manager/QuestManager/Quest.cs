@@ -34,7 +34,8 @@ public class Quest
         if (questStepPrefab != null)
         {
             // 최적화 시 오브젝트 풀링 사용
-            QuestStep questStep = Object.Instantiate<GameObject>(questStepPrefab, parentTransform).GetComponent<QuestStep>();
+            GameObject newQuestStepObject = Object.Instantiate(questStepPrefab, parentTransform);
+            QuestStep questStep = newQuestStepObject.GetComponent<QuestStep>();
             questStep.InitializeQuestStep(info.id);
         }
     }
