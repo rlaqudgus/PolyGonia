@@ -61,7 +61,7 @@ public class JoyconInputManager : MonoBehaviour
     {
         //if (leftStick == Vector2.zero) return;
         //분기처리에 신경을 써줘야한다 event를 update에서 부르고 있으니 너무 많이 불리면 문제생길 가능성
-        JoyCon_Move.Invoke(leftStick);
+        if(leftStick!=Vector2.zero) JoyCon_Move.Invoke(leftStick);
         JoyCon_ShieldTrigger.Invoke(isShouldertrigger);
         JoyCon_Shield.Invoke(isShoulderPressed);
         if (isAttackbuttontrigger && isShoulderPressed) JoyCon_Parry.Invoke();

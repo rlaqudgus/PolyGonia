@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [Header("Sound Volume Controller")]
     [SerializeField] private Slider _musicVolumeController;
     [SerializeField] private Slider _sfxVolumeController;
+    
 
     private void Awake()
     {   
@@ -43,6 +44,40 @@ public class UIManager : MonoBehaviour
         
         // UI
         CloseAllMenus();
+
+        // Subscribe UI Action by case
+        GameManager.OnGameStateChanged += UIByGameState;
+    }
+
+    private void OnDestroy()
+    {
+        // Not gonna be destroyed because it's Singleton but unsubscribe anyway..?
+        GameManager.OnGameStateChanged -= UIByGameState;
+    }
+
+    private void UIByGameState(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.Init:
+                break;
+            case GameState.Pause:
+                break;
+            case GameState.Adventure:
+                break;
+            case GameState.Inventory:
+                break;
+            case GameState.Cinematic:
+                break;
+            case GameState.Die:
+                break;
+            case GameState.LowHealth:
+                break;
+            case GameState.CutScene:
+                break;
+            default:
+                break;
+        }
     }
 
     public void OpenMainMenu()

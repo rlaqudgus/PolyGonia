@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
     public  static GameManager  Instance { get { return _instance; } }
 
-    public static event Action<GameState> gameStateChanged;
+    public static event Action<GameState> OnGameStateChanged;
 
     public SoundManager soundManager;
     public UIManager uiManager;
@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
             case GameState.Die:
                 Die();
                 break;
+            case GameState.LowHealth:
+                break;
             case GameState.CutScene:
                 CutScene();
                 break;
@@ -73,7 +75,7 @@ public class GameManager : MonoBehaviour
                 // GameState 추가 시 break 거는 것 유의
         }
 
-        gameStateChanged?.Invoke(newGameState);
+        OnGameStateChanged?.Invoke(newGameState);
     }
 
     public void Init()

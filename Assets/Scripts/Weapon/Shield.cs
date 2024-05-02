@@ -67,7 +67,7 @@ public class Shield : Weapon
 
         else if(col.CompareTag("Parry") && !_isParrying)
         {
-            EffectManager.Instance.InstantiateEffect(ParticleColor.WHITE, transform.position);
+            EffectManager.Instance.InstantiateEffect(ParticleColor.WHITE, (transform.position + col.transform.position) * .5f + Vector3.up);
         }
     }
 }

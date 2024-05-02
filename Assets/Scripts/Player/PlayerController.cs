@@ -350,6 +350,8 @@ public class PlayerController : MonoBehaviour, IAttackable
         DamageEffect();
         this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
         _HP -= dmg;
+
+        if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
     }
 
     void DamageEffect()
@@ -434,7 +436,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         //조이콘에서 받은 인풋 사용
         _isShield = s;
         this.Log($"isShield : {_isShield}");
-        //_shield.ShieldActivate(_isShield);
+        WeaponController.Instance.UseShield();
         _anim.SetBool("isShield", _isShield);
     }
 
@@ -449,6 +451,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     void ResetShield()
     {
+        WeaponController.Instance.UseShield();
         _anim.ResetTrigger("Shield");
     }
 
@@ -457,7 +460,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         this.Log("Parry");
         _anim.SetTrigger("Parry");
         StartCoroutine(CheckParry());
-        //_shield.ShieldParry();
+        WeaponController.Instance.UseWeapon(0);
         Invoke("ResetParry", 0.2f);
     }
 

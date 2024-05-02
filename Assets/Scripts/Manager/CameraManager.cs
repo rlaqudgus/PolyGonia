@@ -11,6 +11,7 @@ public class CameraManager : Singleton<CameraManager>
     {
         CreateSingleton(this);
         if (controller == null) controller = GameObject.Find("Virtual Camera").GetComponent<CameraController>();
+        GameManager.OnGameStateChanged += CameraByGameState;
     }
     public void Zoom(float size, float time) => controller.Zoom(size, time);
     public void Shake(float amount, float freq, float time)=>controller.Shake(amount, freq, time);
@@ -19,4 +20,18 @@ public class CameraManager : Singleton<CameraManager>
     public void ResetCamera(float time) => controller.ResetCamera(time);
     public void FollowTarget(GameObject target, float time) => controller.FollowTarget(target, time);
     public void FollowTarget(GameObject target) => controller.FollowTarget(target);
+    
+    [ContextMenu("hp1Effect")]
+    public void LowHPPostProcess(float time) => controller.LowHpPostProcess(time, 1, .4f);
+
+    private void CameraByGameState(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.LowHealth:
+                LowHPPostProcess(3f);
+                break;
+        }
+
+    }
 }
