@@ -32,15 +32,19 @@ public class RayBox : MonoBehaviour
     // [TG] [2024-04-06] [Refactor]
     // 1. 시작 위치 매개변수(Vector2 startPos)를 추가
     // 2. Player가 ground의 끝부분에 있는 지 판단하기 위해 Player의 왼쪽, 오른쪽 부분에서 ray를 발사하여 ground탐지
+    // [광] [2024-05-02]
+    // 1. "Default" 레이어에만 raycast 하도록 layermask 변수 설정
     public bool CheckWithRay(Vector2 startPos, Vector2 dir, float distance)
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(startPos, dir, distance);
+        int layerMask = 1 << LayerMask.NameToLayer("Default");
+        RaycastHit2D[] hits = Physics2D.RaycastAll(startPos, dir, distance, layerMask);
         Debug.DrawRay(transform.position, dir, Color.blue);
+
         foreach (var hit in hits)
         {
             if (hit.collider != null && hit.collider.gameObject.CompareTag(tagName))
             {
-                // Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
                 return true;
             }
         }
