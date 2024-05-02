@@ -4,29 +4,31 @@ using UnityEngine;
 
 public class QuestIcon : MonoBehaviour
 {
-    [SerializeField] private GameObject questPoint;
+    [SerializeField] private GameObject _questPoint;
 
     [Header("Icons")]
-    private GameObject[] icons;
-    [SerializeField] private GameObject requirementsNotMetIcon;
-    [SerializeField] private GameObject canStartIcon;
-    [SerializeField] private GameObject inProgressIcon;
-    [SerializeField] private GameObject canFinishIcon;
+    private GameObject[] _icons;
+    [SerializeField] private GameObject _requirementsNotMetIcon;
+    [SerializeField] private GameObject _canStartIcon;
+    [SerializeField] private GameObject _inProgressIcon;
+    [SerializeField] private GameObject _canFinishIcon;
+    [SerializeField] private GameObject _finishedIcon;
 
     private void Start()
     {
-        icons = new GameObject[] 
+        _icons = new GameObject[] 
         { 
-            requirementsNotMetIcon, 
-            canStartIcon,
-            inProgressIcon,
-            canFinishIcon,
+            _requirementsNotMetIcon, 
+            _canStartIcon,
+            _inProgressIcon,
+            _canFinishIcon,
+            _finishedIcon
         };
 
-        float offsetY = Mathf.Abs(questPoint.transform.localScale.y);
-        this.transform.position = questPoint.transform.position + offsetY * Vector3.up;
+        float offsetY = Mathf.Abs(_questPoint.transform.localScale.y);
+        this.transform.position = _questPoint.transform.position + offsetY * Vector3.up;
 
-        foreach (GameObject icon in icons)
+        foreach (GameObject icon in _icons)
         {
             icon.transform.position = this.transform.position;
             icon.SetActive(false);
@@ -36,7 +38,7 @@ public class QuestIcon : MonoBehaviour
     public void SetState(QuestState newState, bool startPoint, bool finishPoint)
     {
         // set all to inactive
-        foreach (GameObject icon in icons)
+        foreach (GameObject icon in _icons)
         {
             icon.SetActive(false);
         }
@@ -45,18 +47,19 @@ public class QuestIcon : MonoBehaviour
         switch (newState)
         {
             case QuestState.REQUIREMENTS_NOT_MET:
-                if (startPoint) { requirementsNotMetIcon.SetActive(true); }
+                if (startPoint) { _requirementsNotMetIcon.SetActive(true); }
                 break;
             case QuestState.CAN_START:
-                if (startPoint) { canStartIcon.SetActive(true); }
+                if (startPoint) { _canStartIcon.SetActive(true); }
                 break;
             case QuestState.IN_PROGRESS:
-                inProgressIcon.SetActive(true);
+                _inProgressIcon.SetActive(true);
                 break;
             case QuestState.CAN_FINISH:
-                if (finishPoint) { canFinishIcon.SetActive(true); }
+                if (finishPoint) { _canFinishIcon.SetActive(true); }
                 break;
             case QuestState.FINISHED:
+                _finishedIcon.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("Quest State not recognized by switch statement for quest icon: " + newState);
