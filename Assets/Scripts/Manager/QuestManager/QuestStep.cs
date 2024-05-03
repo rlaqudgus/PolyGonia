@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class QuestStep : MonoBehaviour
 {
+    [SerializeField] Dialogue dialogue;
     private bool isFinished = false;
 
     private string _questId;
@@ -14,14 +15,21 @@ public abstract class QuestStep : MonoBehaviour
     }
 
     protected void FinishQuestStep()
-    {
-        Debug.Log("Finish Quest Step: " + this.gameObject.name);
+    {       
+        if (isFinished) return;
         
-        if (!isFinished)
+        isFinished = true;
+        Debug.Log("Finish Quest Step: " + this.gameObject.name);
+
+        // 현재 QuestStep 을 끝냈음을 알리는 어떤 수단이 필요
+        // 그것은 Dialogue 가 아닐 수도 있음
+        if (dialogue != null)
         {
-            isFinished = true;
-            QuestManager.Instance.AdvanceQuest(_questId);
-            Destroy(this.gameObject);
+            DialogueManager.Instance.StartDialogue(dialogue);
         }
+
+        QuestManager.Instance.AdvanceQuest(_questId);
+
+        Destroy(this.gameObject);
     }
 }

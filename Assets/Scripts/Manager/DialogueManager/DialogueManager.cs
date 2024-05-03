@@ -33,6 +33,8 @@ public class DialogueManager : MonoBehaviour
 
     public Animator animator;
 
+    public event Action OnDialogueStarted;
+    public event Action OnDialogueDisplayed;
     public event Action OnDialogueEnded;
 
     private void Awake()
@@ -66,6 +68,10 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("There is no dialogue data assigned");
             return;
         }
+        else if (dialogue.utterances.Length == 0)
+        {
+            Debug.LogWarning("Dialogue exists but there is no utterances assigned in " + dialogue.name);
+        }
 
         _sentences.Clear();
         _speakers.Clear();
@@ -83,6 +89,8 @@ public class DialogueManager : MonoBehaviour
         GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
 
         animator.SetBool("IsOpen", true);
+
+        if (OnDialogueStarted != null) OnDialogueStarted();
 
         DisplayNextSentence();
     }
@@ -128,6 +136,8 @@ public class DialogueManager : MonoBehaviour
         {
             FinishTypingEarly(_sentence.text);
         }
+
+        if (OnDialogueDisplayed != null) OnDialogueDisplayed();
     }
 
     IEnumerator TypeText(string text)

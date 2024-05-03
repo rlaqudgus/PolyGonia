@@ -29,8 +29,6 @@ public class QuestPoint : NPC, ITalkable
     Dialogue[] _questDialogues;
     Dialogue _currentDialogue;
 
-    private bool _visit;
-
     private void Awake()
     {
         _questId = questInfoForPoint.id;
@@ -77,22 +75,22 @@ public class QuestPoint : NPC, ITalkable
     // Implement IInteractable Interface in NPC
     public override void Interact()
     {   
-        _visit = true;
+        _isInteracting = true;
 
         // 모든 QuestState 에 대해 반드시 대화 데이터가 존재해서 대화할 필요는 없다
         // 가령 REQUIREMENTS_NOT_MET 일 때 대화 불가능하도록 하려면 대화 데이터를 할당하지 않으면 된다
-        if (_currentDialogue == null) _visit = false;
-        else Talk(); // EndDialogue 시 _visit 을 false 로 만든다
+        if (_currentDialogue == null) _isInteracting = false;
+        else Talk(); // EndDialogue 시 isInteracting 을 false 로 만든다
     }
 
     private void DialogueEnded()
     {
         // Dialogue가 끝났다는 소식을 들었는데
         // 그것이 QuestPoint 본인의 Dialogue가 아니면 return
-        if (!_visit) return;
+        if (!_isInteracting) return;
 
-        // Dialogue 가 끝났으면 _visit 을 false로 바꾼다
-        _visit = false;
+        // Dialogue 가 끝났으면 isInteracting 을 false로 바꾼다
+        _isInteracting = false;
 
         if ((_currentQuestState == QuestState.CAN_START) && _startPoint)
         {

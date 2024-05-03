@@ -352,10 +352,14 @@ public class PlayerController : MonoBehaviour, IAttackable
     private void Interact() 
     {
         if (scannedObjects.Count == 0) return;
- 
+        
         // 가장 가까운 scan된 물체 사용
         GameObject scannedObject = FindClosestObject(gameObject, scannedObjects);
         Debug.Assert(scannedObject != null, "Scanned object must not be null for interaction");
+
+        // [SH] [2024-05-03]
+        // 현재는 플레이어 중심으로 Interaction 가능한 물체를 탐색하지만 Event 를 사용해서 구현할 수도 있다
+        // 만약 InteractBox 끼리 겹치지 않는다고 가정한다면 Event 를 사용해서 프로그래밍을 할 수 있다
  
         // Interact 처리 수행
         if (scannedObject.layer == LayerMask.NameToLayer("NPC")) 
