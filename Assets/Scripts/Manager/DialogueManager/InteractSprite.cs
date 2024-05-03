@@ -38,4 +38,9 @@ public class InteractSprite : MonoBehaviour
     {
         _angle = 0f;   
     }
+
+    public void SetActive(bool flag) 
+    {
+        this.gameObject.SetActive(flag);
+    }
 }
