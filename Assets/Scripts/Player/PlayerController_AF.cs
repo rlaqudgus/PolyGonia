@@ -16,12 +16,10 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 {   
     public PlayerData data; // player에 관한 변수들을 저장한 scriptable object
     [SerializeField] private RayBox _ray;
-    [SerializeField] private float _moveSpd;
     [SerializeField] private float _invincibleTime;
     [SerializeField] private int _maxHP;
     [SerializeField] private int _HP;
     
-    private Vector2 _moveDir;
     private int _dir;
     private bool _isMoving;
     private bool _canTeeter;
@@ -58,7 +56,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 
     // Dash
     private int _dashCounter;
-    private bool _dashRefilling;
+    private bool _isDashCoolTime;
     private bool _isDashAttacking;
     
     public bool IsJumping { get; private set; }
@@ -84,11 +82,10 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
     #region CHECK PARAMETERS
     [Header("Checks")] 
     [SerializeField] private Transform _groundCheckPoint;
-    //Size of groundCheck depends on the size of your character generally you want them slightly small than width (for ground) and height (for the wall check)
-    [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.49f, 0.03f);
+    [SerializeField] private Vector2 _groundCheckSize = new Vector2(0.5f, 0.03f);
     [Space(5)]
     [SerializeField] private Transform _wallCheckPoint;
-    [SerializeField] private Vector2 _wallCheckSize = new Vector2(0.5f, 1f);
+    [SerializeField] private Vector2 _wallCheckSize = new Vector2(0.3f, 1f);
     #endregion
 
     #region LAYERS & TAGS
@@ -98,8 +95,6 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
     
     void Start()
     {
-	    // [TG] [2024-04-29]
-	    SetGravityScale(data.gravityScale);
 	    
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
@@ -107,21 +102,20 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
         _anim = GetComponent<Animator>();
         _shield = GetComponentInChildren<Shield>(true);
 
+	    SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
         _HP = _maxHP;
     }
     
     void Update()
     {
-	    // [TG] [2024-04-29]
-	    #region TIMERS
+	    // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
 	    TimerOnGround -= Time.deltaTime;
 	    TimerOnWall -= Time.deltaTime;
 	    TimerOnWallRight -= Time.deltaTime;
 	    TimerOnWallLeft -= Time.deltaTime;
 	    TimerPressJumpBtn -= Time.deltaTime;
 	    TimerPressDashBtn -= Time.deltaTime;
-	    #endregion
 	    
 	    #region COLLISION CHECKS
 	    if (!IsDashing && !IsJumping)
@@ -151,8 +145,6 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 		    TimerOnWall = Mathf.Max(TimerOnWallLeft, TimerOnWallRight);
 	    }
 	    #endregion
-	    
-        Move();
         
         #region TEETER CHECK
         if (CanTeeter())
@@ -193,21 +185,38 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
         {
 			_isJumpCut = false;
 			_isJumpFalling = false;
-			IsSliding = false;
         }
-		#endregion
+		
+		if (!IsDashing)
+		{
+			//Jump
+			if (CanJump() && TimerPressJumpBtn > 0)
+			{
+				IsJumping = true;
+				IsWallJumping = false;
+				_isJumpCut = false;
+				_isJumpFalling = false;
+				Jump();
+			}
+			//WALL JUMP
+			else if (CanWallJump() && TimerPressJumpBtn > 0)
+			{
+				IsWallJumping = true;
+				IsJumping = false;
+				_isJumpCut = false;
+				_isJumpFalling = false;
 
-		#region SLIDE CHECKS
-		if (CanSlide() && ((TimerOnWallLeft > 0 && _moveInput.x < 0) || (TimerOnWallRight > 0 && _moveInput.x > 0)))
-			IsSliding = true;
-		else
-			IsSliding = false;
-		#endregion
+				_lastWallJumpTime = Time.time;
+				_lastWallJumpDir = (TimerOnWallRight > 0) ? -1 : 1;
 
+				WallJump(_lastWallJumpDir);
+			}
+		}
+		#endregion
+		
 		#region GRAVITY
 		if (!_isDashAttacking)
 		{
-			//Higher gravity if we've released the jump input or are falling
 			if (IsSliding)
 			{
 				SetGravityScale(0);
@@ -221,6 +230,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 			else if (_isJumpCut)
 			{
 				// 점프를 중간에 취소할 시 빠른 하강 : 중력값을 그대로 사용할 시 점프컷이 아닌 일반 점프에 점프 높이만 낮아진 것이 되어버림
+				this.Log("jump cut");
 				SetGravityScale(data.gravityScale * data.jumpCutGravityMult);
 				_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFallSpeed));
 			}
@@ -246,10 +256,31 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 			SetGravityScale(0);
 		}
 		#endregion
+		
+		#region SLIDE CHECKS
+		// 왼쪽 벽에 붙어있고 왼쪽 방향키 누를 때, 오른쪽 벽에 붙어있고 오른쪽 방향키 누를 때
+		if (CanSlide() && ((TimerOnWallLeft > 0 && _moveInput.x < 0) || (TimerOnWallRight > 0 && _moveInput.x > 0)))
+		{
+			IsSliding = true;
+		}
+		else
+		{
+			IsSliding = false;
+		}
+		#endregion
+		
+		//x축 부호 바꾸기 (좌우반전)
+		if (_isMoving)
+		{
+			transform.localScale = new Vector2(_dir, transform.localScale.y);
+		}
+		
+		_anim.SetBool("isMoving", _isMoving);
     }
+    
     private void FixedUpdate()
     {
-	    // Run
+	    #region Run
 	    if (!IsDashing && IsWallJumping)
 	    {
 		    Run(data.wallJumpRunLerp);
@@ -262,50 +293,36 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	    {
 		    Run(data.dashEndRunLerp);
 	    }
+	    else if (isShield || _isParry)
+	    {
+		    Run(0.25f);
+	    }
+	    #endregion
 	    // Slide
-	    if (IsSliding) Slide();
+	    if (IsSliding)
+	    {
+		    Slide();
+	    }
     }
     
     //Event를 통해 호출되는 함수
     //input에 따라 _moveDir를 변경
     public void OnMove(InputAction.CallbackContext input)
     {
-        Vector2 playerInput = input.ReadValue<Vector2>();
+        _moveInput = input.ReadValue<Vector2>();
 
-        if (playerInput.x > Mathf.Epsilon) _dir = 1;
-        else if (playerInput.x < -Mathf.Epsilon) _dir = -1;
+        if (_moveInput.x > Mathf.Epsilon) _dir = 1;
+        else if (_moveInput.x < -Mathf.Epsilon) _dir = -1;
         else _dir = 0;
-        
-        _moveDir = Vector2.right * _dir;
-        // this.Log($"Move Direction : {_moveDir}");
 
         _isMoving = (_dir != 0);
         // this.Log($"_isMoving : {_isMoving}");
+        
     }
     
-    private void Move()
-    {
-        if (_isMoving)
-        {
-            //방어상태 이동 그냥 이동 차이
-            float moveAmount = 1.0f;
-            if (isShield) moveAmount *= 0.25f;
-            if (_isParry) moveAmount *= 0.25f;
-            
-            // Move
-            transform.Translate(_moveDir * _moveSpd * moveAmount * Time.deltaTime);
-            
-            //x축 부호 바꾸기 (좌우반전)
-            transform.localScale = new Vector2(_dir, transform.localScale.y);
-        }
-        
-        // Animation Transition
-        _anim.SetBool("isMoving", _isMoving);
-    }
-
     public void OnLook(InputAction.CallbackContext input)
     {
-        Vector2 playerInput = input.ReadValue<Vector2>();
+	    Vector2 playerInput = input.ReadValue<Vector2>();
 
         IsLookUp = (playerInput.y > 0);
         IsLookDown = (playerInput.y < 0);
@@ -397,35 +414,14 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
     #region JUMP METHODS
     public void OnJump(InputAction.CallbackContext input)
     {
-        if (input.performed)
-        {
+	    if (input.phase == InputActionPhase.Started)
+	    {
 		    OnJumpInput();
+	    }
+        if (input.phase == InputActionPhase.Canceled)
+        {
+		   
 		    OnJumpUpInput();
-		    if (!IsDashing)
-		    {
-			    //Jump
-			    if (CanJump() && TimerPressJumpBtn > 0)
-			    {
-				    IsJumping = true;
-				    IsWallJumping = false;
-				    _isJumpCut = false;
-				    _isJumpFalling = false;
-				    Jump();
-			    }
-			    //WALL JUMP
-			    else if (CanWallJump() && TimerPressJumpBtn > 0)
-			    {
-				    IsWallJumping = true;
-				    IsJumping = false;
-				    _isJumpCut = false;
-				    _isJumpFalling = false;
-
-				    _lastWallJumpTime = Time.time;
-				    _lastWallJumpDir = (TimerOnWallRight > 0) ? -1 : 1;
-
-				    WallJump(_lastWallJumpDir);
-			    }
-		    }
         }
     }
     
@@ -434,6 +430,8 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	    //Ensures we can't call Jump multiple times from one press
 	    TimerPressJumpBtn = 0;
 	    TimerOnGround = 0;
+	 
+	    this.Log("Perform Jump");
 	    
 	    // 현재 속도에 상관없이 항상 일정한 점프를 할 수 있도록 함
 	    float force = data.jumpForce;
@@ -448,20 +446,22 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	    TimerOnGround = 0;
 	    TimerOnWallRight = 0;
 	    TimerOnWallLeft = 0;
-
+		
+	    this.Log("Perform Wall jump");
+	    
 	    Vector2 force = new Vector2(data.wallJumpForce.x, data.wallJumpForce.y);
-	    force.x *= dir; //apply force in opposite direction of wall
+	    force.x *= dir; // 벽과 반대방향으로 wall jump
 
 	    if (Mathf.Sign(_rb.velocity.x) != Mathf.Sign(force.x))
+	    {
 		    force.x -= _rb.velocity.x;
+	    }
 
-	    if (_rb.velocity.y < 0) //checks whether player is falling, if so we subtract the velocity.y
-		    //(counteracting force of gravity). This ensures the player always reaches our desired jump
-		    //force or greater
+	    if (_rb.velocity.y < 0) // 항상 일정한 wall jump
+	    {
 		    force.y -= _rb.velocity.y;
+	    }
 
-	    //Unlike in the run we want to use the Impulse mode.
-	    //The default mode will apply are force instantly ignoring masss
 	    _rb.AddForce(force, ForceMode2D.Impulse);
     }
     #endregion
@@ -580,9 +580,6 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
         else if (playerInput.x < -Mathf.Epsilon) _dir = -1;
         else _dir = 0;
 
-        _moveDir = Vector2.right * _dir;
-        // this.Log($"Move Direction : {_moveDir}");
-
         _isMoving = (_dir != 0);
         // this.Log($"_isMoving : {_isMoving}");
 
@@ -654,7 +651,9 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	public void OnJumpUpInput()
 	{
 		if (CanJumpCut() || CanWallJumpCut())
+		{
 			_isJumpCut = true;
+		}
 	}
 
 	public void OnDashInput()
@@ -678,64 +677,43 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	private IEnumerator PerformSleep(float duration)
     {
 		Time.timeScale = 0;
-		yield return new WaitForSecondsRealtime(duration); //Must be Realtime since timeScale with be 0 
+		yield return new WaitForSecondsRealtime(duration); // Time.timeScale에 영향을 받지 않기 위해 Realtime 사용
 		Time.timeScale = 1;
 	}
     #endregion
-
-	//MOVEMENT METHODS
+    
     #region RUN METHODS
     private void Run(float lerpAmount)
 	{
-		//Calculate the direction we want to move in and our desired velocity
+		// 이동 Input을 주었을 때의 목표 속도
 		float targetSpeed = _moveInput.x * data.runMaxSpeed;
-		//We can reduce are control using Lerp() this smooths changes to are direction and speed
 		targetSpeed = Mathf.Lerp(_rb.velocity.x, targetSpeed, lerpAmount);
 
-		#region Calculate AccelRate
-		float accelRate;
-
-		//Gets an acceleration value based on if we are accelerating (includes turning) 
-		//or trying to decelerate (stop). As well as applying a multiplier if we're air borne.
+		// 가속도 계산
+		float accelRate = 0f;
 		if (TimerOnGround > 0)
+		{
 			accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount : data.runDeccelAmount;
+		}
 		else
+		{
 			accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount * data.accelInAir : data.runDeccelAmount * data.deccelInAir;
-		#endregion
+		}
 
-		#region Add Bonus Jump Apex Acceleration
-		//Increase are acceleration and maxSpeed when at the apex of their jump, makes the jump feel a bit more bouncy, responsive and natural
+		// Jump Apex 근처에 있을 때 가속도 및 최대 속도 증가
 		if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(_rb.velocity.y) < data.jumpHangThreshold)
 		{
 			accelRate *= data.jumpHangAccelerationMult;
 			targetSpeed *= data.jumpHangMaxSpeedMult;
 		}
-		#endregion
-
-		#region Conserve Momentum
-		//We won't slow the player down if they are moving in their desired direction but at a greater speed than their maxSpeed
-		if(data.doConserveMomentum && Mathf.Abs(_rb.velocity.x) > Mathf.Abs(targetSpeed) && Mathf.Sign(_rb.velocity.x) == Mathf.Sign(targetSpeed) && Mathf.Abs(targetSpeed) > 0.01f && TimerOnGround < 0)
-		{
-			//Prevent any deceleration from happening, or in other words conserve are current momentum
-			//You could experiment with allowing for the player to slightly increae their speed whilst in this "state"
-			accelRate = 0; 
-		}
-		#endregion
-
-		//Calculate difference between current velocity and desired velocity
+		
 		float speedDif = targetSpeed - _rb.velocity.x;
-		//Calculate force along x-axis to apply to thr player
+		float moveForce = speedDif * accelRate;
 
-		float movement = speedDif * accelRate;
+		this.Log(moveForce);
+		// 지속적인 힘을 가하기 위해 ForceMode2D.Force 사용 - 물체 질량이 작을 수록 큰 가속도를 받음
+		_rb.AddForce(moveForce * Vector2.right, ForceMode2D.Force);
 
-		//Convert this to a vector and apply to rigidbody
-		_rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
-
-		/*
-		 * For those interested here is what AddForce() will do
-		 * _rb.velocity = new Vector2(_rb.velocity.x + (Time.fixedDeltaTime  * speedDif * accelRate) / _rb.mass, _rb.velocity.y);
-		 * Time.fixedDeltaTime is by default in Unity 0.02 seconds equal to 50 FixedUpdate() calls per second
-		*/
 	}
     #endregion
     
@@ -757,8 +735,6 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 		while (Time.time - startTime <= data.dashAttackTime)
 		{
 			_rb.velocity = dir.normalized * data.dashSpeed;
-			//Pauses the loop until the next frame, creating something of a Update loop. 
-			//This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
 			yield return null;
 		}
 
@@ -775,17 +751,14 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 			yield return null;
 		}
 
-		//Dash over
 		IsDashing = false;
 	}
 
-	//Short period before the player is able to dash again
 	private IEnumerator RefillDash(int amount)
 	{
-		//SHoet cooldown, so we can't constantly dash along the ground, again this is the implementation in Celeste, feel free to change it up
-		_dashRefilling = true;
+		_isDashCoolTime = true;
 		yield return new WaitForSeconds(data.dashCoolTime);
-		_dashRefilling = false;
+		_isDashCoolTime = false;
 		_dashCounter = Mathf.Min(data.dashAmount, _dashCounter + 1);
 	}
 	#endregion
@@ -793,18 +766,14 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	#region SLIDE
 	private void Slide()
 	{
-		//Works the same as the Run but only in the y-axis
 		float speedDif = data.slideSpeed - _rb.velocity.y;	
-		float movement = speedDif * data.slideAccel;
-		//So, we clamp the movement here to prevent any over corrections (these aren't noticeable in the Run)
-		//The force applied can't be greater than the (negative) speedDifference * by how many times a second FixedUpdate() is called. For more info research how force are applied to rigidbodies.
-		movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
+		float moveForce = speedDif * data.slideAccel;
+		moveForce = Mathf.Clamp(moveForce, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
 
-		_rb.AddForce(movement * Vector2.up);
+		_rb.AddForce(moveForce * Vector2.up);
 	}
     #endregion
-
-
+    
     #region CHECK METHODS
 
     private bool CanJump()
@@ -825,6 +794,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 
 	private bool CanJumpCut()
     {
+	    this.Log(IsJumping.ToString());
 		return IsJumping && _rb.velocity.y > 0;
     }
 
@@ -838,7 +808,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 		// Dash가 가능한 환경
 		// 1. Dash를 하고 있지 않으며 남은 Dash Amount가 1 이상
 		// 2. Ground에 닿고 있으며 Dash의 CoolTime이 충전이 끝난 상태
-		if (!IsDashing && _dashCounter < data.dashAmount && TimerOnGround > 0 && !_dashRefilling)
+		if (!IsDashing && _dashCounter < data.dashAmount && TimerOnGround > 0 && !_isDashCoolTime)
 		{
 			StartCoroutine(nameof(RefillDash), 1);
 		}

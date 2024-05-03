@@ -30,9 +30,6 @@ public class PlayerData : ScriptableObject
 	[Space(5)]
 	[Range(0f, 1f)] public float accelInAir; // 공중에 있을 시 가속도 값에 대한 Multiflier
 	[Range(0f, 1f)] public float deccelInAir;
-	
-	[Space(5)]
-	public bool doConserveMomentum = true;
 
 	[Space(20)]
 	[Header("Jump")]
@@ -97,6 +94,10 @@ public class PlayerData : ScriptableObject
 		
 		// 프로젝트 상의 중력값을 고려하여 RigidBody 상의 중력값 계산 gravity scale (project settings/Physics2D)
 		gravityScale = gravityStrength / Physics2D.gravity.y;
+
+		// 플레이어 이동 가속도의 최댓값을 이동 속도로 제한
+		runAccel = Mathf.Clamp(runAccel, 0.01f, runMaxSpeed);
+		runDeccel = Mathf.Clamp(runDeccel, 0.01f, runMaxSpeed);
 		
 		// 최대 이동 속도가 클 수록 가속도 값 작아지게 함 : 너무 빨리 이동 속도가 최대로 되는 것을 방지
 		// 50 : time.fixedDeltaTime(=0.02)의 역수값
@@ -107,10 +108,6 @@ public class PlayerData : ScriptableObject
 		//Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
 		// jumpForce가 아니라 정확히는 initJumpVelocity지만 그 값을 힘으로 취급
 		jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
-
-		// 플레이어 이동 가속도의 최댓값을 이동 속도로 제한
-		runAccel = Mathf.Clamp(runAccel, 0.01f, runMaxSpeed);
-		runDeccel = Mathf.Clamp(runDeccel, 0.01f, runMaxSpeed);
-	}
+    }
 }
 
