@@ -105,6 +105,15 @@ public class QuestManager : Singleton<QuestManager>
         Debug.Log("Start Quest: " + id);
 
         Quest quest = GetQuestById(id);
+
+        // 예외처리
+        if (quest.info.questStepPrefabs.Length == 0)
+        {
+            Debug.LogWarning("It seems that Quest step prefabs are not assigned yet: " + id);
+            ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
+            return;
+        }
+
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
     }
