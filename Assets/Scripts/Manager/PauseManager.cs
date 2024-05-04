@@ -40,6 +40,8 @@ public class PauseManager : MonoBehaviour
         // UI
         UIManager.Instance.OpenMainMenu();
 
+        UIManager.Instance.CloseMobileUI();
+
         // Input System
         GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
 
@@ -56,6 +58,8 @@ public class PauseManager : MonoBehaviour
 
         // UI
         UIManager.Instance.CloseAllMenus();
+
+        UIManager.Instance.OpenMobileUI();
 
         // Input System
         GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
