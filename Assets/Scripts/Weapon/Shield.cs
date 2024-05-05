@@ -23,10 +23,10 @@ public class Shield : Weapon
         yield return new WaitForSeconds(.3f);
         _isParrying = false;
 
-        if (!player._isShield) _collider.enabled = false;
+        if (!player.isShield) _collider.enabled = false;
     }
 
-    public override void UseShield() => _collider.enabled = player._isShield;
+    public override void UseShield() => _collider.enabled = player.isShield;
 
     //private void OnCollisionEnter2D(Collision2D collision)
     //{
@@ -35,8 +35,8 @@ public class Shield : Weapon
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        //ÆÐ¸µ ¿ÀºêÁ§Æ®°¡ °ËÃâµÇ¾ú´Ù¸é(ÆÐ¸µ ¼º°ø)
-        //ÆÐ¸µ ¿ÀºêÁ§Æ®ÀÇ ºÎ¸ð Á¢±Ù - ºÎ¸ðÀÇ IAttackable ÄÄÆ÷³ÍÆ® Á¢±Ù - byParry ¸Þ¼­µå ½ÇÇà
+        //ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ù¸ï¿½(ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        //ï¿½Ð¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ - ï¿½Î¸ï¿½ï¿½ï¿½ IAttackable ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ - byParry ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (col.CompareTag("Parry") && _isParrying)
         {
             this.Log("parry");
@@ -45,21 +45,21 @@ public class Shield : Weapon
             {
                 var shield = this.GetComponentInParent<Shield>();
 
-                //ÆÐ¸µµÈ³ðÀÇ ByParry ¸Þ¼­µå
+                //ï¿½Ð¸ï¿½ï¿½È³ï¿½ï¿½ï¿½ ByParry ï¿½Þ¼ï¿½ï¿½ï¿½
                 //a.ByParry(shield);
 
                 EffectManager.Instance.InstantiateEffect(ParticleColor.YELLOW, (transform.position + col.transform.position) * .5f);
-                //ÇÃ·¹ÀÌ¾î È¿°ú - ³Ë¹é
+                //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ È¿ï¿½ï¿½ - ï¿½Ë¹ï¿½
                 player.PlayerKnockBack(0.5f);
-                //ÇÃ·¹ÀÌ¾î È¿°ú - Ä«¸Þ¶ó Èçµé±â
+                //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ È¿ï¿½ï¿½ - Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½
 
                 CameraManager.Instance.Shake();
 
-                //Ä«¸Þ¶ó zoom ¿Ô´Ù °¬´Ù ÇÏ´Â ÀÌÆåÆ® ¸¸µé¤·ÁÖ¼À
+                //Ä«ï¿½Þ¶ï¿½ zoom ï¿½Ô´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½é¤·ï¿½Ö¼ï¿½
                 CameraManager.Instance.Zoom(6, 0);
 
                 CameraManager.Instance.ResetCamera(.15f);
-                //Á¶ÀÌÄÜ È¿°ú - Áøµ¿
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½
                 JoyConManager.Instance?.j[0].SetRumble(160, 320, 0.6f, 200);
 
             }

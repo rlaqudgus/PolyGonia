@@ -8,7 +8,6 @@ using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using Utilities;
 
-// PlayerController -> PlayerController_AF 수정
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -19,7 +18,7 @@ public class GameManager : MonoBehaviour
     public SoundManager soundManager;
     public UIManager uiManager;
     public CameraManager cameraManager;
-    public PlayerController_AF playerController;
+    public PlayerController playerController;
     public PlayerInput playerInput;
 
     // #region LOADING SCENE

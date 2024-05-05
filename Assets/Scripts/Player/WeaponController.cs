@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
-// Player -> Player_AF
 public class WeaponController : Singleton<WeaponController> //Player�� �޾Ƶα�
 {
     [SerializeField] Weapon[] _weaponArray;
@@ -17,7 +16,7 @@ public class WeaponController : Singleton<WeaponController> //Player�� �޾
     {
         CreateSingleton(this);
 
-        _player = GameObject.Find("Player_AF").GetComponent<PlayerController>();
+        _player = GameObject.Find("Player").GetComponent<PlayerController>();
         _weaponArray = gameObject.GetComponentsInChildren<Weapon>();
 
         foreach (Weapon weapon in _weaponArray) weapon.player = _player;
@@ -26,7 +25,7 @@ public class WeaponController : Singleton<WeaponController> //Player�� �޾
     public void UseShield() => this._weaponArray[_shieldIdx].UseShield();
     public void UseWeapon(int idx)
     {
-        if(_player._isShield) this._weaponArray[_shieldIdx].UseWeapon(idx);
+        if(_player.isShield) this._weaponArray[_shieldIdx].UseWeapon(idx);
         else this._weaponArray[_swordIdx].UseWeapon(idx);
     }
 }
