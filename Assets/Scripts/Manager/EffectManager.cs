@@ -5,19 +5,20 @@ using UnityEngine;
 using UnityEngine.Diagnostics;
 using Utilities;
 
+// Player -> Player_AF
+// PlayerController -> PlayerController_AFë¡œ ë°”ê¿”ì¤˜ì•¼í•¨..
 public enum ParticleColor { WHITE, YELLOW, RED, MIX};
-
 public class EffectManager : Singleton<EffectManager>
 {
     //public enum particleEffect { white, yellow, red, mix };
-    PlayerController _playercontroller;
+    PlayerController_AF _playercontroller;
  
     [SerializeField] GameObject[] _particles;
     // Start is called before the first frame update
     private void Awake()
     {
         CreateSingleton(this);
-        _playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
+        _playercontroller = GameObject.Find("Player_AF").GetComponent<PlayerController_AF>();
     }
 
     public void InvincibleEffect() => StartCoroutine(IEInvincible());
@@ -47,26 +48,26 @@ public class EffectManager : Singleton<EffectManager>
     IEnumerator IEInvincible()
     {
         GameObject go = _playercontroller.gameObject;
-        //ÃÖ»óÀ§ ÄÝ¶óÀÌ´õ invincible·Î º¯°æ
+        //ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ invincibleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         go.layer = LayerMask.NameToLayer("Invincible");
-        //ÇÏÀ§ ¸ðµç ¿ÀºêÁ§Æ® invincible·Î º¯°æ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® invincibleï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         foreach (Transform child in go.transform)
         {
             child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
         }
 
-        //±ôºý±ôºý ÀÌÆåÆ®
-        while (_playercontroller._isInvincible)
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+        while (_playercontroller.isInvincible)
         {
             yield return new WaitForSeconds(.2f);
             go.GetComponent<SpriteRenderer>().enabled = false;
             yield return new WaitForSeconds(.2f);
             go.GetComponent<SpriteRenderer>().enabled = true;
         }
-        //ÃÖ»óÀ§ ÄÝ¶óÀÌ´õ ´Ù½Ã ÇÃ·¹ÀÌ¾î·Î º¯°æ
+        //ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½Ù½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         go.layer = LayerMask.NameToLayer("Player1");
 
-        //ÇÏÀ§ ¸ðµç ¿ÀºêÁ§Æ® ´Ù½Ã ÇÃ·¹ÀÌ¾î·Î º¯°æ 
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ù½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         foreach (Transform child in go.transform)
         {
             child.gameObject.layer = LayerMask.NameToLayer("Player1");

@@ -51,7 +51,7 @@ public class MixerBox : MonoBehaviour
         SoundManager.Instance.snapshotInfoList.Add(snapshotInformation);
         SoundManager.Instance.Transition(timeToReach);
         
-        this.Log($"{snapshotInformation.snapshot.name} is working!");
+        // this.Log($"{snapshotInformation.snapshot.name} is working!");
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -64,6 +64,6 @@ public class MixerBox : MonoBehaviour
         SoundManager.Instance.snapshotInfoList.Remove(snapshotInformation);
         SoundManager.Instance.Transition(timeToReach);
         
-        this.Log($"{snapshotInformation.snapshot.name} is removed!");
+        // this.Log($"{snapshotInformation.snapshot.name} is removed!");
     }
 }

@@ -135,5 +135,5 @@ public class UIManager : MonoBehaviour
     public void SFXVolume()
     {   
         SoundManager.Instance.SetSFXVolume(_sfxVolumeController.value);
-    }   
+    }
 }
