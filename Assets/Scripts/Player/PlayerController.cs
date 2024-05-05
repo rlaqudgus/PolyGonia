@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     // coyote time은 가능하면?
     public void OnJump(InputAction.CallbackContext input)
     {
-        this.Log("Jump executed");
+        //this.Log("Jump executed");
         //SceneTest();
         if (input.performed) Jump();
         if (input.canceled) JumpCut();
@@ -252,14 +252,17 @@ public class PlayerController : MonoBehaviour, IAttackable
     void Jump()
     {
 
-        if (_jumpCounter <= 0 || coyoteTime <= 0) return;
+        if (_jumpCounter <=0 || (!_isJumping && coyoteTime <= 0)) return; 
+        //this.Log("Performed");
 
-        this.Log("Performed");
-        _isJumping = true;
-        if (coyoteTime > 0)
+        if (_isJumping) coyoteTime = 1.0f;
+        else _isJumping = true;
+
+        /*if (coyoteTime > 0)
         {
-            _jumpCounter = Mathf.Max(_jumpCounter, 1); // 최소한 한 번의 점프는 보장
-        }
+            _jumpCounter = Mathf.Max(_jumpCounter, 2); // 최소한 한 번의 점프는 보장
+        }   > 이 코드는 이제 없어도 되지 않을까요? 5/2 이광영 */ 
+
         _jumpCounter--;
 
         // Y velocity after adding force is the same as the initial jump velocity
@@ -276,7 +279,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         // Adjustable jump height
         if (!_isJumping) return;
         if (_isJumpingDown) return;
-        this.Log("Jump Cut");
+        //this.Log("Jump Cut");
 
         _rb.AddForce(Vector2.down * _rb.velocity.y * _rb.mass * (1 - _jumpCutMultiplier), ForceMode2D.Impulse);
     }
@@ -400,7 +403,9 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         if (col.gameObject.CompareTag("Ground"))
         {
+        
             coyoteTime = _coyoteTimeDuration;
+
             if (_ray.CheckWithBox()) 
             {
                 _isJumping = false;
@@ -427,6 +432,8 @@ public class PlayerController : MonoBehaviour, IAttackable
         DamageEffect();
         this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
         _HP -= dmg;
+
+        if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
     }
 
     void DamageEffect()
@@ -511,7 +518,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         //조이콘에서 받은 인풋 사용
         _isShield = s;
         this.Log($"isShield : {_isShield}");
-        //_shield.ShieldActivate(_isShield);
+        WeaponController.Instance.UseShield();
         _anim.SetBool("isShield", _isShield);
     }
 
@@ -526,6 +533,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     void ResetShield()
     {
+        WeaponController.Instance.UseShield();
         _anim.ResetTrigger("Shield");
     }
 
@@ -534,7 +542,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         this.Log("Parry");
         _anim.SetTrigger("Parry");
         StartCoroutine(CheckParry());
-        //_shield.ShieldParry();
+        WeaponController.Instance.UseWeapon(0);
         Invoke("ResetParry", 0.2f);
     }
 

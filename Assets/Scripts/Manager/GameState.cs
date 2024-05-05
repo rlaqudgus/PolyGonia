@@ -4,11 +4,13 @@ using UnityEngine;
 
 public enum GameState 
 {
-    Init, 
+    Init,
+    Pause,
     Adventure, 
     Inventory, 
     Cinematic, 
-    Die, 
+    Die,
+    LowHealth,
     CutScene, 
     
 }

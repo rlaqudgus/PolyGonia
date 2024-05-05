@@ -2,7 +2,8 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-  
+using UnityEngine.Rendering.PostProcessing;
+
 public class CameraController : MonoBehaviour
 {
     CinemachineVirtualCamera _virtualCamera;
@@ -15,6 +16,9 @@ public class CameraController : MonoBehaviour
 
     Vector3 defaultOffset;
     float defaultSize;
+
+    [Header("PostProcessing Components")]
+    [SerializeField] private PostProcessVolume _postProcessController;
 
     private void Awake()
     {
@@ -37,6 +41,7 @@ public class CameraController : MonoBehaviour
     public void ResetCamera(float time) => StartCoroutine(IEReset(time));
     public void FollowTarget(GameObject target, float time) => StartCoroutine(IEFollowTarget(target, time));
     public void FollowTarget(GameObject target) => _virtualCamera.m_Follow = target.transform;
+    public void LowHpPostProcess(float time, float grainamount, float vignetteamount) => StartCoroutine(IELowHpPostProcess(time,grainamount,vignetteamount));
 
     private IEnumerator IEShake(float amount, float freq, float time)
     {
@@ -111,5 +116,25 @@ public class CameraController : MonoBehaviour
         yield return new WaitForSeconds(time);
 
         _virtualCamera.m_Follow = GameObject.Find("Player").transform;
+    }
+
+    private IEnumerator IELowHpPostProcess(float duration, float grainValue, float vignetteValue)
+    {
+        float elapsedTime = 0;
+
+        _postProcessController.profile.TryGetSettings(out Grain grain);
+        _postProcessController.profile.TryGetSettings(out Vignette vignette);
+
+        while(elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            grain.intensity.value = Mathf.Lerp(0, grainValue, t);
+            vignette.intensity.value = Mathf.Lerp(0, vignetteValue, t);
+
+            yield return null;
+
+            elapsedTime+=Time.deltaTime;
+        }
+        
     }
 }

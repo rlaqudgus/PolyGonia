@@ -18,8 +18,8 @@ TagManager:
   - Player2
   - Enemy1
   - Enemy2
+  - BackgroundTile
   - 
-  - NPC
   - 
   - 
   - 
@@ -43,13 +43,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: NPC
-    uniqueID: 1242905509
-    locked: 0
-  - name: Player
-    uniqueID: 3355981795
-    locked: 0
-  - name: Enemy
-    uniqueID: 4133902565
     locked: 0

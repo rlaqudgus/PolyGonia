@@ -34,6 +34,8 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
+        
+
         isPaused = true;
         _lastActionMap = GameManager.Instance.playerInput.currentActionMap;
         Time.timeScale = 0;
