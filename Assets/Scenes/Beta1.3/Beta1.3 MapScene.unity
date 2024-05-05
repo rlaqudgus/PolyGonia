@@ -459,7 +459,6 @@ GameObject:
   - component: {fileID: 86492746}
   - component: {fileID: 86492745}
   - component: {fileID: 86492748}
-  - component: {fileID: 86492747}
   m_Layer: 2
   m_Name: Goal
   m_TagString: Ground
@@ -495,19 +494,6 @@ Transform:
   - {fileID: 1351269451}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &86492747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86492744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ca06ae8df1bea44b7f1f5b942c3ecd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetScene: TestScene
 --- !u!65 &86492748
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10736,7 +10722,7 @@ GameObject:
   - component: {fileID: 920711040}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12437,7 +12423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ca06ae8df1bea44b7f1f5b942c3ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetScene: TestScene
+  targetScene: KBHMAPScene
 --- !u!1 &1378832571
 GameObject:
   m_ObjectHideFlags: 0
