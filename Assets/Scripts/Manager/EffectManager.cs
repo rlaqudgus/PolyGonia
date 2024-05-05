@@ -11,14 +11,14 @@ public enum ParticleColor { WHITE, YELLOW, RED, MIX};
 public class EffectManager : Singleton<EffectManager>
 {
     //public enum particleEffect { white, yellow, red, mix };
-    PlayerController_AF _playercontroller;
+    PlayerController _playercontroller;
  
     [SerializeField] GameObject[] _particles;
     // Start is called before the first frame update
     private void Awake()
     {
         CreateSingleton(this);
-        _playercontroller = GameObject.Find("Player_AF").GetComponent<PlayerController_AF>();
+        _playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     public void InvincibleEffect() => StartCoroutine(IEInvincible());
