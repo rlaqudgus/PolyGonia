@@ -27,6 +27,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _sfxVolumeController;
     
 
+    [Header("Mobile UI")]
+    [SerializeField] private GameObject _mobileUI;
+
     private void Awake()
     {   
         if (_instance == null)
@@ -137,5 +140,15 @@ public class UIManager : MonoBehaviour
     public void SFXVolume()
     {   
         SoundManager.Instance.SetSFXVolume(_sfxVolumeController.value);
+    }
+
+    public void CloseMobileUI()
+    {
+        _mobileUI.SetActive(false);
+    }
+
+    public void OpenMobileUI()
+    {
+        _mobileUI.SetActive(true);
     }
 }

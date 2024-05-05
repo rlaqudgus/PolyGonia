@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using Utilities;
- 
+
+using UnityEngine.InputSystem;
+
 public class PauseManager : MonoBehaviour
 {
     private static PauseManager _instance;
@@ -34,7 +36,7 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
-        
+        GameManager.Instance.playerInput = FindObjectOfType<PlayerInput>();
 
         isPaused = true;
         _lastActionMap = GameManager.Instance.playerInput.currentActionMap;
@@ -46,6 +48,8 @@ public class PauseManager : MonoBehaviour
 
         // UI
         UIManager.Instance.OpenMainMenu();
+
+        UIManager.Instance.CloseMobileUI();
 
         // Input System
         if (_lastActionMap.name != "UI")
@@ -67,6 +71,8 @@ public class PauseManager : MonoBehaviour
 
         // UI
         UIManager.Instance.CloseAllMenus();
+
+        UIManager.Instance.OpenMobileUI();
 
         // Input System
         if (_lastActionMap.name == "Player")
