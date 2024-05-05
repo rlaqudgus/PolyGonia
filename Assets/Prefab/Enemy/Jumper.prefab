@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBody: 0
   hitPoint: 2
+  _weapon: {fileID: 0}
 --- !u!1 &1125555547519895968
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBody: 1
   hitPoint: 1
+  _weapon: {fileID: 0}
 --- !u!61 &8748479509708481636
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -263,8 +265,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -161064731
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1013861045, guid: 3250c0bf417640e4db2089cdb1a92844, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

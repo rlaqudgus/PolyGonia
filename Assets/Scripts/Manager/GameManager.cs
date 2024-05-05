@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
 
     public GameState gameState;
 
+    public PlayerEvents playerEvents;
+    public MiscEvents miscEvents;
+    public QuestEvents questEvents;
+
     private void Start()
     {
         
@@ -39,6 +43,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        miscEvents = new MiscEvents();
+        playerEvents = new PlayerEvents();
+        questEvents = new QuestEvents();
     }
 
     public void UpdateGameState(GameState newGameState)

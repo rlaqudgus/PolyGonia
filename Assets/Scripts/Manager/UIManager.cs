@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     [Header("Menu Objects")]
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private GameObject _settingsMenu;
+    
+    [Header("Window Objects")]
+    [HideInInspector] public List<Window> windows = new List<Window>();
+    [SerializeField] private GameObject _dialogueWindow;
 
     [Header("First Selected Options")]
     [SerializeField] private GameObject _mainMenuFirst;
@@ -65,6 +69,28 @@ public class UIManager : MonoBehaviour
         _settingsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
     }
+
+
+    #region Dialogue
+
+    // [SH] [2024-04-29]
+    // Dialogue 상황에서 Pause를 처리하는 것이 까다롭다
+    // 여러 개의 UI가 있을 때 이 UI들의 순서를 기억하는 시스템이 필요하다
+    // 그래서 Window 클래스를 만들고 리스트를 사용하였음
+
+    public void OpenDialogueWindow()
+    {
+        Window window = _dialogueWindow.GetComponent<Window>();
+        window.Open();
+    }
+
+    public void CloseDialogueWindow()
+    {
+        Window window = _dialogueWindow.GetComponent<Window>();
+        window.Close();
+    }
+
+    #endregion
 
     public void MusicVolume()
     {   

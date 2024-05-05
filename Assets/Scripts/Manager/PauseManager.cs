@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using Utilities;
  
 public class PauseManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class PauseManager : MonoBehaviour
     public  static PauseManager  Instance { get { return _instance; } }
 
     public bool isPaused;
+    private InputActionMap _lastActionMap;
 
     private void Awake()
     {
@@ -27,21 +29,27 @@ public class PauseManager : MonoBehaviour
     public void Start()
     {
         isPaused = false;
+        _lastActionMap = GameManager.Instance.playerInput.currentActionMap;
     }
 
     public void Pause()
     {
         isPaused = true;
+        _lastActionMap = GameManager.Instance.playerInput.currentActionMap;
         Time.timeScale = 0;
 
         // Sound
         SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
+        SoundManager.Instance.PauseVoice();
 
         // UI
         UIManager.Instance.OpenMainMenu();
 
         // Input System
-        GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
+        if (_lastActionMap.name != "UI")
+        {
+            GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");   
+        }
 
         this.Log("Pause");
     }
@@ -53,13 +61,36 @@ public class PauseManager : MonoBehaviour
 
         // Sound
         SoundManager.Instance.Transition(1f);
+        SoundManager.Instance.ResumeVoice();
 
         // UI
         UIManager.Instance.CloseAllMenus();
 
         // Input System
-        GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
+        if (_lastActionMap.name == "Player")
+        {
+            GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
+        }
+        else if (_lastActionMap.name == "UI")
+        {
+            int n_windows = UIManager.Instance.windows.Count;
+
+            Debug.Assert(
+                n_windows > 0,
+                "Last Action Map is UI but nothing is in the windows list"
+            );
+
+            Window recentWindow = UIManager.Instance.windows[n_windows-1];
+            recentWindow.Reload();
+
+        }
 
         this.Log("Resume");
+    }
+
+    public void TogglePause()
+    {
+        if (!isPaused) Pause();
+        else Resume();
     }
 }

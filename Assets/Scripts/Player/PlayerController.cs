@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour, IAttackable
     private bool _isJumpingDown => _rb.velocity.y < 0;
 
     public bool _isInvincible; 
+
+    // InteractBox에서 사용
+    [HideInInspector] public List<GameObject> scannedObjects = new List<GameObject>();
 
     private PlayerInput _playerInput;
 
@@ -284,27 +288,100 @@ public class PlayerController : MonoBehaviour, IAttackable
     // OnResume은 UI Action Map에 할당
     // Pause 시 Action Map을 UI로 전환시켜서 Pause 상태에서 Player Input이 작동하지 못하도록 만든다
 
+    // [SH] [2024-04-29]
+    // Dialogue 상황에서는 UI Action Map을 사용하는데
+    // UI Action Map 상태에서도 Pause를 처리하기 위해 수정함
+
     public void OnPause(InputAction.CallbackContext input)
     {
-        bool isPaused = PauseManager.Instance.isPaused;
-        if (!isPaused) Pause();
+        if (input.started)
+        {
+            Pause();
+        }
     }
 
     private void Pause()
     {
-        PauseManager.Instance.Pause();
+        PauseManager.Instance.TogglePause();
     }
+    
+    #endregion
 
-    public void OnResume(InputAction.CallbackContext input)
+
+    #region Interact
+    
+    // [SH] [2024-04-30]
+    // 주변에 있는 오브젝트와 상호작용
+    // 상호작용 가능한 물체는 InteractBox를 가지며
+    // InteractBox와 Trigger 될 경우 Player의 scannedObjects 에 해당 물체가 추가됨
+    // scan이 된 여러 개의 물체 중에 가장 가까운 것을 선택해서 상호작용
+ 
+    public void OnInteract(InputAction.CallbackContext input)
     {
-        bool isPaused = PauseManager.Instance.isPaused;
-        if (isPaused) Resume();
+        if (input.started) Interact();
+    }    
+ 
+    GameObject FindClosestObject(GameObject origin, List<GameObject> objects)
+    {       
+        if (objects == null || objects.Count == 0)
+        { 
+            Debug.LogWarning("List is null or empty");
+            return null;
+        } 
+ 
+        int minIndex = -1;
+        float minValue = float.MaxValue;
 
+        for (int i = 0; i < objects.Count; i++) 
+        {   
+            GameObject obj = objects[i];
+            float dx = origin.transform.position.x - obj.transform.position.x;
+            float dy = origin.transform.position.y - obj.transform.position.y;
+            float r2 = dx * dx + dy * dy;
+ 
+            if (r2 < minValue)
+            {
+                minValue = r2;
+                minIndex = i;
+            }
+        }   
+        Debug.Assert(minIndex >= 0);
+        return objects[minIndex];
     }
-
-    public void Resume()
+ 
+    private void Interact() 
     {
-        PauseManager.Instance.Resume();
+        if (scannedObjects.Count == 0) return;
+        
+        // 가장 가까운 scan된 물체 사용
+        GameObject scannedObject = FindClosestObject(gameObject, scannedObjects);
+        Debug.Assert(scannedObject != null, "Scanned object must not be null for interaction");
+
+        // [SH] [2024-05-03]
+        // 현재는 플레이어 중심으로 Interaction 가능한 물체를 탐색하지만 Event 를 사용해서 구현할 수도 있다
+        // 만약 InteractBox 끼리 겹치지 않는다고 가정한다면 Event 를 사용해서 프로그래밍을 할 수 있다
+ 
+        // Interact 처리 수행
+        if (scannedObject.layer == LayerMask.NameToLayer("NPC")) 
+        { 
+            // Do Something ... 
+ 
+            NPC npc = scannedObject.GetComponent<NPC>();
+            Debug.Assert(npc != null);
+ 
+            npc.Interact();
+        }           
+ 
+        // Debug용 출력
+        string scannedObjectsList = "";
+        foreach (GameObject obj in scannedObjects) 
+        {           
+            scannedObjectsList += obj.name;    
+            scannedObjectsList += " / ";
+        }           
+                    
+        this.Log($"All Scanned Objects: " + scannedObjectsList);
+        this.Log($"Currently Scanned Object: " + scannedObject.name);
     }
 
     #endregion
