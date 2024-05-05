@@ -89,7 +89,7 @@ public class PlayerData : ScriptableObject
 	// 인스펙터가 업데이트될 때 자동적으로 유니티에서 호출하는 콜백 함수
     private void OnValidate()
     {
-		// 공식 : (0.5) * gravity * time^2 = jumpHeightToApex 
+		// 공식 : (0.5) * gravity * time^2 = jumpHeightToApex
 		gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
 		
 		// 프로젝트 상의 중력값을 고려하여 RigidBody 상의 중력값 계산 gravity scale (project settings/Physics2D)

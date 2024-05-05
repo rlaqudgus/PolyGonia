@@ -126,7 +126,8 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 		    if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _layerTerrain) && !IsJumping)
 		    {
 			    TimerOnGround = data.coyoteTime;
-		    }		
+			    _jumpCounter = data.jumpAmount;
+		    }
 
 		    // Right Wall Check
 		    if ((Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0, _layerTerrain) && _dir == 1) && !IsWallJumping)
@@ -311,7 +312,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
     public void OnMove(InputAction.CallbackContext input)
     {
         _moveInput = input.ReadValue<Vector2>();
-
+		
         if (_moveInput.x > Mathf.Epsilon) _dir = 1;
         else if (_moveInput.x < -Mathf.Epsilon) _dir = -1;
         else _dir = 0;
@@ -439,6 +440,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	    if (_rb.velocity.y < 0) force -= _rb.velocity.y;
 
 	    _rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+	    _jumpCounter -= 1;
     }
     
     private void WallJump(int dir)
@@ -689,7 +691,14 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 		// 이동 Input을 주었을 때의 목표 속도
 		float targetSpeed = _moveInput.x * data.runMaxSpeed;
 		targetSpeed = Mathf.Lerp(_rb.velocity.x, targetSpeed, lerpAmount);
-
+		if (_moveInput.x < 0 && TimerOnWallLeft > 0)
+		{
+			return;
+		}
+		if (_moveInput.x > 0 && TimerOnWallRight > 0)
+		{
+			return;
+		}
 		// 가속도 계산
 		float accelRate = 0f;
 		if (TimerOnGround > 0)
@@ -784,7 +793,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 
     private bool CanJump()
     {
-		return TimerOnGround > 0 && _jumpCounter > 0;
+		return _jumpCounter > 0; // TimerOnGround > 0 && _jumpCounter > 0 에서 변경
     }
 
 	private bool CanWallJump()

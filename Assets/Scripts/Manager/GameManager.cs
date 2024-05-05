@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour
     public PlayerController_AF playerController;
     public PlayerInput playerInput;
 
-    public GameObject eventManager; // 흠..
-    
     // #region LOADING SCENE
     // public GameObject loadingScreen;
     // public Slider loaindgBar;
@@ -173,7 +171,7 @@ public class GameManager : MonoBehaviour
             yield return null; // 다음 프레임에서 실행되도록 대기
            
         }
-        if(eventManager != null) Destroy(eventManager); // 흠..
+        
         #region ACTION MAP
         // PlayerInput 컴포넌트 다시 할당
         PlayerInput playerInput = FindObjectOfType<PlayerInput>();
