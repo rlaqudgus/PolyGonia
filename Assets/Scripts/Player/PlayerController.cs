@@ -278,8 +278,8 @@ public class PlayerController : MonoBehaviour, IAttackable
 			transform.localScale = new Vector2(_dir, transform.localScale.y);
 		}
 		
-		this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
-		this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
+		// this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
+		// this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
 		_anim.SetBool("isMoving", _isMoving);
     }
     

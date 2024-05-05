@@ -87,8 +87,10 @@ public class UIManager : MonoBehaviour
     public void OpenMainMenu()
     {
         CloseAllMenus();
+        this.Log("close finish");
         _mainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(_mainMenuFirst);
+        this.Log("setactive true");
     }
     
     public void OpenSettingsMenu()
