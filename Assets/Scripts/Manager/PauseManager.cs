@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using Utilities;
- 
+
+using UnityEngine.InputSystem;
+
 public class PauseManager : MonoBehaviour
 {
     private static PauseManager _instance;
@@ -31,6 +33,8 @@ public class PauseManager : MonoBehaviour
 
     public void Pause()
     {
+        GameManager.Instance.playerInput = FindObjectOfType<PlayerInput>();
+
         isPaused = true;
         Time.timeScale = 0;
 

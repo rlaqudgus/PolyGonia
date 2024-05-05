@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
@@ -22,7 +23,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+            if (playerInput == null)
+            {
+                playerInput = FindObjectOfType<PlayerInput>();
+                if (playerInput == null)
+                {
+                UnityEngine.Debug.Log("PlayerInput not found!");
+                }
+            }
         
+
+
+
     }
 
     private void Awake()
