@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4220284235711458025}
   - component: {fileID: 2215569299897763953}
   - component: {fileID: 1602053233662379681}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: QuestPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

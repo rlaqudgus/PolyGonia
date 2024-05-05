@@ -562,6 +562,8 @@ public class PlayerController : MonoBehaviour, IAttackable
  
     private void Interact() 
     {
+        Debug.Log("interaction key pressed");
+
         if (scannedObjects.Count == 0) return;
         
         // 가장 가까운 scan된 물체 사용

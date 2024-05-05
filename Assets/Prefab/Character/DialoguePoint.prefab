@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 463993953830724649}
   - component: {fileID: 5459795695332393332}
   - component: {fileID: 8325835820520398565}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: DialoguePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
