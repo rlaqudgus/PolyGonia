@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 using Utilities;
 
+// PlayerController -> PlayerController_AF 수정
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -15,8 +19,15 @@ public class GameManager : MonoBehaviour
     public SoundManager soundManager;
     public UIManager uiManager;
     public CameraManager cameraManager;
-    public PlayerController playerController;
+    public PlayerController_AF playerController;
     public PlayerInput playerInput;
+
+    public GameObject eventManager; // 흠..
+    
+    // #region LOADING SCENE
+    // public GameObject loadingScreen;
+    // public Slider loaindgBar;
+    // #endregion
 
     public GameState gameState;
 
@@ -140,5 +151,50 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         
         #endif
+    }
+
+    public void LoadScene(int sceneId)
+    {
+        StartCoroutine(LoadSceneAsync(sceneId));
+    }
+
+    // 로딩 씬 관련 함수 추가
+    IEnumerator LoadSceneAsync(int sceneID)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneID);
+        
+        // loadingScreen.SetActive(true);
+        while (!operation.isDone)
+        {
+            this.Log($"Loading...{operation.progress}%");
+            float curProgress = Mathf.Clamp01(operation.progress / 0.9f);
+            // loadingbar.value = curProgress;
+            
+            yield return null; // 다음 프레임에서 실행되도록 대기
+           
+        }
+        if(eventManager != null) Destroy(eventManager); // 흠..
+        #region ACTION MAP
+        // PlayerInput 컴포넌트 다시 할당
+        PlayerInput playerInput = FindObjectOfType<PlayerInput>();
+        if (playerInput != null)
+        {
+            // Input System 업데이트 모드 설정
+            InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
+
+            // Action Map 전환 (여기로 옮김)
+            playerInput.SwitchCurrentActionMap("Player");
+        }
+        else
+        {
+            this.Log("PlayerInput 컴포넌트를 찾을 수 없습니다.");
+        }
+        #endregion
+        PauseManager.Instance.isPaused = false;
+        Time.timeScale = 1;
+        // Sound
+        SoundManager.Instance.Transition(1f);
+        // UI
+        UIManager.Instance.CloseAllMenus();
     }
 }

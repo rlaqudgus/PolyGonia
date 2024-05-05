@@ -29,7 +29,6 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
     public bool isShield;
     private bool _isParry;
     public bool IsAttacking { get; private set; }
-    private bool IsJumpingDown => _rb.velocity.y < 0; // get 프로퍼티
 
     public bool isInvincible; 
 
@@ -118,7 +117,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	    TimerPressDashBtn -= Time.deltaTime;
 	    
 	    #region COLLISION CHECKS
-	    if (!IsDashing && !IsJumping)
+	    if (!IsDashing) // (!IsDashing && !IsJumping) 에서 수정
 	    {
 		    // 기존의 OnCollision2D를 이용한 Ground Check은 실시간 모니터링을 하기 힘들어 Update함수에서 check를 함
 		    // CheckWithbox의 BoxCastAll가 동적 함수라 Update내에서 쓰기에는 많은 리소스를 잡아먹을 것 같아 정적 검사인 OverlapBox사용
@@ -247,7 +246,6 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 			}
 			else
 			{
-				//Default gravity if standing on a platform or moving upwards
 				SetGravityScale(data.gravityScale);
 			}
 		}
@@ -275,11 +273,14 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 			transform.localScale = new Vector2(_dir, transform.localScale.y);
 		}
 		
+		this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
+		this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
 		_anim.SetBool("isMoving", _isMoving);
     }
     
     private void FixedUpdate()
     {
+	    this.Log(_moveInput.ToString());
 	    #region Run
 	    if (!IsDashing && IsWallJumping)
 	    {
@@ -427,7 +428,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
     
     void Jump()
     {
-	    //Ensures we can't call Jump multiple times from one press
+	    // 점프 버튼 한 번으로 여러 번 점프되는 것을 방지
 	    TimerPressJumpBtn = 0;
 	    TimerOnGround = 0;
 	 
@@ -556,7 +557,7 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 
     public void ByParry(Shield shield)
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public void ByWeapon(Weapon weapon)
@@ -709,8 +710,9 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 		
 		float speedDif = targetSpeed - _rb.velocity.x;
 		float moveForce = speedDif * accelRate;
-
-		this.Log(moveForce);
+		
+		this.Log($"targetSpeed : {targetSpeed}, _rb.velocity : {_rb.velocity}, accelRate : {accelRate}");
+		this.Log((moveForce * Vector2.right).ToString());
 		// 지속적인 힘을 가하기 위해 ForceMode2D.Force 사용 - 물체 질량이 작을 수록 큰 가속도를 받음
 		_rb.AddForce(moveForce * Vector2.right, ForceMode2D.Force);
 
@@ -766,10 +768,14 @@ public class PlayerController_AF : MonoBehaviour, IAttackable
 	#region SLIDE
 	private void Slide()
 	{
+		if(_rb.velocity.y > 0)
+		{
+			_rb.AddForce(-_rb.velocity.y * Vector2.up,ForceMode2D.Impulse);
+		}
 		float speedDif = data.slideSpeed - _rb.velocity.y;	
 		float moveForce = speedDif * data.slideAccel;
 		moveForce = Mathf.Clamp(moveForce, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
-
+		this.Log(moveForce * Vector2.up);
 		_rb.AddForce(moveForce * Vector2.up);
 	}
     #endregion

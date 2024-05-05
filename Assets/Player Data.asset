@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Data
   m_EditorClassIdentifier: 
   gravityStrength: -77.77777
-  gravityScale: 2.5925925
+  gravityScale: 3.8888886
   fallGravityMult: 2
   maxFallSpeed: 18
   fastFallGravityMult: 1
@@ -40,14 +40,14 @@ MonoBehaviour:
   doTurnOnWallJump: 0
   slideSpeed: -6
   slideAccel: 6
-  coyoteTime: 0.05
-  jumpInputBufferTime: 0.05
-  dashAmount: 1
-  dashSpeed: 20
-  dashSleepTime: 0.05
-  dashAttackTime: 0.15
-  dashEndTime: 0.15
-  dashEndSpeed: {x: 15, y: 15}
-  dashEndRunLerp: 0.5
-  dashCoolTime: 0.1
-  dashInputBufferTime: 0.1
+  coyoteTime: 0.1
+  jumpInputBufferTime: 0.1
+  dashAmount: 0
+  dashSpeed: 0
+  dashSleepTime: 0
+  dashAttackTime: 0
+  dashEndTime: 0
+  dashEndSpeed: {x: 0, y: 0}
+  dashEndRunLerp: 0
+  dashCoolTime: 0
+  dashInputBufferTime: 0.01
