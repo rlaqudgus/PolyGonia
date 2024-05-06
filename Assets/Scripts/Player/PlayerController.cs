@@ -441,8 +441,9 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    this.Log("Perform Jump");
 	    
 	    // 현재 속도에 상관없이 항상 일정한 점프를 할 수 있도록 함
+	    // ( _rb.velocity.y가 음수일 때만 작동하게 하였는데 모든 상황에서 작동하도록 변경 -> 더블 점프 시 지나치게 높이 점프하는 버그 해결)
 	    float force = data.jumpForce;
-	    if (_rb.velocity.y < 0) force -= _rb.velocity.y;
+	    force -= _rb.velocity.y;
 
 	    _rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
 	    _jumpCounter -= 1;
@@ -876,7 +877,8 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     private bool CanJump()
     {
-		return _jumpCounter > 0; // TimerOnGround > 0 && _jumpCounter > 0 에서 변경
+	    // 벽에 닿고 있을 때는 Jump가 아닌 Wall Jump를 하기 위해서 조건 추가 -> 점프 - 벽점프 - 더블 점프가 되지 않는 버그 수정
+		return (_jumpCounter > 0) && (TimerOnWall < 0);
     }
 
 	private bool CanWallJump()
