@@ -22,12 +22,19 @@ public class CameraManager : Singleton<CameraManager>
     public void FollowTarget(GameObject target) => controller.FollowTarget(target);
     
     [ContextMenu("hp1Effect")]
-    public void LowHPPostProcess(float time) => controller.LowHpPostProcess(time, 1, .4f);
+    public void LowHPPostProcess(float time)
+    {
+        if (controller == null) controller = GameObject.Find("Virtual Camera").GetComponent<CameraController>();
+        controller.LowHpPostProcess(time, 1, .4f);
+    }
+    
 
     private void CameraByGameState(GameState state)
     {
         switch (state)
         {
+            case GameState.Init:
+                break;
             case GameState.LowHealth:
                 LowHPPostProcess(3f);
                 break;

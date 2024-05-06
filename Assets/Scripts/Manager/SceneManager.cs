@@ -11,6 +11,8 @@ public class SceneTransition : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             SceneManager.LoadScene(targetScene);
+
+            //GameManager.Instance.UpdateGameState(GameState.Init);
         }
     }
 }

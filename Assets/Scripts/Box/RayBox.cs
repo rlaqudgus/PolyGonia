@@ -36,9 +36,9 @@ public class RayBox : MonoBehaviour
     // 1. "Default" 레이어에만 raycast 하도록 layermask 변수 설정
     public bool CheckWithRay(Vector2 startPos, Vector2 dir, float distance)
     {
-        int layerMask = 1 << LayerMask.NameToLayer("Default");
+        int layerMask = 1 << LayerMask.NameToLayer("Terrain");
         RaycastHit2D[] hits = Physics2D.RaycastAll(startPos, dir, distance, layerMask);
-        Debug.DrawRay(transform.position, dir, Color.blue);
+        Debug.DrawRay(startPos, dir, Color.blue);
 
         foreach (var hit in hits)
         {

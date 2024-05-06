@@ -156,6 +156,7 @@ public class PlayerController : MonoBehaviour, IAttackable
             if (!_ray.CheckWithRay(transform.position + new Vector3(-0.2f, -0.45f, 0), Vector2.down, 0.1f)
                 || !_ray.CheckWithRay(transform.position + new Vector3(0.2f, -0.45f, 0), Vector2.down, 0.1f))
             {
+                this.Log("isteeter");
                 _anim.SetBool("isTeetering", true);
             }
             else

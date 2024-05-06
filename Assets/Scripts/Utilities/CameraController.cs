@@ -22,6 +22,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        //DontDestroyOnLoad(this);
         _virtualCamera = GetComponent<CinemachineVirtualCamera>();
         _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>(); //offset
         _multiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); //shake

@@ -481,7 +481,6 @@ GameObject:
   - component: {fileID: 1149961820}
   - component: {fileID: 1149961819}
   - component: {fileID: 1149961823}
-  - component: {fileID: 1149961824}
   m_Layer: 5
   m_Name: MenuCanvas
   m_TagString: Untagged
@@ -587,24 +586,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainButton: {fileID: 1149961818}
---- !u!114 &1149961824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1149961818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a888f4e7d41bb429aaf773d67847b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundManager: {fileID: 0}
-  uiManager: {fileID: 0}
-  cameraManager: {fileID: 0}
-  playerController: {fileID: 0}
-  playerInput: {fileID: 0}
-  gameState: 0
 --- !u!1 &1168104794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,7 +1352,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1149961824}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1

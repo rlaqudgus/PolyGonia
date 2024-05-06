@@ -15,7 +15,7 @@ public class Menu : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("SceneChange");
-        SceneManager.LoadScene(3);  // "GameScene"은 전환하려는 씬의 이름
+        SceneManager.LoadScene(2);  // "GameScene"은 전환하려는 씬의 이름
         _mainButton.gameObject.SetActive(false);
     }
 }

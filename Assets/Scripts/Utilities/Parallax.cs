@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 public class Parallax : MonoBehaviour
 {
@@ -21,8 +22,8 @@ public class Parallax : MonoBehaviour
         startZ = transform.position.z;
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
     {
         Vector2 paralVec = startPos + travel * parallaxFactor;
         transform.position = new Vector3(paralVec.x, transform.position.y, startZ);

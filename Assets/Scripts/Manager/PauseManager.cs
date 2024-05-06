@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using Utilities;
 
-using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
