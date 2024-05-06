@@ -4571,7 +4571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startOffset: {x: 0, y: 2.5, z: 0}
-  _cameraDamping: 3
+  _cameraDamping: 0.5
   _postProcessController: {fileID: 321794782}
 --- !u!4 &1620491432
 Transform:
