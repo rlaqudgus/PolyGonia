@@ -22,7 +22,7 @@ TagManager:
   - 
   - NPC
   - 
-  - 
+  - Torch
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Illuminated
+    uniqueID: 3931514171
     locked: 0

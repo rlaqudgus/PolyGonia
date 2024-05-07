@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour, IAttackable
             if (!_ray.CheckWithRay(transform.position + new Vector3(-0.2f, -0.45f, 0), Vector2.down, 0.1f)
                 || !_ray.CheckWithRay(transform.position + new Vector3(0.2f, -0.45f, 0), Vector2.down, 0.1f))
             {
-                this.Log("isteeter");
+                // this.Log("isteeter");
                 _anim.SetBool("isTeetering", true);
             }
             else
@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 			else if (_isJumpCut)
 			{
 				// 점프를 중간에 취소할 시 빠른 하강 : 중력값을 그대로 사용할 시 점프컷이 아닌 일반 점프에 점프 높이만 낮아진 것이 되어버림
-				this.Log("jump cut");
+				// this.Log("jump cut");
 				SetGravityScale(data.gravityScale * data.jumpCutGravityMult);
 				_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFallSpeed));
 			}
@@ -286,7 +286,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     
     private void FixedUpdate()
     {
-	    this.Log(_moveInput.ToString());
 	    #region Run
 	    if (!IsDashing && IsWallJumping)
 	    {
@@ -577,16 +576,25 @@ public class PlayerController : MonoBehaviour, IAttackable
         // 만약 InteractBox 끼리 겹치지 않는다고 가정한다면 Event 를 사용해서 프로그래밍을 할 수 있다
  
         // Interact 처리 수행
-        if (scannedObject.layer == LayerMask.NameToLayer("NPC")) 
-        { 
-            // Do Something ... 
- 
-            NPC npc = scannedObject.GetComponent<NPC>();
-            Debug.Assert(npc != null);
- 
-            npc.Interact();
-        }           
- 
+        if (scannedObject.layer == LayerMask.NameToLayer("NPC"))
+        {
+	        // Do Something ... 
+
+	        NPC npc = scannedObject.GetComponent<NPC>();
+	        Debug.Assert(npc != null);
+
+	        npc.Interact();
+        }
+        // [TG] [2024-05-07]
+        // Torch 상호작용 추가
+        else if (scannedObject.layer == LayerMask.NameToLayer("Torch"))
+		{
+			TorchController torchController = scannedObject.GetComponent<TorchController>();
+			Debug.Assert(torchController != null);
+
+			torchController.FireTorch();
+		}
+        
         // Debug용 출력
         string scannedObjectsList = "";
         foreach (GameObject obj in scannedObjects) 
@@ -804,8 +812,6 @@ public class PlayerController : MonoBehaviour, IAttackable
 		float speedDif = targetSpeed - _rb.velocity.x;
 		float moveForce = speedDif * accelRate;
 		
-		this.Log($"targetSpeed : {targetSpeed}, _rb.velocity : {_rb.velocity}, accelRate : {accelRate}");
-		this.Log((moveForce * Vector2.right).ToString());
 		// 지속적인 힘을 가하기 위해 ForceMode2D.Force 사용 - 물체 질량이 작을 수록 큰 가속도를 받음
 		_rb.AddForce(moveForce * Vector2.right, ForceMode2D.Force);
 

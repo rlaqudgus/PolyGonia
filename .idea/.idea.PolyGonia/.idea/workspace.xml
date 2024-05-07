@@ -6,19 +6,705 @@
   <component name="ChangeListManager">
     <list default="true" id="1800897b-b620-46bc-b046-70891d26bab2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Finish Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Finish Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Start Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Start Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Finished Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Finished Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Hello World.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Hello World.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/In Progress Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/In Progress Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Requirements Not Met Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Requirements Not Met Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue A.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue A.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue B.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue B.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Collect Completed Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Collect Completed Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/First Quest.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/First Quest.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Visit/Visit Completed Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Visit/Visit Completed Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/Second Quest/Second Quest.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/Second Quest/Second Quest.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/AssetUtility.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/AssetUtility/AssetUtility.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/AssetUtility/AssetUtility.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/BugReport.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/BugReport/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/BugReport/Editor/BugReportUtils.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/BugReport/Editor/BugReportUtils.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/BugReport/Editor/BugReportWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/BugReport/Editor/BugReportWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/CasterCollider.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/CasterCollider.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/CoreUtils.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/CoreUtils.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/DynamicLight.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/DynamicLight.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/DynamicLightEvents.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/DynamicLightEvents.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate/CheckUpdateAsset.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate/CheckUpdateAsset.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate/CheckUpdateBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate/CheckUpdateBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate/CheckUpdateWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/CheckUpdate/CheckUpdateWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightDrawGizmo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightDrawGizmo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightHierarchyIcon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightHierarchyIcon.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightMenu.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/DynamicLightMenu.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/EditorUtils.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/EditorUtils.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/PostProcessMethods.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/PostProcessMethods.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/DynamicLightSetting.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/DynamicLightSetting.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/Settings.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/Settings.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/SettingsManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/SettingsManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/SettingsWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/SettingsWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/TagLayerClass.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/Settings/TagLayerClass.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/SortingMethod.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/SortingMethod.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/TileMapCollisionGenerator_Editor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/Editor/TileMapCollisionGenerator_Editor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/OccludedUR_passToShader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/OccludedUR_passToShader.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/TileMapCollisionGenerator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Core/TileMapCollisionGenerator.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Fonts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Fonts/EXTRAVAGANZZA-EXTRA-BOLD.TTF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Fonts/EXTRAVAGANZZA-EXTRA-BOLD.TTF.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Fonts/EXTRAVAGANZZA.TTF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Fonts/EXTRAVAGANZZA.TTF.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Icon_tilemap_utility.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Icon_tilemap_utility.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Textures/2DDL_logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/Textures/2DDL_logo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/drop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/drop.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/drop2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/drop2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/focus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/focus.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/logo2DDL.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/logo2DDL.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/logo2DDL_gizmos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/logo2DDL_gizmos.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/reload-w.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/reload-w.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/titleTexture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Misc/titleTexture.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/2DDLight.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/2DDLight.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/Attributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/Attributes.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/ButtonAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/ButtonAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/DropAreaDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/DropAreaDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/FieldDescriptionAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/FieldDescriptionAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/IncrementableAttribute.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/IncrementableAttribute.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/IncrementableAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/IncrementableAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/PopUpAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/PopUpAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/ReadOnlyAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/ReadOnlyAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/SeparatorAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/SeparatorAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/ShowOnlyAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/ShowOnlyAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/TitleAttributeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/PropertyDrawers/TitleAttributeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/CGTexturizing.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/CGTexturizing.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/CastStencil.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/CastStencil.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturized.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturized.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturizedAdditive.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturizedAdditive.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturizedWithAlpha.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturizedWithAlpha.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturizedWithAlphaMixColors.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DefaultTexturizedWithAlphaMixColors.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DepthMask.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/DepthMask.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/Gradient-ZFighting.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/Gradient-ZFighting.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/Occluded_URP.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/Occluded_URP.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/Occluderr_URP.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/Occluderr_URP.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/OffsetShader.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/OffsetShader.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/RadialGradientAlphaBlend.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/RadialGradientAlphaBlend.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/StencilMask.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/StencilMask.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/StencilObject.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/StencilObject.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/VertexColor.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/VertexColor.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/occluded.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/occluded.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/occluder.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Shaders/occluder.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Sight.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Sight/SightListenerTemplate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Sight/SightListenerTemplate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/RegisterCaster.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/RegisterCaster.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/Resources2DDL.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/Resources2DDL.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/CoroutineExt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/CoroutineExt/CoroutineExtentions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/CoroutineExt/CoroutineExtentions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/ExtendsMe.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/ExtendsMe.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/GLDebug.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/GLDebug.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/SetRenderQueue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/SetRenderQueue.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/TablaSenoCoseno.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/TablaSenoCoseno.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/TimerClass.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/TimerClass.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/fpsClass.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/fpsClass.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/interface_touch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/2DLight/Utils/more/interface_touch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/AddOnBase.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/AddOnBase/AddOnBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/AddOnBase/AddOnBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/AddOnBase/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/AddOnBase/Editor/AddOnBaseEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/AddOnBase/Editor/AddOnBaseEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/ArrowsInputControl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/ArrowsInputControl.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/ColorBlending.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/ColorBlending.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/CookieSpriteLight.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/CookieSpriteLight.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/EnemyDetection.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/EnemyDetection.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Fire.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Fire.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Fog.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Fog.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/LensFlares.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/LensFlares.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/LitDiffuse.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/LitDiffuse.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/LookAt.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/LookAt.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/NormalMaps.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/NormalMaps.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Rotation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Rotation.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Source.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/Source.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/TilemapUtility.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Add-ons/TilemapUtility.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/BlinkLight.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/BlinkLight.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/CatchTheBlueTorch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/CatchTheBlueTorch.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/CharacterMovement.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/CharacterMovement.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/CreditsScript.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/CreditsScript.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Ghost.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Ghost.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Hero.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Hero.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/HeroController (MacBook-Pro-de-Martin's conflicted copy 2015-10-23).controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/HeroController (MacBook-Pro-de-Martin's conflicted copy 2015-10-23).controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/HeroController.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/HeroController.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/IddleHero.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/IddleHero.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 1- StartGame.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 1- StartGame.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 2.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 2.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 3.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 3.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 4.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Level 4.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/OpenEgyptianGate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/OpenEgyptianGate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/RunHero.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/RunHero.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/SetProximityFactor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/SetProximityFactor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Torch.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/Torch.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/UnlockTheExitDoor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/UnlockTheExitDoor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/followPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/followPlayer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/gate.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/gate.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/introPulse.aiff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/introPulse.aiff.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/jump.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/jump.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/openGate.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/0 - DUNGEON GAME/openGate.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/1 - Simple Light.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/1 - Simple Light/1 - Simple Light.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/1 - Simple Light/1 - Simple Light.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/10 - Radar Example.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/10 - Radar Example/10 - Radar Example.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/10 - Radar Example/10 - Radar Example.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/11 - Sprite Ilumination.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/11 - Sprite Ilumination/11 - Sprite illumination and shadows effect in Radial.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/11 - Sprite Ilumination/11 - Sprite illumination and shadows effect in Radial.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/11 - Sprite Ilumination/11 - Sprite illumination and shadows effect in Spot.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/11 - Sprite Ilumination/11 - Sprite illumination and shadows effect in Spot.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code/12 - Create and register Casters by code.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code/12 - Create and register Casters by code.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code/UsingAddColliderToScene.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code/UsingAddColliderToScene.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code/addingCastersUnefficient.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/12 - Create and register Casters by code/addingCastersUnefficient.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/13 - Delete Casters by code in PlayMode.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/13 - Delete Casters by code in PlayMode/13 - Delete Casters by code in PlayMode.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/13 - Delete Casters by code in PlayMode/13 - Delete Casters by code in PlayMode.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/13 - Delete Casters by code in PlayMode/DeleteCasters.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/13 - Delete Casters by code in PlayMode/DeleteCasters.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/14 - Creation of both 2DDLight and Casters Procedurally.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/14 - Creation of both 2DDLight and Casters Procedurally/14 - Creation of both 2DDLight and Casters Procedurally.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/14 - Creation of both 2DDLight and Casters Procedurally/14 - Creation of both 2DDLight and Casters Procedurally.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/14 - Creation of both 2DDLight and Casters Procedurally/ProceduralLightAndCasters.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/14 - Creation of both 2DDLight and Casters Procedurally/ProceduralLightAndCasters.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics/15 - (Interpolate confflict)SOLVED.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics/15 - (Interpolate confflict)SOLVED.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics/15 - Lights with physics.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics/15 - Lights with physics.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics/followBody.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/15 - Light with Physics/followBody.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/16 - Soft Lights.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/16 - Soft Lights.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only).meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/Blur.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/Blur.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/BlurOptimized.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/BlurOptimized.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/PostEffectsBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/PostEffectsBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/Shaders.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/Shaders/_BloomAndFlares.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/Shaders/_BloomAndFlares/MobileBlur.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/16 - Soft and Smooth shadows edges/Standard Assets/Image Effects (Pro Only)/_Sources/Shaders/_BloomAndFlares/MobileBlur.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/17 - Tilemap Example.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/17 - Tilemap Example.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/angle_tile.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/angle_tile.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/palette_demo.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/palette_demo.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/square_tile.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/17 - Tilemap example/square_tile.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/18 - Mixing Colors.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/18 - Mixing Colors/18 - MixingColors.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/18 - Mixing Colors/18 - MixingColors.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/19 - Lighting cast stencil buffer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/19 - Lighting cast stencil buffer/19- Lighting cast stencil.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/19 - Lighting cast stencil buffer/19- Lighting cast stencil.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/19 - Lighting cast stencil buffer/SkyboxMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/19 - Lighting cast stencil buffer/SkyboxMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/2 - Fire Light.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/2 - Fire Light/2 - Fire Light.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/2 - Fire Light/2 - Fire Light.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/2 - Fire Light/AnimateFireSprite.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/2 - Fire Light/AnimateFireSprite.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/3 - Multiples Lights.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/3 - Multiples Lights/3 - Multiples Lights.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/3 - Multiples Lights/3 - Multiples Lights.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/3 - Multiples Lights/interface_manager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/3 - Multiples Lights/interface_manager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/4 - Events.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/4 - Events/4 - OnEnterOnExitEvents.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/4 - Events/4 - OnEnterOnExitEvents.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/4 - Events/InstanceEvents.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/4 - Events/InstanceEvents.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm/5 - Bomb Explosion Simulation and Visibility algorithm.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm/5 - Bomb Explosion Simulation and Visibility algorithm.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm/PlayerStatusManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm/PlayerStatusManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm/bomb.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/5 - Bomb Explosion Simulation and Visibility algorithm/bomb.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events/6 - Fog of War with Occlusion effect and Sight with dispatch events.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events/6 - Fog of War with Occlusion effect and Sight with dispatch events.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events/OcclusionEventsDelegate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events/OcclusionEventsDelegate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events/SceneColliders.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/6 - Fog of War with Occlusion effect and Sight with dispatch events/SceneColliders.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask/7 - Fog of War with Occlusion effect using Stencil Mask.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask/7 - Fog of War with Occlusion effect using Stencil Mask.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask/7a - Portal-like  with Occlusion effect using Stencil Mask.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask/7a - Portal-like  with Occlusion effect using Stencil Mask.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask/7b - Example Ultra Dark Shadows using Stencil Mask.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/7 - Fog of War with Occlusion effect using Stencil Mask/7b - Example Ultra Dark Shadows using Stencil Mask.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/8 - Fog of War and Occlusion effect using DepthMask (advance implementation).meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/8 - Fog of War and Occlusion effect using DepthMask (advance implementation)/8 - Fog of War and Occlusion effect using DepthMask (advance implementation).unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/8 - Fog of War and Occlusion effect using DepthMask (advance implementation)/8 - Fog of War and Occlusion effect using DepthMask (advance implementation).unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car/9 - Light Car.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car/9 - Light Car.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car/9a - Another Light Car.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car/9a - Another Light Car.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car/SpawnCasters.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/9 - Light Car/SpawnCasters.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/CastStencilScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/CastStencilScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/0 - First Simple.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/0 - First Simple/punchRadius.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/0 - First Simple/punchRadius.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/1 - Simple Light.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/1 - Simple Light/1.SimpleLight.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/1 - Simple Light/1.SimpleLight.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/15 - ZOrder.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/15 - ZOrder/15 - ZOrder.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/15 - ZOrder/15 - ZOrder.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/7 - Visible Minimal.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/7 - Visible Minimal/7.1.VisibleMinimalitic.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/7 - Visible Minimal/7.1.VisibleMinimalitic.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/7 - Visible Minimal/7.VisibleMinimal.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/7 - Visible Minimal/7.VisibleMinimal.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/LineOfVision.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/LineOfVision.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/bullet.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/bullet.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/fire.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/fire.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/laser.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/laser.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/rotate_2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/OLD Examples/8 - ConeOfSight - FieldOfView/rotate_2.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/BombMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/BombMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/DepthMaskMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/DepthMaskMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/DiffuseWithNormalMap.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/DiffuseWithNormalMap.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/FloorMatCredits.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/FloorMatCredits.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/GLDebugLinesMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/GLDebugLinesMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/GradientMatForPhysicsScene.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/GradientMatForPhysicsScene.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/Green2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/Green2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightCar.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightCar.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradient.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradient.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradientRed.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradientRed.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradientYellow.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradientYellow.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradientYellow2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialGradientYellow2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialPink.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialPink.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialYellow.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LightMaterialYellow.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LilaDiffuse.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LilaDiffuse.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LineOfSightTexturizedMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/LineOfSightTexturizedMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/MultiPlyPoint.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/MultiPlyPoint.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/OffsetMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/OffsetMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/SmoothMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/SmoothMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StandardLightMaterialGradientCarLight.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StandardLightMaterialGradientCarLight.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StandardLightMaterialGradientWhite.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StandardLightMaterialGradientWhite.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StencilMaskMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StencilMaskMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StencilObjMaterial-2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StencilObjMaterial-2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StencilObjMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/StencilObjMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/TexturedMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/TexturedMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/Vision.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/Vision.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/carcar.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/carcar.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/fireMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/fireMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/fireMaterial2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/fireMaterial2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/green.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/green.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/red 1.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/red 1.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/red.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/red.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/smoothTex 1.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/smoothTex 1.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/smoothTex.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/smoothTex.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/sprite.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/sprite.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/white.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Materials/white.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Angle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Angle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Expanded.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Expanded.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Materials/stone_PNG13619.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Materials/stone_PNG13619.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/RadiaGradientTex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/RadiaGradientTex.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Red_racing_car_top_view.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/Red_racing_car_top_view.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/brick.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/brick.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/bright_tx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/bright_tx.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/circle2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/circle2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/dungeon_screen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/dungeon_screen.jpg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/fire.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/fire.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/ghost1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/ghost1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/ghost2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/ghost2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lamp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lamp.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lamp2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lamp2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lampglow.png.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lampglow.png.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lightCarTex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/lightCarTex.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/penumbra.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/penumbra.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/player.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/playerNew.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/playerNew.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/pointTex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/pointTex.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/radarPane.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/radarPane.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/smoothTex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/smoothTex.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/square.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/square.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/squareStroke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/squareStroke.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/stone_PNG13619.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/stone_PNG13619.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tex.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tex.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Materials/hero_idle_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Materials/hero_idle_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Materials/tile0_2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Materials/tile0_2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Screen Shot 2015-05-03 at 0.11.37.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/Screen Shot 2015-05-03 at 0.11.37.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/ghost.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/ghost.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_idle_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_idle_2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/hero_run_4.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/shadow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/shadow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile0_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile0_0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile0_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile0_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile0_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile0_2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile1_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile1_0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile1_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile1_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile2_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile2_0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile2_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile2_1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile3_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile3_0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile4_0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/tile4_0.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/treasure.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/tiles.atlas/treasure.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/triangle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Example_Textures/triangle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/CharacterController2D.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/CharacterController2D/CharacterController2D.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/CharacterController2D/CharacterController2D.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/SmoothFollow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/SmoothFollow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/restoreStone.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/restoreStone.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/rotate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/rotate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/rotationUsingSync.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Examples/__Examples_Scripts/rotationUsingSync.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Iluminated - Circle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Iluminated - Circle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteBumping.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteBumping.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteLit.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteLit.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded3.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded3.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded_URP.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteOccluded_URP.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteRenderMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Materials/SpriteRenderMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/Line.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/Line.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/box_sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/box_sprite.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/circle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/circle.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/concave_shape.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/concave_shape.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/exagono_sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/exagono_sprite.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/pacman_sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/pacman_sprite.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/shape.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/shape.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/star_sprite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/Textures/star_sprite.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/box.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/box.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/box_ilum.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/box_ilum.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/box_stencil.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/box_stencil.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/circle - CircleCollider2D.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/circle - CircleCollider2D.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/circle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/circle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/edge - EdgeCollider2D.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/edge - EdgeCollider2D.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/hexagon.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/hexagon.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/pacman.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/pacman.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/shape.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/shape.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/shape_conc.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/shape_conc.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/star.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Casters/star.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-GradientPoint2DLight.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-GradientPoint2DLight.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-Point2DLightWithIlumination.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-Point2DLightWithIlumination.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-Spot2DLight.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-Spot2DLight.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-Spot2DWithIlumination.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-Spot2DWithIlumination.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-StandardNoMaterialPoint2DLight.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-StandardNoMaterialPoint2DLight.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-TexturizedPoint2DLight.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/2DDL-TexturizedPoint2DLight.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/CastStencil.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/CastStencil.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardCookieSpriteLight.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardCookieSpriteLight.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightMaterialGradient.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightMaterialGradient.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightTexturizedMaterialAdditive.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightTexturizedMaterialAdditive.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightTexturizedMaterialBlend.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightTexturizedMaterialBlend.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightTexturizedMaterialMixColors.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardLightTexturizedMaterialMixColors.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardOccluderMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardOccluderMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardOccluderMaterial_URP.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardOccluderMaterial_URP.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardSpotCarType1.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Materials/StandardSpotCarType1.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial2.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial3.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/radial4.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/spot1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2DDL/Prefabs/Lights/Textures/spot1.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/UI Blur.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/UI Blur.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/UI Blur.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/UI Blur.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Boxes/MixerBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Boxes/MixerBox.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Boxes/MusicBox.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Boxes/MusicBox.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Character/DialoguePoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Character/DialoguePoint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Character/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Character/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Character/QuestPoint.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Character/QuestPoint.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Enemy/Soldier.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Enemy/Soldier.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Coin.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Coin.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/NewScenes/Beta1.4 MapScene_TG.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/NewScenes/Beta1.4 MapScene_TG.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,10 +721,10 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Bases/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Manager/SoundManager/SoundManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerController_AF.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.9.7/Samples~/Cinemachine Example Scenes/Shared/Models/UnityCharacter/Scripts/CharacterMovementNoCamera.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Plugins/PlayerInput/PlayerInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@14.0.9/Runtime/UniversalRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -52,29 +738,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Beta1.3__Taegyu",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Beta1.3__Taegyu&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\m0nosummer\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\m0nosummer\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\m0nosummer\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\m0nosummer\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\m0nosummer\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\m0nosummer\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.12f1\Editor\Unity.exe" />
@@ -144,7 +830,9 @@
       <workItem from="1714875806474" duration="3921000" />
       <workItem from="1714886042090" duration="3464000" />
       <workItem from="1714890747104" duration="870000" />
-      <workItem from="1714997665397" duration="954000" />
+      <workItem from="1714997665397" duration="4060000" />
+      <workItem from="1715064019875" duration="1457000" />
+      <workItem from="1715081873854" duration="2416000" />
     </task>
     <servers />
   </component>
