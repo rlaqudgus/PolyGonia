@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 // How create a Quest System in Unity | RPG Style | Including Data Persistence
 // https://www.youtube.com/watch?v=UyTJLDGcT64&list=LL
@@ -46,7 +47,9 @@ public class QuestManager : Singleton<QuestManager>
     private Dictionary<string, Quest> CreateQuestMap()
     {
         // Assets/Resources/Quests 폴더에 존재하는 모든 QuestInfo 로드
+        //this.Log("trying to createquestmap");
         QuestInfo[] allQuests = Resources.LoadAll<QuestInfo>("Quests");
+        //this.Log(allQuests.Length);
         
         Dictionary<string, Quest> idToQuestMap = new Dictionary<string, Quest>();
 

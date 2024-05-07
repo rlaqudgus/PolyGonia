@@ -11872,7 +11872,7 @@ MonoBehaviour:
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
   m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -13519,7 +13519,7 @@ MonoBehaviour:
   m_FollowOffset: {x: 0, y: 0, z: -10}
   m_XDamping: 2
   m_YDamping: 2
-  m_ZDamping: 1
+  m_ZDamping: 3
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
