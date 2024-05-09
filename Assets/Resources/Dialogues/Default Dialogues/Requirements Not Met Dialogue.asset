@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: Requirements Not Met Dialogue
   m_EditorClassIdentifier: 
   id: Requirements Not Met Dialogue
-  utterances:
-  - speaker: 
-    sentences:
-    - voice: {fileID: 0}
-      text: Requirements not met
+  utterances: []

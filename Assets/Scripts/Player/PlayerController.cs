@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
+using Manager.DialogueScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -376,7 +378,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     // 3. Attack Script 제작
     public void OnAttack(InputAction.CallbackContext input)
     {
-        switch (input.phase)
+	    switch (input.phase)
         {
             case InputActionPhase.Started:
                 IsAttacking = true;
@@ -508,13 +510,8 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         if (input.started)
         {
-            Pause();
+	        UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
         }
-    }
-
-    private void Pause()
-    {
-        PauseManager.Instance.TogglePause();
     }
     
     #endregion
@@ -620,7 +617,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
         _HP -= dmg;
 
-        if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
+        //if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
     }
 
     void DamageEffect()

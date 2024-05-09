@@ -13,10 +13,4 @@ MonoBehaviour:
   m_Name: Can Finish Dialogue
   m_EditorClassIdentifier: 
   id: Can Finish Dialogue
-  utterances:
-  - speaker: 
-    sentences:
-    - voice: {fileID: 0}
-      text: 'Can Finish
-
-'
+  utterances: []

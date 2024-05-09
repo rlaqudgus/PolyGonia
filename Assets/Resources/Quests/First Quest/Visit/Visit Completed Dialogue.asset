@@ -13,15 +13,4 @@ MonoBehaviour:
   m_Name: Visit Completed Dialogue
   m_EditorClassIdentifier: 
   id: Visit Completed Dialogue
-  utterances:
-  - speaker: Diamond
-    sentences:
-    - voice: {fileID: 0}
-      text: Visit Completed
-    - voice: {fileID: 0}
-      text: 'Two quest steps are done
-
-
-        You can complete the quest now'
-    - voice: {fileID: 0}
-      text: visit quest finisher
+  utterances: []

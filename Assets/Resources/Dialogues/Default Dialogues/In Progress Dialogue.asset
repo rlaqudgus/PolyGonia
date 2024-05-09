@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: In Progress Dialogue
   m_EditorClassIdentifier: 
   id: In Progress Dialogue
-  utterances:
-  - speaker: 
-    sentences:
-    - voice: {fileID: 0}
-      text: In progress
+  utterances: []

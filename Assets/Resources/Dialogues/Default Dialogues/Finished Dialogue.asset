@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: Finished Dialogue
   m_EditorClassIdentifier: 
   id: Finished Dialogue
-  utterances:
-  - speaker: 
-    sentences:
-    - voice: {fileID: 0}
-      text: Finished
+  utterances: []

@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : Singleton<T>
+namespace Bases
 {
-    static T _instance;
-    public static T Instance
+    public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        get
+        private static T _instance;
+        public static T Instance
         {
-            if (_instance == null) Debug.Log($"{typeof(T)} is Empty");
-            return _instance;
+            get
+            {
+                if (_instance == null) Debug.Log($"{typeof(T)} is Empty");
+                return _instance;
+            }
+        }
+
+        protected void CreateSingleton(T instance, bool dontDestroyOnLoad = false)
+        {
+            _instance = instance;
+            if (dontDestroyOnLoad) DontDestroyOnLoad(this);
+            Init();
+        }
+
+        protected virtual void Init()
+        {
+        
         }
     }
-
-    protected void CreateSingleton(T instance) => _instance = instance;
 }

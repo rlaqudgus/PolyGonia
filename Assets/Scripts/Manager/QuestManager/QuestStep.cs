@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
+using Manager.DialogueScripts;
 using UnityEngine;
 
 public abstract class QuestStep : MonoBehaviour

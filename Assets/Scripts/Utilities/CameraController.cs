@@ -1,141 +1,143 @@
-using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class CameraController : MonoBehaviour
+namespace Utilities
 {
-    CinemachineVirtualCamera _virtualCamera;
-    CinemachineTransposer _transposer;
-    CinemachineBasicMultiChannelPerlin _multiChannelPerlin;
-    CinemachineConfiner2D _confiner2D;
-
-    [SerializeField] Vector3 _startOffset;
-    [SerializeField] float _cameraDamping;
-
-    Vector3 defaultOffset;
-    float defaultSize;
-
-    [Header("PostProcessing Components")]
-    [SerializeField] private PostProcessVolume _postProcessController;
-
-    private void Awake()
+    public class CameraController : MonoBehaviour
     {
-        //DontDestroyOnLoad(this);
-        _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>(); //offset
-        _multiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); //shake
-        _confiner2D = GetComponent<CinemachineConfiner2D>();
+        CinemachineVirtualCamera _virtualCamera;
+        CinemachineTransposer _transposer;
+        CinemachineBasicMultiChannelPerlin _multiChannelPerlin;
+        CinemachineConfiner2D _confiner2D;
 
-        defaultOffset = _startOffset + new Vector3(0, 0, -10);
-        defaultSize = _virtualCamera.m_Lens.OrthographicSize;
+        [SerializeField] Vector3 _startOffset;
+        [SerializeField] float _cameraDamping;
 
-        _transposer.m_FollowOffset = defaultOffset;
-        _transposer.m_XDamping = _cameraDamping;
-        _transposer.m_YDamping = _cameraDamping;
-    }
+        Vector3 defaultOffset;
+        float defaultSize;
 
-    public void Shake(float amount, float freq, float time) => StartCoroutine(IEShake(amount, freq, time));
-    public void Zoom(float size, float time) => StartCoroutine(IEZoom(size, time));
-    public void Look(Vector3 offset, float time) => StartCoroutine(IELook(offset, time));
-    public void ResetCamera(float time) => StartCoroutine(IEReset(time));
-    public void FollowTarget(GameObject target, float time) => StartCoroutine(IEFollowTarget(target, time));
-    public void FollowTarget(GameObject target) => _virtualCamera.m_Follow = target.transform;
-    public void LowHpPostProcess(float time, float grainamount, float vignetteamount) => StartCoroutine(IELowHpPostProcess(time,grainamount,vignetteamount));
+        [Header("PostProcessing Components")]
+        [SerializeField] private PostProcessVolume _postProcessController;
 
-    private IEnumerator IEShake(float amount, float freq, float time)
-    {
+        private void Awake()
+        {
+            //DontDestroyOnLoad(this);
+            _virtualCamera = GetComponent<CinemachineVirtualCamera>();
+            _transposer = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>(); //offset
+            _multiChannelPerlin = _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>(); //shake
+            _confiner2D = GetComponent<CinemachineConfiner2D>();
 
-        _multiChannelPerlin.m_AmplitudeGain = amount;
-        _multiChannelPerlin.m_FrequencyGain = freq;
+            defaultOffset = _startOffset + new Vector3(0, 0, -10);
+            defaultSize = _virtualCamera.m_Lens.OrthographicSize;
 
-        yield return new WaitForSeconds(time);
+            _transposer.m_FollowOffset = defaultOffset;
+            _transposer.m_XDamping = _cameraDamping;
+            _transposer.m_YDamping = _cameraDamping;
+        }
+
+        public void Shake(float amount, float freq, float time) => StartCoroutine(IEShake(amount, freq, time));
+        public void Zoom(float size, float time) => StartCoroutine(IEZoom(size, time));
+        public void Look(Vector3 offset, float time) => StartCoroutine(IELook(offset, time));
+        public void ResetCamera(float time) => StartCoroutine(IEReset(time));
+        public void FollowTarget(GameObject target, float time) => StartCoroutine(IEFollowTarget(target, time));
+        public void FollowTarget(GameObject target) => _virtualCamera.m_Follow = target.transform;
+        public void LowHpPostProcess(float time, float grainamount, float vignetteamount) => StartCoroutine(IELowHpPostProcess(time,grainamount,vignetteamount));
+
+        private IEnumerator IEShake(float amount, float freq, float time)
+        {
+
+            _multiChannelPerlin.m_AmplitudeGain = amount;
+            _multiChannelPerlin.m_FrequencyGain = freq;
+
+            yield return new WaitForSeconds(time);
         
-        _multiChannelPerlin.m_AmplitudeGain = 0f;
-        _multiChannelPerlin.m_FrequencyGain = 0f;
-    }
-
-    private IEnumerator IEZoom(float size, float time) // Ȯ�� �� confiner �ʰ��ϴ� ���� �߻�
-    {
-        float elapsedTime = 0f;
-        float startSize = _virtualCamera.m_Lens.OrthographicSize;
-        float targetSize = size;
-
-        while (elapsedTime < time)
-        {
-
-            _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
-            elapsedTime += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            _multiChannelPerlin.m_AmplitudeGain = 0f;
+            _multiChannelPerlin.m_FrequencyGain = 0f;
         }
 
-        _virtualCamera.m_Lens.OrthographicSize = targetSize;
-    }
-
-
-    private IEnumerator IELook(Vector3 targetOffset, float time)
-    {
-        float elapsedTime = 0f;
-        Vector3 startOffset = _transposer.m_FollowOffset;
-        targetOffset += new Vector3(0, 0, -10);
-
-        while (elapsedTime < time)
+        private IEnumerator IEZoom(float size, float time) // Ȯ�� �� confiner �ʰ��ϴ� ���� �߻�
         {
-            _transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
-            elapsedTime += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            float elapsedTime = 0f;
+            float startSize = _virtualCamera.m_Lens.OrthographicSize;
+            float targetSize = size;
+
+            while (elapsedTime < time)
+            {
+
+                _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+
+            _virtualCamera.m_Lens.OrthographicSize = targetSize;
         }
 
-        _transposer.m_FollowOffset = targetOffset;
-    }
-    private IEnumerator IEReset(float time)
-    {
-        float elapsedTime = 0f;
-        Vector3 startOffset = _transposer.m_FollowOffset;
-        Vector3 targetOffset = defaultOffset;
-        float startSize = _virtualCamera.m_Lens.OrthographicSize;
-        float targetSize = defaultSize;
 
-
-        while (elapsedTime < time)
+        private IEnumerator IELook(Vector3 targetOffset, float time)
         {
-            _transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
-            _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
-            elapsedTime += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
+            float elapsedTime = 0f;
+            Vector3 startOffset = _transposer.m_FollowOffset;
+            targetOffset += new Vector3(0, 0, -10);
+
+            while (elapsedTime < time)
+            {
+                _transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+
+            _transposer.m_FollowOffset = targetOffset;
+        }
+        private IEnumerator IEReset(float time)
+        {
+            float elapsedTime = 0f;
+            Vector3 startOffset = _transposer.m_FollowOffset;
+            Vector3 targetOffset = defaultOffset;
+            float startSize = _virtualCamera.m_Lens.OrthographicSize;
+            float targetSize = defaultSize;
+
+
+            while (elapsedTime < time)
+            {
+                _transposer.m_FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsedTime / time);
+                _virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / time);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+
+            _virtualCamera.m_Lens.OrthographicSize = targetSize;
+            _transposer.m_FollowOffset = targetOffset;
         }
 
-        _virtualCamera.m_Lens.OrthographicSize = targetSize;
-        _transposer.m_FollowOffset = targetOffset;
-    }
-
-    private IEnumerator IEFollowTarget(GameObject target, float time)
-    {
-        _virtualCamera.m_Follow = target.transform;
-
-        yield return new WaitForSeconds(time);
-
-        _virtualCamera.m_Follow = GameObject.Find("Player").transform;
-    }
-
-    private IEnumerator IELowHpPostProcess(float duration, float grainValue, float vignetteValue)
-    {
-        float elapsedTime = 0;
-
-        _postProcessController.profile.TryGetSettings(out Grain grain);
-        _postProcessController.profile.TryGetSettings(out Vignette vignette);
-
-        while(elapsedTime < duration)
+        private IEnumerator IEFollowTarget(GameObject target, float time)
         {
-            float t = elapsedTime / duration;
-            grain.intensity.value = Mathf.Lerp(0, grainValue, t);
-            vignette.intensity.value = Mathf.Lerp(0, vignetteValue, t);
+            _virtualCamera.m_Follow = target.transform;
 
-            yield return null;
+            yield return new WaitForSeconds(time);
 
-            elapsedTime+=Time.deltaTime;
+            _virtualCamera.m_Follow = GameObject.Find("Player").transform;
         }
+
+        private IEnumerator IELowHpPostProcess(float duration, float grainValue, float vignetteValue)
+        {
+            float elapsedTime = 0;
+
+            _postProcessController.profile.TryGetSettings(out Grain grain);
+            _postProcessController.profile.TryGetSettings(out Vignette vignette);
+
+            while(elapsedTime < duration)
+            {
+                float t = elapsedTime / duration;
+                grain.intensity.value = Mathf.Lerp(0, grainValue, t);
+                vignette.intensity.value = Mathf.Lerp(0, vignetteValue, t);
+
+                yield return null;
+
+                elapsedTime+=Time.deltaTime;
+            }
         
+        }
     }
 }

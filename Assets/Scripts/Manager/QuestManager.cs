@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Bases;
+using Manager;
 using UnityEngine;
 
 // How create a Quest System in Unity | RPG Style | Including Data Persistence

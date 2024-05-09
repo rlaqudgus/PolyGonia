@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
+using Manager.DialogueScripts;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -77,6 +79,8 @@ public class QuestPoint : NPC, ITalkable
     {   
         _isInteracting = true;
 
+        Debug.Log(_currentDialogue);
+        
         // 모든 QuestState 에 대해 반드시 대화 데이터가 존재해서 대화할 필요는 없다
         // 가령 REQUIREMENTS_NOT_MET 일 때 대화 불가능하도록 하려면 대화 데이터를 할당하지 않으면 된다
         if (_currentDialogue == null) _isInteracting = false;

@@ -13,16 +13,4 @@ MonoBehaviour:
   m_Name: New Dialogue B
   m_EditorClassIdentifier: 
   id: New Dialogue B
-  utterances:
-  - speaker: Silence Suzuka
-    sentences:
-    - voice: {fileID: 8300000, guid: 9613fe6ddac59df42b96090664110c61, type: 3}
-      text: "\rThank you for your hard work, trainer."
-  - speaker: Kitasan Black
-    sentences:
-    - voice: {fileID: 8300000, guid: 75fde52b3b85a334ca79929eaefc86cb, type: 3}
-      text: Let's do our best!
-  - speaker: Rice Shower
-    sentences:
-    - voice: {fileID: 8300000, guid: d4c212ad0b6672e458a37a18b276c1f9, type: 3}
-      text: Welcome home, brother!
+  utterances: []

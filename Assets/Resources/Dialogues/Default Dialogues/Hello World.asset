@@ -13,14 +13,4 @@ MonoBehaviour:
   m_Name: Hello World
   m_EditorClassIdentifier: 
   id: Hello World
-  utterances:
-  - speaker: Me
-    sentences:
-    - voice: {fileID: 0}
-      text: Hello World
-    - voice: {fileID: 0}
-      text: How are you
-  - speaker: You
-    sentences:
-    - voice: {fileID: 0}
-      text: I'm fine
+  utterances: []
