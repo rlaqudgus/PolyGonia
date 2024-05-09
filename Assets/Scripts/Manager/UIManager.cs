@@ -1,138 +1,154 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using Bases;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Utilities;
 
-namespace Manager
+public class UIManager : MonoBehaviour
 {
-    public class UIManager : Singleton<UIManager>
+    private static UIManager _instance;
+    public  static UIManager  Instance { get { return _instance; } }
+
+    [Header("Menu Objects")]
+    [SerializeField] private GameObject _mainMenu;
+    [SerializeField] private GameObject _settingsMenu;
+    
+    [Header("Window Objects")]
+    [HideInInspector] public List<Window> windows = new List<Window>();
+    [SerializeField] private GameObject _dialogueWindow;
+
+    [Header("First Selected Options")]
+    [SerializeField] private GameObject _mainMenuFirst;
+    [SerializeField] private GameObject _settingsMenuFirst;
+
+    [Header("Sound Volume Controller")]
+    [SerializeField] private Slider _musicVolumeController;
+    [SerializeField] private Slider _sfxVolumeController;
+    
+
+    [Header("Mobile UI")]
+    [SerializeField] private GameObject _mobileUI;
+
+    private void Awake()
+    {   
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }   
+
+    void Start()
     {
-        public GameObject[] uiArray;
-        private readonly Dictionary<string, GameObject> _uiDic = new Dictionary<string, GameObject>();
-        private int _order = 10;
-        private bool _pause = false;
-
-        private readonly Stack<GameObject> _popupStack = new Stack<GameObject>();
-        private GameObject _background;
-
-        #region UIObjectName
-
-        public const string MAIN_MENU = "Main Menu";
-        public const string SETTING_MENU = "Settings Menu";
-        public const string MOBILE_CANVAS = "Mobile Canvas";
-        public const string DIALOGUE_CANVAS = "Dialogue Canvas";
+        // Sound
+        _musicVolumeController.value = 1f;
+        _sfxVolumeController.value   = 1f;
         
-        #endregion
-        
-        private void Awake()
+        // UI
+        CloseAllMenus();
+
+        // Subscribe UI Action by case
+        GameManager.OnGameStateChanged += UIByGameState;
+    }
+
+    private void OnDestroy()
+    {
+        // Not gonna be destroyed because it's Singleton but unsubscribe anyway..?
+        GameManager.OnGameStateChanged -= UIByGameState;
+    }
+
+    private void UIByGameState(GameState state)
+    {
+        switch (state)
         {
-            CreateSingleton(this);
-
-            foreach (var uiObj in uiArray)
-            {
-                uiObj.SetActive(false);
-                _uiDic.Add(uiObj.name, uiObj);
-            }
+            case GameState.Init:
+                break;
+            case GameState.Pause:
+                break;
+            case GameState.Adventure:
+                break;
+            case GameState.Inventory:
+                break;
+            case GameState.Cinematic:
+                break;
+            case GameState.Die:
+                break;
+            case GameState.LowHealth:
+                break;
+            case GameState.CutScene:
+                break;
+            default:
+                break;
         }
+    }
 
-        #region UI
+    public void OpenMainMenu()
+    {
+        CloseAllMenus();
+        this.Log("close finish");
+        _mainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(_mainMenuFirst);
+        this.Log("setactive true");
+    }
+    
+    public void OpenSettingsMenu()
+    {
+        CloseAllMenus();
+        _settingsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(_settingsMenuFirst);
+    }
+    
+    public void CloseAllMenus()
+    {
+        _mainMenu.SetActive(false);
+        _settingsMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+    }
 
-        public void OpenPopupUI(string uiName) => OpenPopupUI(uiName, false);
-        public void OpenPopupUI(string uiName, bool pauseOnUI)
-        {
-            GameObject uiObj = OpenUI(uiName, _order);
-            if (uiObj == null) return;
-            
-            _order++;
-            EventSystem.current.SetSelectedGameObject(uiObj.transform.GetChild(0).gameObject);
-            _popupStack.Push(uiObj);
-            
-            if(pauseOnUI) Pause();
-        }
 
-        public void OpenBackgroundUI(string uiName)
-        {
-            GameObject uiObj = OpenUI(uiName, -1);
-            if (uiObj == null) return;
-            
-            _background?.SetActive(false);
-            _background = uiObj;
-        }
+    #region Dialogue
 
-        public void ClosePopupUI()
-        {
-            if(_popupStack.Count==0) return;
+    // [SH] [2024-04-29]
+    // Dialogue 상황에서 Pause를 처리하는 것이 까다롭다
+    // 여러 개의 UI가 있을 때 이 UI들의 순서를 기억하는 시스템이 필요하다
+    // 그래서 Window 클래스를 만들고 리스트를 사용하였음
 
-            GameObject popup = _popupStack.Pop();
-            popup.SetActive(false);
+    public void OpenDialogueWindow()
+    {
+        Window window = _dialogueWindow.GetComponent<Window>();
+        window.Open();
+    }
 
-            if (_popupStack.Count >= 1)
-                EventSystem.current.SetSelectedGameObject(_popupStack.Peek().transform.GetChild(0).gameObject);
-            _order--;
+    public void CloseDialogueWindow()
+    {
+        Window window = _dialogueWindow.GetComponent<Window>();
+        window.Close();
+    }
 
-            if (_pause) Resume();
-        }
-        
-        public void CloseAllPopupUI()
-        {
-            while(_popupStack.Count >0) ClosePopupUI();
-            EventSystem.current.SetSelectedGameObject(null);
-        }
+    #endregion
 
-        private GameObject OpenUI(string uiName, int sortingOrder)
-        {
-            GameObject uiObj = _uiDic[uiName];
+    public void MusicVolume()
+    {   
+        SoundManager.Instance.SetMusicVolume(_musicVolumeController.value);
+    }   
 
-            if (uiObj.activeSelf) return null;
-            
-            Canvas canvas = uiObj.GetOrAddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.overrideSorting = true;
-            canvas.sortingOrder = sortingOrder;
+    public void SFXVolume()
+    {   
+        SoundManager.Instance.SetSFXVolume(_sfxVolumeController.value);
+    }
 
-            uiObj.GetOrAddComponent<GraphicRaycaster>();
-            uiObj.SetActive(true);
-            
-            return uiObj;
-        }
+    public void CloseMobileUI()
+    {
+        _mobileUI.SetActive(false);
+    }
 
-        #endregion
-
-        #region Pause
-
-        public void Pause()
-        {
-            GameManager.Instance.playerInput = FindObjectOfType<PlayerInput>();
-
-            _pause = true;
-            Time.timeScale = 0;
-
-            // Sound
-            SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
-            SoundManager.Instance.PauseVoice();
-
-            // Input System
-            GameManager.Instance.ChangePlayerInput("UI");
-        }
-
-        public void Resume()
-        {
-            _pause = false;
-            Time.timeScale = 1;
-
-            // Sound
-            SoundManager.Instance.Transition(1f);
-            SoundManager.Instance.ResumeVoice();
-
-            // Input System
-            GameManager.Instance.ChangePlayerInput("player");
-        }
-        
-        #endregion
+    public void OpenMobileUI()
+    {
+        _mobileUI.SetActive(true);
     }
 }

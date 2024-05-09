@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: New Dialogue A
   utterances:
-  - speaker: 
+  - speaker: Special Week
     sentences:
-    - voice: {fileID: 0}
-      text: 
-  - speaker: 
-    sentences: []
+    - voice: {fileID: 8300000, guid: 549ac20644b6d1c45b04e34d5eeefa47, type: 3}
+      text: Can you please collect three coins?

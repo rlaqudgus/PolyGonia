@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Can Start Dialogue
   m_EditorClassIdentifier: 
   id: Can Start Dialogue
-  utterances: []
+  utterances:
+  - speaker: 
+    sentences:
+    - voice: {fileID: 0}
+      text: Can Start

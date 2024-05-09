@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: Collect Completed Dialogue
   m_EditorClassIdentifier: 
   id: Collect Completed Dialogue
-  utterances: []
+  utterances:
+  - speaker: Coins
+    sentences:
+    - voice: {fileID: 0}
+      text: You collected all coins
+    - voice: {fileID: 0}
+      text: Please visit diamond

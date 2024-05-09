@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Bases;
 using UnityEngine;
 using Utilities;
 public class WeaponController : Singleton<WeaponController> //Player�� �޾Ƶα�
