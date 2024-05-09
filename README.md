@@ -1,2 +1,2 @@
 # PolyGonia
-2D Platformer Adventure Game
+2D Platformer Adventure Game!
