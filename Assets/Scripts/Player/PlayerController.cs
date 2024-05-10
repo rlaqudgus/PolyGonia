@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
@@ -5,8 +6,6 @@ using Manager.DialogueScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.Windows;
 using Utilities;
 
 
@@ -110,8 +109,17 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
         _HP = _maxHP;
+
+        KeyboardInputManager.Instance.MoveAction += Move;
+        KeyboardInputManager.Instance.LookAction += Look;
+        KeyboardInputManager.Instance.JumpAction += OnJumpInput;
+        KeyboardInputManager.Instance.JumpUpAction += OnJumpUpInput;
+        
+        KeyboardInputManager.Instance.ShieldAction += Shield;
+        KeyboardInputManager.Instance.AttackStartedAction += Attack;
+        KeyboardInputManager.Instance.AttackCanceledAction += AttackCancel;
     }
-    
+
     void Update()
     {
 	    // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
@@ -312,93 +320,38 @@ public class PlayerController : MonoBehaviour, IAttackable
 		    Slide();
 	    }
     }
-    
-    //Event를 통해 호출되는 함수
-    //input에 따라 _moveDir를 변경
-    public void OnMove(InputAction.CallbackContext input)
+
+    public void Move(Vector2 inputVec, int moveDir)
     {
-        _moveInput = input.ReadValue<Vector2>();
-		
-        if (_moveInput.x > Mathf.Epsilon) _dir = 1;
-        else if (_moveInput.x < -Mathf.Epsilon) _dir = -1;
-        else _dir = 0;
+	    this._moveInput = inputVec;
+	    this._dir = moveDir;
 
-        _isMoving = (_dir != 0);
-        // this.Log($"_isMoving : {_isMoving}");
-        
-    }
-    
-    public void OnLook(InputAction.CallbackContext input)
-    {
-	    Vector2 playerInput = input.ReadValue<Vector2>();
-
-        IsLookUp = (playerInput.y > 0);
-        IsLookDown = (playerInput.y < 0);
-
-        //위나 아래를 보고 있을 때 움직이면 바로 움직이게
-        //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
-        if (_isMoving) 
-        {
-            IsLookUp = false;
-            IsLookDown = false;
-        }
-
-        Look();
+	    _isMoving = (_dir != 0);
     }
 
-    private void Look() 
+    private void Look(float y)
     {
+	    if (_isMoving) return;
+
+	    IsLookUp = y > 0;
+	    IsLookDown = y < 0;
         _anim.SetBool("isLookUp", IsLookUp);
         _anim.SetBool("isLookDown", IsLookDown);
     }
-
-    // Axis는 눌렀을 때 1, 뗐을 때 0으로 변하는 float return
-    // 계속 누르고 있으면 계속 True를 반환하는 isShield 변수 - 이놈은 shield idle 애니메이션 할 때 쓰기
-    // 한번 눌렀을 때 딱 한번 실행하는 애니메이션(방패 뽑는 애니메이션)을 써야하기 때문에 trigger 변수 하나 더 만들어주자 
-    public void OnShield(InputAction.CallbackContext input)
-    {
-        isShield = input.ReadValueAsButton();
-        this.Log($"isShield : {isShield}");
-
-        Shield();
-    }
     
-    private void Shield()
+    private void Shield(bool shield)
     {
+	    this.isShield = shield;
         if (isShield) _anim.SetTrigger("Shield");
 
         WeaponController.Instance.UseShield();
         _anim.SetBool("isShield", isShield);
 
     }
-    
-    // [TG] [2024-04-04] [Refactor]
-    // 1. OnAttack을 switch문으로 변경
-    // 2. 수동 리셋 위치 옮김
-    // 3. Attack Script 제작
-    public void OnAttack(InputAction.CallbackContext input)
+
+    private void Attack()
     {
-	    switch (input.phase)
-        {
-            case InputActionPhase.Started:
-                IsAttacking = true;
-                Attack();
-                break;
-            
-            case InputActionPhase.Canceled:
-                IsAttacking = false;
-                // 너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
-                _anim.ResetTrigger("Parry");
-                break;
-        }
-    }
-
-
-    // [TG] [2024-04-04] [Refactor]
-    // 1. 윗 공격, 하단 공격, 좌우 공격 추가
-    // 2. 상 하 공격은 디버깅을 위해 일단 합치지 않았음
-    // 2. 마음에 안듬 => input system의 one modifier..?
-    private void Attack() {
+	    IsAttacking = true;
         int idx = IsLookUp ? 0 : IsLookDown ? 2 : 1; //LookUP이 true면 0, lookDown이 true면 2 다 아니면 1 위에서 아래 순
 
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
@@ -412,6 +365,12 @@ public class PlayerController : MonoBehaviour, IAttackable
         WeaponController.Instance.UseWeapon(idx);
     }
 
+    private void AttackCancel()
+    {
+	    IsAttacking = false;
+	    _anim.ResetTrigger("Parry");
+    }
+
     IEnumerator CheckParry()
     {
         _isParry = true;
@@ -420,19 +379,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     }
 
     #region JUMP METHODS
-    public void OnJump(InputAction.CallbackContext input)
-    {
-	    if (input.phase == InputActionPhase.Started)
-	    {
-		    OnJumpInput();
-	    }
-        if (input.phase == InputActionPhase.Canceled)
-        {
-		   
-		    OnJumpUpInput();
-        }
-    }
-    
     void Jump()
     {
 	    // 점프 버튼 한 번으로 여러 번 점프되는 것을 방지
@@ -691,7 +637,7 @@ public class PlayerController : MonoBehaviour, IAttackable
             IsLookDown = false;
         }
 
-        Look();
+        //Look();
     }
 
     public void J_OnShield(bool s)

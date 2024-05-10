@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1800897b-b620-46bc-b046-70891d26bab2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Util.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Util.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/KeyboardInputManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/KeyboardInputManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Character/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab/Character/Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Finish Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Finish Dialogue.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Start Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Can Start Dialogue.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Finished Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/Default Dialogues/Finished Dialogue.asset" afterDir="false" />
@@ -19,38 +18,11 @@
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue A.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue A.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue B.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogues/New Dialogue B.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Collect Completed Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Collect Completed Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/CollectItemsQuestStep.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/CollectItemsQuestStep.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Item.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Collect/Item.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/First Quest.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/First Quest.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Visit/Visit Completed Dialogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/First Quest/Visit/Visit Completed Dialogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Quests/Second Quest/Second Quest.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Quests/Second Quest/Second Quest.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Bases/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Bases/Singleton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Box/CamResetBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/CamResetBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Box/FollowChangeBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/FollowChangeBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Box/InteractBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/InteractBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Box/LookBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/LookBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Box/ZoomBox.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/ZoomBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/CameraManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/CameraManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/DialogueManager/DialogueManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/DialogueManager/DialogueManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/EffectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/EffectManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/GameState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/GameState.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/PauseManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/PauseManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/QuestManager/QuestManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/QuestManager/QuestManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/QuestManager/QuestPoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/QuestManager/QuestPoint.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/SceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/SceneTransitionBox.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/SceneManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Box/SceneTransitionBox.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/UIManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/Window.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/Window.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/NewScenes/Beta1.4 RHC.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/NewScenes/Beta1.4 RHC.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/InputManager.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/WeaponController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/WeaponController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/CameraController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Timer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/Shield.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Shield.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +66,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Beta1.3&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Beta1.3__RHC&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -205,6 +177,9 @@
       <workItem from="1715219399876" duration="3420000" />
       <workItem from="1715223386612" duration="9585000" />
       <workItem from="1715234603184" duration="395000" />
+      <workItem from="1715315370559" duration="1606000" />
+      <workItem from="1715317013701" duration="250000" />
+      <workItem from="1715317299648" duration="769000" />
     </task>
     <servers />
   </component>
