@@ -70,7 +70,7 @@ namespace Manager
             }
         
             UIManager.Instance.OpenPopupUI(UIManager.DIALOGUE_CANVAS);
-            GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
+            KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.UI);
 
             //animator.SetBool("IsOpen", true);
 
@@ -143,7 +143,7 @@ namespace Manager
         public void EndDialogue()
         {
             UIManager.Instance.ClosePopupUI();
-            GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
+            KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.PLAYER);
 
             //animator.SetBool("IsOpen", false);
         

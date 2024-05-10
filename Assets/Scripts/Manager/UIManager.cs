@@ -107,8 +107,6 @@ namespace Manager
 
         public void Pause()
         {
-            GameManager.Instance.playerInput = FindObjectOfType<PlayerInput>();
-
             _pause = true;
             Time.timeScale = 0;
 
@@ -117,7 +115,7 @@ namespace Manager
             SoundManager.Instance.PauseVoice();
 
             // Input System
-            GameManager.Instance.ChangePlayerInput("UI");
+            KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.UI);
         }
 
         public void Resume()
@@ -130,7 +128,7 @@ namespace Manager
             SoundManager.Instance.ResumeVoice();
 
             // Input System
-            GameManager.Instance.ChangePlayerInput("player");
+            KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.PLAYER);
         }
         
         #endregion

@@ -17,7 +17,6 @@ namespace Manager
     public class GameManager : Singleton<GameManager>
     { 
         public PlayerController playerController;
-        public PlayerInput playerInput;
     
 
         public GameState gameState;
@@ -110,15 +109,6 @@ namespace Manager
             SoundManager.Instance.Transition(1f);
             // UI
             UIManager.Instance.CloseAllPopupUI();
-        }
-
-        #endregion
-
-        #region PlayerInputSystem
-
-        public void ChangePlayerInput(string inputName)
-        {
-            if (playerInput.currentActionMap.name != inputName) playerInput.SwitchCurrentActionMap(inputName);
         }
 
         #endregion

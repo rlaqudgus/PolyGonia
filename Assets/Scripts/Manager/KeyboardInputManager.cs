@@ -27,9 +27,11 @@ namespace Manager
         public Action AttackStartedAction = null;
         public Action AttackCanceledAction = null;
 
+        public Action InteractAction = null;
+        
         #endregion
 
-        private void Awake() => CreateSingleton(this);
+        private void Awake() => CreateSingleton(this, true);
         protected override void Init() => _playerInput ??= GetComponent<PlayerInput>();
 
         public void UpdateInputState(string inputState)
@@ -96,6 +98,20 @@ namespace Manager
             }
         }
         
+        #endregion
+
+        #region OtherInput
+
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            if (context.started) UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
+        }
+        
+        public void OnInteract(InputAction.CallbackContext input)
+        {
+            if (input.started) InteractAction?.Invoke();
+        } 
+
         #endregion
     }
 }

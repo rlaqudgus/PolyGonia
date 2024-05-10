@@ -10616,10 +10616,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 910703460}
-  - component: {fileID: 910703459}
+  - component: {fileID: 910703461}
   - component: {fileID: 910703458}
   m_Layer: 0
-  m_Name: ImputManager
+  m_Name: KeyboardInputManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10652,9 +10652,21 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 910703459}
-        m_TargetAssemblyTypeName: Manager.InputManager, Assembly-CSharp
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
         m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10667,15 +10679,51 @@ MonoBehaviour:
     m_ActionId: 924b8913-0c22-4e9e-9768-1d725458fa5b
     m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/upArrow,/Keyboard/downArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnShield
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: ced9e200-a543-406a-8fca-c672f790172b
     m_ActionName: Player/Shield[/Keyboard/c]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6191a691-0dab-44bc-a6a9-c63dcf8aaae8
     m_ActionName: Player/Attack[/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 09ff4861-23eb-4204-89bd-caac80128dab
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
@@ -10683,11 +10731,35 @@ MonoBehaviour:
     m_ActionId: dcb2a0cf-9dc9-4dc9-93ca-6d42d028f734
     m_ActionName: Player/Parry[/Keyboard/c,/Keyboard/x]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 11526ca8-abe3-4dee-ae89-98d532cc8074
     m_ActionName: Player/Pause[/Keyboard/p]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5daaa515-9520-486c-acb4-2b06a36b037b
     m_ActionName: Player/Interact[/Keyboard/e]
   - m_PersistentCalls:
@@ -10739,18 +10811,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &910703459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910703457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 431f2ff6625f4516a5b7d507d63430f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &910703460
 Transform:
   m_ObjectHideFlags: 0
@@ -10766,6 +10826,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &910703461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910703457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a9b08e1f2c4fb086e5053957883bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &920813511
 GameObject:
   m_ObjectHideFlags: 0
@@ -11350,7 +11422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2094483865986786823, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8779180292725892650, guid: 83971fc664d2e154d8a47b7eda318999, type: 3}
       propertyPath: maxHp
@@ -12945,45 +13017,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2261868275654040705, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
+      propertyPath: isHitPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261868275654040705, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
+      propertyPath: dontHitPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4574291224206179229, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
+      propertyPath: dontHitPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5868314773221598724, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_DefaultActionMap
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 666638442}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnInteract
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5979790711380875650, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
-      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7406845069004775575, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13024,6 +13072,10 @@ PrefabInstance:
     - target: {fileID: 7406845069004775575, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9222587935199073367, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
+      propertyPath: dontHitPlayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14050,7 +14102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 666638442}
-  playerInput: {fileID: 0}
   gameState: 0
 --- !u!4 &2031370152
 Transform:
@@ -14394,6 +14445,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 699080054454600104, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3093025035988677510, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
       propertyPath: m_Name
       value: Scene Transition Box

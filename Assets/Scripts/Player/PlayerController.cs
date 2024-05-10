@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     public bool IsLookDown{ get; private set; }
 
     public bool isShield;
-    private bool _isParry;
     public bool IsAttacking { get; private set; }
 
     public bool isInvincible; 
@@ -118,6 +117,22 @@ public class PlayerController : MonoBehaviour, IAttackable
         KeyboardInputManager.Instance.ShieldAction += Shield;
         KeyboardInputManager.Instance.AttackStartedAction += Attack;
         KeyboardInputManager.Instance.AttackCanceledAction += AttackCancel;
+
+        KeyboardInputManager.Instance.InteractAction += Interact;
+    }
+
+    private void OnDestroy()
+    {
+	    KeyboardInputManager.Instance.MoveAction -= Move;
+	    KeyboardInputManager.Instance.LookAction -= Look;
+	    KeyboardInputManager.Instance.JumpAction -= OnJumpInput;
+	    KeyboardInputManager.Instance.JumpUpAction -= OnJumpUpInput;
+        
+	    KeyboardInputManager.Instance.ShieldAction -= Shield;
+	    KeyboardInputManager.Instance.AttackStartedAction -= Attack;
+	    KeyboardInputManager.Instance.AttackCanceledAction -= AttackCancel;
+
+	    KeyboardInputManager.Instance.InteractAction -= Interact;
     }
 
     void Update()
@@ -309,7 +324,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    {
 		    Run(data.dashEndRunLerp);
 	    }
-	    else if (isShield || _isParry)
+	    else if (isShield)
 	    {
 		    Run(0.25f);
 	    }
@@ -341,11 +356,11 @@ public class PlayerController : MonoBehaviour, IAttackable
     
     private void Shield(bool shield)
     {
-	    this.isShield = shield;
-        if (isShield) _anim.SetTrigger("Shield");
+	    isShield = shield;
+        if (shield) _anim.SetTrigger("Shield");
 
-        WeaponController.Instance.UseShield();
-        _anim.SetBool("isShield", isShield);
+        WeaponController.Instance.UseShield(shield);
+        _anim.SetBool("isShield", shield);
 
     }
 
@@ -357,9 +372,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
         if (isShield)
         {
-            this.Log($"isParry: {_isParry}");
             _anim.SetTrigger("Parry");
-            StartCoroutine(CheckParry());
         }
 
         WeaponController.Instance.UseWeapon(idx);
@@ -369,13 +382,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
 	    IsAttacking = false;
 	    _anim.ResetTrigger("Parry");
-    }
-
-    IEnumerator CheckParry()
-    {
-        _isParry = true;
-        yield return new WaitForSeconds(.5f);
-        _isParry = false;
     }
 
     #region JUMP METHODS
@@ -440,27 +446,6 @@ public class PlayerController : MonoBehaviour, IAttackable
 		    StartCoroutine(nameof(StartDash), _dir);
 	    }
     }
-    
-    #region Pause / Resume
-
-    // [SH] [2024-04-14]
-    // OnPause는 Player Action Map에 할당
-    // OnResume은 UI Action Map에 할당
-    // Pause 시 Action Map을 UI로 전환시켜서 Pause 상태에서 Player Input이 작동하지 못하도록 만든다
-
-    // [SH] [2024-04-29]
-    // Dialogue 상황에서는 UI Action Map을 사용하는데
-    // UI Action Map 상태에서도 Pause를 처리하기 위해 수정함
-
-    public void OnPause(InputAction.CallbackContext input)
-    {
-        if (input.started)
-        {
-	        UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
-        }
-    }
-    
-    #endregion
 
 
     #region Interact
@@ -470,11 +455,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     // 상호작용 가능한 물체는 InteractBox를 가지며
     // InteractBox와 Trigger 될 경우 Player의 scannedObjects 에 해당 물체가 추가됨
     // scan이 된 여러 개의 물체 중에 가장 가까운 것을 선택해서 상호작용
- 
-    public void OnInteract(InputAction.CallbackContext input)
-    {
-        if (input.started) Interact();
-    }    
  
     GameObject FindClosestObject(GameObject origin, List<GameObject> objects)
     {       
@@ -504,7 +484,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         return objects[minIndex];
     }
  
-    private void Interact() 
+    private void Interact() // 가능하면 각 NPC, Torch로 코드를 뺄 수 있을 듯?
     {
         Debug.Log("interaction key pressed");
 
@@ -660,7 +640,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     void ResetShield()
     {
-        WeaponController.Instance.UseShield();
+        WeaponController.Instance.UseShield(isShield);
         _anim.ResetTrigger("Shield");
     }
 
@@ -668,7 +648,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         this.Log("Parry");
         _anim.SetTrigger("Parry");
-        StartCoroutine(CheckParry());
         WeaponController.Instance.UseWeapon(0);
         Invoke("ResetParry", 0.2f);
     }

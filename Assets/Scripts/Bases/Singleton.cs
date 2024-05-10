@@ -9,7 +9,7 @@ namespace Bases
         {
             get
             {
-                if (_instance == null) Debug.Log($"{typeof(T)} is Empty");
+                if (!_instance) Debug.Log($"{typeof(T)} is Empty");
                 return _instance;
             }
         }

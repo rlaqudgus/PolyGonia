@@ -1,10 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
 public class Sword : Weapon
 {
-    public override void UseShield() { }
+    private void Awake()
+    {
+        for (var i = 0; i < transform.childCount; i++) transform.GetChild(i).gameObject.SetActive(false);
+    }
+
+    public override void UseShield(bool on) { }
 
     public override void UseWeapon(int idx)
     {
