@@ -22,6 +22,7 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float _meeleeRange;
 
     protected Animator _anim;
+    protected SpriteRenderer _spriteRenderer;
 
     protected bool _isMeeleeRange;
     protected bool _isMoving = true;
