@@ -2880,6 +2880,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761248201}
   m_CullTransparentMesh: 1
+--- !u!1001 &764620771
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6067977103410738029, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_Size.x
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067977103410738029, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_Size.y
+      value: 2.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6067977103410738029, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cc3ebe076f0baf140b9610a3325808bc, type: 3}
+    - target: {fileID: 6067977103410738029, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1591
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.50683
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1591
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -56.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.78839636
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313824929347031218, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433187244778036038, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
+      propertyPath: m_Name
+      value: Lurker
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 47d12c09ad3bf91438a1b7a8033164c2, type: 3}
 --- !u!1 &834421272
 GameObject:
   m_ObjectHideFlags: 0
@@ -22120,6 +22205,7 @@ SceneRoots:
   - {fileID: 1039066267}
   - {fileID: 658171523}
   - {fileID: 250380412}
+  - {fileID: 381902363}
   - {fileID: 1094360300}
   - {fileID: 1691628384}
   - {fileID: 437032826}
@@ -22135,4 +22221,4 @@ SceneRoots:
   - {fileID: 248613095}
   - {fileID: 1496663384}
   - {fileID: 939530509}
-  - {fileID: 381902363}
+  - {fileID: 764620771}
