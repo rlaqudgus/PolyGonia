@@ -5,6 +5,7 @@ using UnityEngine;
 using Utilities;
 using UnityEngine.UI;
 using TMPro;
+using Manager;
 
 // How to make a Dialogue System in Unity
 // https://www.youtube.com/watch?v=_nRzoTzeyxU
@@ -31,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     float _initTypeSpeed;
     [SerializeField] private bool _syncTextToVoice;
 
-    public Animator animator;
+    //public Animator animator;
 
     public event Action OnDialogueStarted;
     public event Action OnDialogueDisplayed;
@@ -84,11 +85,11 @@ public class DialogueManager : MonoBehaviour
                 _speakers.Enqueue(utterance.speaker);
             }
         }
-        
-        UIManager.Instance.OpenDialogueWindow();
-        GameManager.Instance.playerInput.SwitchCurrentActionMap("UI");
 
-        animator.SetBool("IsOpen", true);
+        UIManager.Instance.OpenPopupUI(UIManager.DIALOGUE_CANVAS);
+        KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.UI);
+
+        //animator.SetBool("IsOpen", true);
 
         if (OnDialogueStarted != null) OnDialogueStarted();
 
@@ -172,10 +173,10 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        UIManager.Instance.CloseDialogueWindow();
-        GameManager.Instance.playerInput.SwitchCurrentActionMap("Player");
+        UIManager.Instance.ClosePopupUI();
+        KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.PLAYER);
 
-        animator.SetBool("IsOpen", false);
+        //animator.SetBool("IsOpen", false);
         
         _sentence = null;
         _speaker = null;

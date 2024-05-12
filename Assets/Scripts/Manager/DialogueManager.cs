@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Bases;
-using Manager.DialogueScripts;
 using TMPro;
 using UnityEngine;
 

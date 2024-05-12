@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
-using Manager.DialogueScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -318,7 +317,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    }
 	    else if (!IsDashing && !IsWallJumping)
 	    {
-		    if (isShield || _isParry)
+		    if (isShield)
 		    {
 			    Run(0.15f);
 		    }
