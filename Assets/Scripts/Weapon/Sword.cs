@@ -21,7 +21,7 @@ public class Sword : Weapon
 
     private IEnumerator DisableAttackAfterDelay(int idx)
     {
-        yield return new WaitForSeconds(0.05f); // ³Ê¹« ±æ¸é ¿ŞÂÊ°ø°İÇÏ°í ¿À¸¥ÂÊÀ¸·Î µ¹¸é ¿À¸¥ÂÊ ¸ó½ºÅÍ°¡ ÇÇ°İµÊ (HitBox°¡ Player¿¡ ºÙ¾î ´Ù´Ï±â ¶§¹®)
+        yield return new WaitForSeconds(0.05f); // ë„ˆë¬´ ê¸¸ë©´ ì™¼ìª½ê³µê²©í•˜ê³  ì˜¤ë¥¸ìª½ìœ¼ë¡œ ëŒë©´ ì˜¤ë¥¸ìª½ ëª¬ìŠ¤í„°ê°€ í”¼ê²©ë¨ (HitBoxê°€ Playerì— ë¶™ì–´ ë‹¤ë‹ˆê¸° ë•Œë¬¸)
         transform.GetChild(idx).gameObject.SetActive(false);
     }
 }

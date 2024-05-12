@@ -311,30 +311,35 @@ public class PlayerController : MonoBehaviour, IAttackable
     
     private void FixedUpdate()
     {
-       #region Run
-       if (!IsDashing && IsWallJumping)
-       {
-          Run(data.wallJumpRunLerp);
-       }
-       else if (!IsDashing && !IsWallJumping)
-       {
-          Run(1);
-       }
-       else if (_isDashAttacking)
-       {
-          Run(data.dashEndRunLerp);
-       }
-       else if (isShield)
-       {
-          Run(0.25f);
-       }
-       #endregion
-       // Slide
-       if (IsSliding)
-       {
-          Slide();
-       }
+	    #region Run
+	    if (!IsDashing && IsWallJumping)
+	    {
+		    Run(data.wallJumpRunLerp);
+	    }
+	    else if (!IsDashing && !IsWallJumping)
+	    {
+		    if (isShield || _isParry)
+		    {
+			    Run(0.15f);
+		    }
+		    else
+		    {
+			    Run(1);
+		    }
+	    }
+	    else if (_isDashAttacking)
+	    {
+		    Run(data.dashEndRunLerp);
+	    }
+	    
+	    #endregion
+	    // Slide
+	    if (IsSliding)
+	    {
+		    Slide();
+	    }
     }
+    
 
     public void Move(Vector2 inputVec, int moveDir)
     {

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utilities;
+
+// Namespace 가 없음 ... 
+// error CS0234: The type or namespace name 'GraphView' does not exist in the namespace 'UnityEditor.Experimental'
+// using UnityEditor.Experimental.GraphView; 
 
 //기본적인 상태 구조는 상위 스크립트에서 해결
 //여기서는 각 상태 세부 구현 및 애니메이션 짜기
@@ -16,8 +19,8 @@ public class Triangle : Enemy, IAttackable, IDetectable
     [SerializeField] float _jumpForce;
     
     [Header("Dash")]
-    [SerializeField] float _dashForce;
-    [SerializeField] float _dashDistance;
+    [SerializeField] protected float _dashForce;
+    [SerializeField] protected float _dashDistance;
 
     protected bool _reachCliff;
     protected bool _onWall;
@@ -27,11 +30,12 @@ public class Triangle : Enemy, IAttackable, IDetectable
     [SerializeField] GameObject _hitBox;
     protected Vector2 _moveDir;
 
-    void Start()
+    protected virtual void Start()
     {
         _hp = _maxHp;
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _enemyState = EnemyState.Idle;
         _moveDir = Vector2.left;
         _reachCliff = false;
@@ -41,7 +45,7 @@ public class Triangle : Enemy, IAttackable, IDetectable
 
     //매 프레임마다 확인해야 할 것? bool 애니메이션은 애니메이션 함수로 따로 처리하기 파편화되어있으니 보기 싫다
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         // [SH] [2024-04-16]
         // Triangle이 Civilian, Soldier, Jumper로 분리되었는데
