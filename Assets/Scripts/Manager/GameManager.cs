@@ -35,18 +35,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (playerInput == null)
+        {
+            playerInput = FindObjectOfType<PlayerInput>();
             if (playerInput == null)
             {
-                playerInput = FindObjectOfType<PlayerInput>();
-                if (playerInput == null)
-                {
-                UnityEngine.Debug.Log("PlayerInput not found!");
-                }
+            UnityEngine.Debug.Log("PlayerInput not found!");
             }
-        
-
-
-
+        }
     }
 
     private void Awake()
