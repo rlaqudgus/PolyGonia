@@ -1,39 +1,47 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 public class WeaponController : Singleton<WeaponController> //Player�� �޾Ƶα�
 {
-    [SerializeField] Weapon[] _weaponArray;
+    [SerializeField] private Weapon[] _weaponArray;
+    [HideInInspector] public Action[] WeaponAction;
+    
+    private PlayerController _player;
 
-    PlayerController _player;
+    #region WeaponIdx
 
-    const int _swordIdx = 0;
-    const int _shieldIdx = 1;
+    private const int SWORD_IDX = 0;
+    private const int SHIELD_IDX = 1;
 
+    #endregion
+
+    private void Awake()
+    {
+        CreateSingleton(this);
+    }
 
     private void Start()
     {
-        CreateSingleton(this);
-
         _player = GameObject.Find("Player").GetComponent<PlayerController>();
         _weaponArray = gameObject.GetComponentsInChildren<Weapon>();
-
-        foreach (Weapon weapon in _weaponArray) weapon.player = _player;
     }
-    
-    public void UseShield() => this._weaponArray[_shieldIdx].UseShield();
+
+    public void AddWeaponAction(int idx, Action action) => _weaponArray[idx].WeaponAction += action;
+    public void UseShield(bool on) => _weaponArray[SHIELD_IDX].UseShield(on);
     public void UseWeapon(int idx)
     {
-        if(_player.isShield) this._weaponArray[_shieldIdx].UseWeapon(idx);
-        else this._weaponArray[_swordIdx].UseWeapon(idx);
+        if(_player.isShield) this._weaponArray[SHIELD_IDX].UseWeapon(idx);
+        else this._weaponArray[SWORD_IDX].UseWeapon(idx);
     }
 }
 
 public abstract class Weapon : MonoBehaviour
 {
     public float weaponForce;
-    public PlayerController player;
+    public Action WeaponAction;
+    
     public abstract void UseWeapon(int idx);
-    public abstract void UseShield();
+    public abstract void UseShield(bool on);
 }

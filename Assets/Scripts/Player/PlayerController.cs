@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
+using Manager.DialogueScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.Windows;
 using Utilities;
 
 
@@ -28,7 +29,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     public bool IsLookDown{ get; private set; }
 
     public bool isShield;
-    private bool _isParry;
     public bool IsAttacking { get; private set; }
 
     public bool isInvincible; 
@@ -98,57 +98,82 @@ public class PlayerController : MonoBehaviour, IAttackable
     
     void Start()
     {
-	    
+       
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _shield = GetComponentInChildren<Shield>(true);
 
-	    SetGravityScale(data.gravityScale);
+       SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
         _HP = _maxHP;
+
+        KeyboardInputManager.Instance.MoveAction += Move;
+        KeyboardInputManager.Instance.LookAction += Look;
+        KeyboardInputManager.Instance.JumpAction += OnJumpInput;
+        KeyboardInputManager.Instance.JumpUpAction += OnJumpUpInput;
+        
+        KeyboardInputManager.Instance.ShieldAction += Shield;
+        KeyboardInputManager.Instance.AttackStartedAction += Attack;
+        KeyboardInputManager.Instance.AttackCanceledAction += AttackCancel;
+
+        KeyboardInputManager.Instance.InteractAction += Interact;
     }
-    
+
+    private void OnDestroy()
+    {
+       KeyboardInputManager.Instance.MoveAction -= Move;
+       KeyboardInputManager.Instance.LookAction -= Look;
+       KeyboardInputManager.Instance.JumpAction -= OnJumpInput;
+       KeyboardInputManager.Instance.JumpUpAction -= OnJumpUpInput;
+        
+       KeyboardInputManager.Instance.ShieldAction -= Shield;
+       KeyboardInputManager.Instance.AttackStartedAction -= Attack;
+       KeyboardInputManager.Instance.AttackCanceledAction -= AttackCancel;
+
+       KeyboardInputManager.Instance.InteractAction -= Interact;
+    }
+
     void Update()
     {
-	    // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
-	    TimerOnGround -= Time.deltaTime;
-	    TimerOnWall -= Time.deltaTime;
-	    TimerOnWallRight -= Time.deltaTime;
-	    TimerOnWallLeft -= Time.deltaTime;
-	    TimerPressJumpBtn -= Time.deltaTime;
-	    TimerPressDashBtn -= Time.deltaTime;
-	    
-	    #region COLLISION CHECKS
-	    if (!IsDashing) // (!IsDashing && !IsJumping) 에서 수정
-	    {
-		    // 기존의 OnCollision2D를 이용한 Ground Check은 실시간 모니터링을 하기 힘들어 Update함수에서 check를 함
-		    // CheckWithbox의 BoxCastAll가 동적 함수라 Update내에서 쓰기에는 많은 리소스를 잡아먹을 것 같아 정적 검사인 OverlapBox사용
-		    
-		    // Ground Check
-		    if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _layerTerrain) && !IsJumping)
-		    {
-			    TimerOnGround = data.coyoteTime;
-			    _jumpCounter = data.jumpAmount;
-		    }
+       // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
+       TimerOnGround -= Time.deltaTime;
+       TimerOnWall -= Time.deltaTime;
+       TimerOnWallRight -= Time.deltaTime;
+       TimerOnWallLeft -= Time.deltaTime;
+       TimerPressJumpBtn -= Time.deltaTime;
+       TimerPressDashBtn -= Time.deltaTime;
+       
+       #region COLLISION CHECKS
+       if (!IsDashing) // (!IsDashing && !IsJumping) 에서 수정
+       {
+          // 기존의 OnCollision2D를 이용한 Ground Check은 실시간 모니터링을 하기 힘들어 Update함수에서 check를 함
+          // CheckWithbox의 BoxCastAll가 동적 함수라 Update내에서 쓰기에는 많은 리소스를 잡아먹을 것 같아 정적 검사인 OverlapBox사용
+          
+          // Ground Check
+          if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _layerTerrain) && !IsJumping)
+          {
+             TimerOnGround = data.coyoteTime;
+             _jumpCounter = data.jumpAmount;
+          }
 
-		    // Right Wall Check
-		    if ((Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0, _layerTerrain) && _dir == 1) && !IsWallJumping)
-		    {
-			    TimerOnWallRight = data.coyoteTime;
-		    }
+          // Right Wall Check
+          if ((Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0, _layerTerrain) && _dir == 1) && !IsWallJumping)
+          {
+             TimerOnWallRight = data.coyoteTime;
+          }
 
-		    // Left Wall Check
-		    if ((Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0, _layerTerrain) && _dir == -1) && !IsWallJumping)
-		    {
-			    TimerOnWallLeft = data.coyoteTime;
-		    }
+          // Left Wall Check
+          if ((Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0, _layerTerrain) && _dir == -1) && !IsWallJumping)
+          {
+             TimerOnWallLeft = data.coyoteTime;
+          }
 
-		    //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
-		    TimerOnWall = Mathf.Max(TimerOnWallLeft, TimerOnWallRight);
-	    }
-	    #endregion
+          //Two checks needed for both left and right walls since whenever the play turns the wall checkPoints swap sides
+          TimerOnWall = Mathf.Max(TimerOnWallLeft, TimerOnWallRight);
+       }
+       #endregion
         
         #region TEETER CHECK
         if (CanTeeter())
@@ -171,353 +196,256 @@ public class PlayerController : MonoBehaviour, IAttackable
         #endregion
         
         #region JUMP CHECK
-		if (IsJumping && _rb.velocity.y < 0)
-		{
-			IsJumping = false;
+      if (IsJumping && _rb.velocity.y < 0)
+      {
+         IsJumping = false;
 
-			if (!IsWallJumping)
-			{
-				_isJumpFalling = true; // jump, wall jump 상태가 아니면서 플레이어의 y속력이 음수인 경우 떨어지는 중
-			}
-		}
+         if (!IsWallJumping)
+         {
+            _isJumpFalling = true; // jump, wall jump 상태가 아니면서 플레이어의 y속력이 음수인 경우 떨어지는 중
+         }
+      }
 
-		if (IsWallJumping && Time.time - _lastWallJumpTime > data.wallJumpTime) // wall jump 상태에서 wallJumpTime을 초과한 경우
-		{
-			IsWallJumping = false;
-		}
+      if (IsWallJumping && Time.time - _lastWallJumpTime > data.wallJumpTime) // wall jump 상태에서 wallJumpTime을 초과한 경우
+      {
+         IsWallJumping = false;
+      }
 
-		if (TimerOnGround > 0 && !IsJumping && !IsWallJumping) // Ground에 있을 경우
+      if (TimerOnGround > 0 && !IsJumping && !IsWallJumping) // Ground에 있을 경우
         {
-			_isJumpCut = false;
-			_isJumpFalling = false;
+         _isJumpCut = false;
+         _isJumpFalling = false;
         }
-		
-		if (!IsDashing)
-		{
-			//Jump
-			if (CanJump() && TimerPressJumpBtn > 0)
-			{
-				IsJumping = true;
-				IsWallJumping = false;
-				_isJumpCut = false;
-				_isJumpFalling = false;
-				Jump();
-			}
-			//WALL JUMP
-			else if (CanWallJump() && TimerPressJumpBtn > 0)
-			{
-				IsWallJumping = true;
-				IsJumping = false;
-				_isJumpCut = false;
-				_isJumpFalling = false;
+      
+      if (!IsDashing)
+      {
+         //Jump
+         if (CanJump() && TimerPressJumpBtn > 0)
+         {
+            IsJumping = true;
+            IsWallJumping = false;
+            _isJumpCut = false;
+            _isJumpFalling = false;
+            Jump();
+         }
+         //WALL JUMP
+         else if (CanWallJump() && TimerPressJumpBtn > 0)
+         {
+            IsWallJumping = true;
+            IsJumping = false;
+            _isJumpCut = false;
+            _isJumpFalling = false;
 
-				_lastWallJumpTime = Time.time;
-				_lastWallJumpDir = (TimerOnWallRight > 0) ? -1 : 1;
+            _lastWallJumpTime = Time.time;
+            _lastWallJumpDir = (TimerOnWallRight > 0) ? -1 : 1;
 
-				WallJump(_lastWallJumpDir);
-			}
-		}
-		#endregion
-		
-		#region GRAVITY
-		if (!_isDashAttacking)
-		{
-			if (IsSliding)
-			{
-				SetGravityScale(0);
-			}
-			else if (_rb.velocity.y < 0 && _moveInput.y < 0)
-			{
-				// 아래 방향키 누르고 있을 시 빠른 하강
-				SetGravityScale(data.gravityScale * data.fastFallGravityMult);
-				_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFastFallSpeed));
-			}
-			else if (_isJumpCut)
-			{
-				// 점프를 중간에 취소할 시 빠른 하강 : 중력값을 그대로 사용할 시 점프컷이 아닌 일반 점프에 점프 높이만 낮아진 것이 되어버림
-				// this.Log("jump cut");
-				SetGravityScale(data.gravityScale * data.jumpCutGravityMult);
-				_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFallSpeed));
-			}
-			else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(_rb.velocity.y) < data.jumpHangThreshold)
-			{
-				// Jump후 Apex에 가까워졌을 때 Gravity값 작게 조정
-				SetGravityScale(data.gravityScale * data.jumpHangGravityMult);
-			}
-			else if (_rb.velocity.y < 0)
-			{
-				// jumpFalling 시 중력값 더 크게
-				SetGravityScale(data.gravityScale * data.fallGravityMult);
-				_rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFallSpeed));
-			}
-			else
-			{
-				SetGravityScale(data.gravityScale);
-			}
-		}
-		else
-		{
-			SetGravityScale(0);
-		}
-		#endregion
-		
-		#region SLIDE CHECKS
-		// 왼쪽 벽에 붙어있고 왼쪽 방향키 누를 때, 오른쪽 벽에 붙어있고 오른쪽 방향키 누를 때
-		if (CanSlide() && ((TimerOnWallLeft > 0 && _moveInput.x < 0) || (TimerOnWallRight > 0 && _moveInput.x > 0)))
-		{
-			IsSliding = true;
-		}
-		else
-		{
-			IsSliding = false;
-		}
-		#endregion
-		
-		//x축 부호 바꾸기 (좌우반전)
-		if (_isMoving)
-		{
-			transform.localScale = new Vector2(_dir, transform.localScale.y);
-		}
-		
-		// this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
-		// this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
-		_anim.SetBool("isMoving", _isMoving);
+            WallJump(_lastWallJumpDir);
+         }
+      }
+      #endregion
+      
+      #region GRAVITY
+      if (!_isDashAttacking)
+      {
+         if (IsSliding)
+         {
+            SetGravityScale(0);
+         }
+         else if (_rb.velocity.y < 0 && _moveInput.y < 0)
+         {
+            // 아래 방향키 누르고 있을 시 빠른 하강
+            SetGravityScale(data.gravityScale * data.fastFallGravityMult);
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFastFallSpeed));
+         }
+         else if (_isJumpCut)
+         {
+            // 점프를 중간에 취소할 시 빠른 하강 : 중력값을 그대로 사용할 시 점프컷이 아닌 일반 점프에 점프 높이만 낮아진 것이 되어버림
+            // this.Log("jump cut");
+            SetGravityScale(data.gravityScale * data.jumpCutGravityMult);
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFallSpeed));
+         }
+         else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(_rb.velocity.y) < data.jumpHangThreshold)
+         {
+            // Jump후 Apex에 가까워졌을 때 Gravity값 작게 조정
+            SetGravityScale(data.gravityScale * data.jumpHangGravityMult);
+         }
+         else if (_rb.velocity.y < 0)
+         {
+            // jumpFalling 시 중력값 더 크게
+            SetGravityScale(data.gravityScale * data.fallGravityMult);
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Max(_rb.velocity.y, -data.maxFallSpeed));
+         }
+         else
+         {
+            SetGravityScale(data.gravityScale);
+         }
+      }
+      else
+      {
+         SetGravityScale(0);
+      }
+      #endregion
+      
+      #region SLIDE CHECKS
+      // 왼쪽 벽에 붙어있고 왼쪽 방향키 누를 때, 오른쪽 벽에 붙어있고 오른쪽 방향키 누를 때
+      if (CanSlide() && ((TimerOnWallLeft > 0 && _moveInput.x < 0) || (TimerOnWallRight > 0 && _moveInput.x > 0)))
+      {
+         IsSliding = true;
+      }
+      else
+      {
+         IsSliding = false;
+      }
+      #endregion
+      
+      //x축 부호 바꾸기 (좌우반전)
+      if (_isMoving)
+      {
+         transform.localScale = new Vector2(_dir, transform.localScale.y);
+      }
+      
+      // this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
+      // this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
+      _anim.SetBool("isMoving", _isMoving);
     }
     
     private void FixedUpdate()
     {
-	    #region Run
-	    if (!IsDashing && IsWallJumping)
-	    {
-		    Run(data.wallJumpRunLerp);
-	    }
-	    else if (!IsDashing && !IsWallJumping)
-	    {
-		    Run(1);
-	    }
-	    else if (_isDashAttacking)
-	    {
-		    Run(data.dashEndRunLerp);
-	    }
-	    else if (isShield || _isParry)
-	    {
-		    Run(0.25f);
-	    }
-	    #endregion
-	    // Slide
-	    if (IsSliding)
-	    {
-		    Slide();
-	    }
-    }
-    
-    //Event를 통해 호출되는 함수
-    //input에 따라 _moveDir를 변경
-    public void OnMove(InputAction.CallbackContext input)
-    {
-        _moveInput = input.ReadValue<Vector2>();
-		
-        if (_moveInput.x > Mathf.Epsilon) _dir = 1;
-        else if (_moveInput.x < -Mathf.Epsilon) _dir = -1;
-        else _dir = 0;
-
-        _isMoving = (_dir != 0);
-        // this.Log($"_isMoving : {_isMoving}");
-        
-    }
-    
-    public void OnLook(InputAction.CallbackContext input)
-    {
-	    Vector2 playerInput = input.ReadValue<Vector2>();
-
-        IsLookUp = (playerInput.y > 0);
-        IsLookDown = (playerInput.y < 0);
-
-        //위나 아래를 보고 있을 때 움직이면 바로 움직이게
-        //키를 뗄 때도 호출되기 때문에 0입력되고 false시켜줌
-        if (_isMoving) 
-        {
-            IsLookUp = false;
-            IsLookDown = false;
-        }
-
-        Look();
+       #region Run
+       if (!IsDashing && IsWallJumping)
+       {
+          Run(data.wallJumpRunLerp);
+       }
+       else if (!IsDashing && !IsWallJumping)
+       {
+          Run(1);
+       }
+       else if (_isDashAttacking)
+       {
+          Run(data.dashEndRunLerp);
+       }
+       else if (isShield)
+       {
+          Run(0.25f);
+       }
+       #endregion
+       // Slide
+       if (IsSliding)
+       {
+          Slide();
+       }
     }
 
-    private void Look() 
+    public void Move(Vector2 inputVec, int moveDir)
     {
+       this._moveInput = inputVec;
+       this._dir = moveDir;
+
+       _isMoving = (_dir != 0);
+    }
+
+    private void Look(float y)
+    {
+       if (_isMoving) return;
+
+       IsLookUp = y > 0;
+       IsLookDown = y < 0;
         _anim.SetBool("isLookUp", IsLookUp);
         _anim.SetBool("isLookDown", IsLookDown);
     }
-
-    // Axis는 눌렀을 때 1, 뗐을 때 0으로 변하는 float return
-    // 계속 누르고 있으면 계속 True를 반환하는 isShield 변수 - 이놈은 shield idle 애니메이션 할 때 쓰기
-    // 한번 눌렀을 때 딱 한번 실행하는 애니메이션(방패 뽑는 애니메이션)을 써야하기 때문에 trigger 변수 하나 더 만들어주자 
-    public void OnShield(InputAction.CallbackContext input)
-    {
-        isShield = input.ReadValueAsButton();
-        this.Log($"isShield : {isShield}");
-
-        Shield();
-    }
     
-    private void Shield()
+    private void Shield(bool shield)
     {
-        if (isShield) _anim.SetTrigger("Shield");
+       isShield = shield;
+        if (shield) _anim.SetTrigger("Shield");
 
-        WeaponController.Instance.UseShield();
-        _anim.SetBool("isShield", isShield);
+        WeaponController.Instance.UseShield(shield);
+        _anim.SetBool("isShield", shield);
 
     }
-    
-    // [TG] [2024-04-04] [Refactor]
-    // 1. OnAttack을 switch문으로 변경
-    // 2. 수동 리셋 위치 옮김
-    // 3. Attack Script 제작
-    public void OnAttack(InputAction.CallbackContext input)
+
+    private void Attack()
     {
-        switch (input.phase)
-        {
-            case InputActionPhase.Started:
-                IsAttacking = true;
-                Attack();
-                break;
-            
-            case InputActionPhase.Canceled:
-                IsAttacking = false;
-                // 너무 빨리 뗐을 때 트리거가 reset되지 않음 수동으로 reset 해주자..
-                _anim.ResetTrigger("Parry");
-                break;
-        }
-    }
-
-
-    // [TG] [2024-04-04] [Refactor]
-    // 1. 윗 공격, 하단 공격, 좌우 공격 추가
-    // 2. 상 하 공격은 디버깅을 위해 일단 합치지 않았음
-    // 2. 마음에 안듬 => input system의 one modifier..?
-    private void Attack() {
+       IsAttacking = true;
         int idx = IsLookUp ? 0 : IsLookDown ? 2 : 1; //LookUP이 true면 0, lookDown이 true면 2 다 아니면 1 위에서 아래 순
 
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
         if (isShield)
         {
-            this.Log($"isParry: {_isParry}");
             _anim.SetTrigger("Parry");
-            StartCoroutine(CheckParry());
         }
 
         WeaponController.Instance.UseWeapon(idx);
     }
 
-    IEnumerator CheckParry()
+    private void AttackCancel()
     {
-        _isParry = true;
-        yield return new WaitForSeconds(.5f);
-        _isParry = false;
+       IsAttacking = false;
+       _anim.ResetTrigger("Parry");
     }
 
     #region JUMP METHODS
-    public void OnJump(InputAction.CallbackContext input)
-    {
-	    if (input.phase == InputActionPhase.Started)
-	    {
-		    OnJumpInput();
-	    }
-        if (input.phase == InputActionPhase.Canceled)
-        {
-		   
-		    OnJumpUpInput();
-        }
-    }
-    
     void Jump()
     {
-	    // 점프 버튼 한 번으로 여러 번 점프되는 것을 방지
-	    TimerPressJumpBtn = 0;
-	    TimerOnGround = 0;
-	 
-	    this.Log("Perform Jump");
-	    
-	    // 현재 속도에 상관없이 항상 일정한 점프를 할 수 있도록 함
-	    // ( _rb.velocity.y가 음수일 때만 작동하게 하였는데 모든 상황에서 작동하도록 변경 -> 더블 점프 시 지나치게 높이 점프하는 버그 해결)
-	    float force = data.jumpForce;
-	    force -= _rb.velocity.y;
+       // 점프 버튼 한 번으로 여러 번 점프되는 것을 방지
+       TimerPressJumpBtn = 0;
+       TimerOnGround = 0;
+    
+       this.Log("Perform Jump");
+       
+       // 현재 속도에 상관없이 항상 일정한 점프를 할 수 있도록 함
+       // ( _rb.velocity.y가 음수일 때만 작동하게 하였는데 모든 상황에서 작동하도록 변경 -> 더블 점프 시 지나치게 높이 점프하는 버그 해결)
+       float force = data.jumpForce;
+       force -= _rb.velocity.y;
 
-	    _rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
-	    _jumpCounter -= 1;
+       _rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+       _jumpCounter -= 1;
     }
     
     private void WallJump(int dir)
     {
-	    TimerPressJumpBtn = 0;
-	    TimerOnGround = 0;
-	    TimerOnWallRight = 0;
-	    TimerOnWallLeft = 0;
-		
-	    this.Log("Perform Wall jump");
-	    
-	    Vector2 force = new Vector2(data.wallJumpForce.x, data.wallJumpForce.y);
-	    force.x *= dir; // 벽과 반대방향으로 wall jump
+       TimerPressJumpBtn = 0;
+       TimerOnGround = 0;
+       TimerOnWallRight = 0;
+       TimerOnWallLeft = 0;
+      
+       this.Log("Perform Wall jump");
+       
+       Vector2 force = new Vector2(data.wallJumpForce.x, data.wallJumpForce.y);
+       force.x *= dir; // 벽과 반대방향으로 wall jump
 
-	    if (Mathf.Sign(_rb.velocity.x) != Mathf.Sign(force.x))
-	    {
-		    force.x -= _rb.velocity.x;
-	    }
+       if (Mathf.Sign(_rb.velocity.x) != Mathf.Sign(force.x))
+       {
+          force.x -= _rb.velocity.x;
+       }
 
-	    if (_rb.velocity.y < 0) // 항상 일정한 wall jump
-	    {
-		    force.y -= _rb.velocity.y;
-	    }
+       if (_rb.velocity.y < 0) // 항상 일정한 wall jump
+       {
+          force.y -= _rb.velocity.y;
+       }
 
-	    _rb.AddForce(force, ForceMode2D.Impulse);
+       _rb.AddForce(force, ForceMode2D.Impulse);
     }
     #endregion
     
     public void OnDash(InputAction.CallbackContext input)
     {
-	    IsDashing = input.ReadValueAsButton();
-	    OnDashInput();
-	    
-	    if (CanDash() && TimerPressDashBtn > 0)
-	    {
-		    // Dash Button을 누른 직후 다른 Input이 들어오는 것을 일정 시간동안 방지
-		    Sleep(data.dashSleepTime); 
-			
-		    IsDashing = true;
-		    IsJumping = false;
-		    IsWallJumping = false;
-		    _isJumpCut = false;
+       IsDashing = input.ReadValueAsButton();
+       OnDashInput();
+       
+       if (CanDash() && TimerPressDashBtn > 0)
+       {
+          // Dash Button을 누른 직후 다른 Input이 들어오는 것을 일정 시간동안 방지
+          Sleep(data.dashSleepTime); 
+         
+          IsDashing = true;
+          IsJumping = false;
+          IsWallJumping = false;
+          _isJumpCut = false;
 
-		    StartCoroutine(nameof(StartDash), _dir);
-	    }
+          StartCoroutine(nameof(StartDash), _dir);
+       }
     }
-    
-    #region Pause / Resume
-
-    // [SH] [2024-04-14]
-    // OnPause는 Player Action Map에 할당
-    // OnResume은 UI Action Map에 할당
-    // Pause 시 Action Map을 UI로 전환시켜서 Pause 상태에서 Player Input이 작동하지 못하도록 만든다
-
-    // [SH] [2024-04-29]
-    // Dialogue 상황에서는 UI Action Map을 사용하는데
-    // UI Action Map 상태에서도 Pause를 처리하기 위해 수정함
-
-    public void OnPause(InputAction.CallbackContext input)
-    {
-        if (input.started)
-        {
-            Pause();
-        }
-    }
-
-    private void Pause()
-    {
-        PauseManager.Instance.TogglePause();
-    }
-    
-    #endregion
 
 
     #region Interact
@@ -527,11 +455,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     // 상호작용 가능한 물체는 InteractBox를 가지며
     // InteractBox와 Trigger 될 경우 Player의 scannedObjects 에 해당 물체가 추가됨
     // scan이 된 여러 개의 물체 중에 가장 가까운 것을 선택해서 상호작용
- 
-    public void OnInteract(InputAction.CallbackContext input)
-    {
-        if (input.started) Interact();
-    }    
  
     GameObject FindClosestObject(GameObject origin, List<GameObject> objects)
     {       
@@ -561,7 +484,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         return objects[minIndex];
     }
  
-    private void Interact() 
+    private void Interact() // 가능하면 각 NPC, Torch로 코드를 뺄 수 있을 듯?
     {
         Debug.Log("interaction key pressed");
 
@@ -578,22 +501,22 @@ public class PlayerController : MonoBehaviour, IAttackable
         // Interact 처리 수행
         if (scannedObject.layer == LayerMask.NameToLayer("NPC"))
         {
-	        // Do Something ... 
+           // Do Something ... 
 
-	        NPC npc = scannedObject.GetComponent<NPC>();
-	        Debug.Assert(npc != null);
+           NPC npc = scannedObject.GetComponent<NPC>();
+           Debug.Assert(npc != null);
 
-	        npc.Interact();
+           npc.Interact();
         }
         // [TG] [2024-05-07]
         // Torch 상호작용 추가
         else if (scannedObject.layer == LayerMask.NameToLayer("Torch"))
-		{
-			TorchController torchController = scannedObject.GetComponent<TorchController>();
-			Debug.Assert(torchController != null);
+      {
+         TorchController torchController = scannedObject.GetComponent<TorchController>();
+         Debug.Assert(torchController != null);
 
-			torchController.FireTorch();
-		}
+         torchController.FireTorch();
+      }
         
         // Debug용 출력
         string scannedObjectsList = "";
@@ -620,7 +543,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
         _HP -= dmg;
 
-        if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
+        //if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
     }
 
     void DamageEffect()
@@ -694,7 +617,7 @@ public class PlayerController : MonoBehaviour, IAttackable
             IsLookDown = false;
         }
 
-        Look();
+        //Look();
     }
 
     public void J_OnShield(bool s)
@@ -717,7 +640,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     void ResetShield()
     {
-        WeaponController.Instance.UseShield();
+        WeaponController.Instance.UseShield(isShield);
         _anim.ResetTrigger("Shield");
     }
 
@@ -725,7 +648,6 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         this.Log("Parry");
         _anim.SetTrigger("Parry");
-        StartCoroutine(CheckParry());
         WeaponController.Instance.UseWeapon(0);
         Invoke("ResetParry", 0.2f);
     }
@@ -739,208 +661,208 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     #region INPUT CALLBACKS
     public void OnJumpInput()
-	{
-		TimerPressJumpBtn = data.jumpInputBufferTime;
-	}
+   {
+      TimerPressJumpBtn = data.jumpInputBufferTime;
+   }
 
-	public void OnJumpUpInput()
-	{
-		if (CanJumpCut() || CanWallJumpCut())
-		{
-			_isJumpCut = true;
-		}
-	}
+   public void OnJumpUpInput()
+   {
+      if (CanJumpCut() || CanWallJumpCut())
+      {
+         _isJumpCut = true;
+      }
+   }
 
-	public void OnDashInput()
-	{
-		TimerPressDashBtn = data.dashInputBufferTime;
-	}
+   public void OnDashInput()
+   {
+      TimerPressDashBtn = data.dashInputBufferTime;
+   }
     #endregion
 
     #region GENERAL METHODS
     public void SetGravityScale(float scale)
-	{
-		_rb.gravityScale = scale;
-	}
+   {
+      _rb.gravityScale = scale;
+   }
 
-	private void Sleep(float duration)
+   private void Sleep(float duration)
     {
-	    // duration만큼 게임의 시간을 멈춤
-		StartCoroutine(nameof(PerformSleep), duration);
+       // duration만큼 게임의 시간을 멈춤
+      StartCoroutine(nameof(PerformSleep), duration);
     }
 
-	private IEnumerator PerformSleep(float duration)
+   private IEnumerator PerformSleep(float duration)
     {
-		Time.timeScale = 0;
-		yield return new WaitForSecondsRealtime(duration); // Time.timeScale에 영향을 받지 않기 위해 Realtime 사용
-		Time.timeScale = 1;
-	}
+      Time.timeScale = 0;
+      yield return new WaitForSecondsRealtime(duration); // Time.timeScale에 영향을 받지 않기 위해 Realtime 사용
+      Time.timeScale = 1;
+   }
     #endregion
     
     #region RUN METHODS
     private void Run(float lerpAmount)
-	{
-		// 이동 Input을 주었을 때의 목표 속도
-		float targetSpeed = _moveInput.x * data.runMaxSpeed;
-		targetSpeed = Mathf.Lerp(_rb.velocity.x, targetSpeed, lerpAmount);
-		if (_moveInput.x < 0 && TimerOnWallLeft > 0)
-		{
-			return;
-		}
-		if (_moveInput.x > 0 && TimerOnWallRight > 0)
-		{
-			return;
-		}
-		// 가속도 계산
-		float accelRate = 0f;
-		if (TimerOnGround > 0)
-		{
-			accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount : data.runDeccelAmount;
-		}
-		else
-		{
-			accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount * data.accelInAir : data.runDeccelAmount * data.deccelInAir;
-		}
+   {
+      // 이동 Input을 주었을 때의 목표 속도
+      float targetSpeed = _moveInput.x * data.runMaxSpeed;
+      targetSpeed = Mathf.Lerp(_rb.velocity.x, targetSpeed, lerpAmount);
+      if (_moveInput.x < 0 && TimerOnWallLeft > 0)
+      {
+         return;
+      }
+      if (_moveInput.x > 0 && TimerOnWallRight > 0)
+      {
+         return;
+      }
+      // 가속도 계산
+      float accelRate = 0f;
+      if (TimerOnGround > 0)
+      {
+         accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount : data.runDeccelAmount;
+      }
+      else
+      {
+         accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount * data.accelInAir : data.runDeccelAmount * data.deccelInAir;
+      }
 
-		// Jump Apex 근처에 있을 때 가속도 및 최대 속도 증가
-		if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(_rb.velocity.y) < data.jumpHangThreshold)
-		{
-			accelRate *= data.jumpHangAccelerationMult;
-			targetSpeed *= data.jumpHangMaxSpeedMult;
-		}
-		
-		float speedDif = targetSpeed - _rb.velocity.x;
-		float moveForce = speedDif * accelRate;
-		
-		// 지속적인 힘을 가하기 위해 ForceMode2D.Force 사용 - 물체 질량이 작을 수록 큰 가속도를 받음
-		_rb.AddForce(moveForce * Vector2.right, ForceMode2D.Force);
+      // Jump Apex 근처에 있을 때 가속도 및 최대 속도 증가
+      if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(_rb.velocity.y) < data.jumpHangThreshold)
+      {
+         accelRate *= data.jumpHangAccelerationMult;
+         targetSpeed *= data.jumpHangMaxSpeedMult;
+      }
+      
+      float speedDif = targetSpeed - _rb.velocity.x;
+      float moveForce = speedDif * accelRate;
+      
+      // 지속적인 힘을 가하기 위해 ForceMode2D.Force 사용 - 물체 질량이 작을 수록 큰 가속도를 받음
+      _rb.AddForce(moveForce * Vector2.right, ForceMode2D.Force);
 
-	}
+   }
     #endregion
     
-	#region DASH METHODS
-	//Dash Coroutine
-	private IEnumerator StartDash(Vector2 dir)
-	{
-		TimerOnGround = 0;
-		TimerPressDashBtn = 0;
+   #region DASH METHODS
+   //Dash Coroutine
+   private IEnumerator StartDash(Vector2 dir)
+   {
+      TimerOnGround = 0;
+      TimerPressDashBtn = 0;
 
-		float startTime = Time.time;
+      float startTime = Time.time;
 
-		_dashCounter--;
-		_isDashAttacking = true;
+      _dashCounter--;
+      _isDashAttacking = true;
 
-		SetGravityScale(0);
+      SetGravityScale(0);
 
-		//We keep the player's velocity at the dash speed during the "attack" phase (in celeste the first 0.15s)
-		while (Time.time - startTime <= data.dashAttackTime)
-		{
-			_rb.velocity = dir.normalized * data.dashSpeed;
-			yield return null;
-		}
+      //We keep the player's velocity at the dash speed during the "attack" phase (in celeste the first 0.15s)
+      while (Time.time - startTime <= data.dashAttackTime)
+      {
+         _rb.velocity = dir.normalized * data.dashSpeed;
+         yield return null;
+      }
 
-		startTime = Time.time;
+      startTime = Time.time;
 
-		_isDashAttacking = false;
+      _isDashAttacking = false;
 
-		//Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
-		SetGravityScale(data.gravityScale);
-		_rb.velocity = data.dashEndSpeed * dir.normalized;
+      //Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
+      SetGravityScale(data.gravityScale);
+      _rb.velocity = data.dashEndSpeed * dir.normalized;
 
-		while (Time.time - startTime <= data.dashEndTime)
-		{
-			yield return null;
-		}
+      while (Time.time - startTime <= data.dashEndTime)
+      {
+         yield return null;
+      }
 
-		IsDashing = false;
-	}
+      IsDashing = false;
+   }
 
-	private IEnumerator RefillDash(int amount)
-	{
-		_isDashCoolTime = true;
-		yield return new WaitForSeconds(data.dashCoolTime);
-		_isDashCoolTime = false;
-		_dashCounter = Mathf.Min(data.dashAmount, _dashCounter + 1);
-	}
-	#endregion
+   private IEnumerator RefillDash(int amount)
+   {
+      _isDashCoolTime = true;
+      yield return new WaitForSeconds(data.dashCoolTime);
+      _isDashCoolTime = false;
+      _dashCounter = Mathf.Min(data.dashAmount, _dashCounter + 1);
+   }
+   #endregion
 
-	#region SLIDE
-	private void Slide()
-	{
-		if(_rb.velocity.y > 0)
-		{
-			_rb.AddForce(-_rb.velocity.y * Vector2.up,ForceMode2D.Impulse);
-		}
-		float speedDif = data.slideSpeed - _rb.velocity.y;	
-		float moveForce = speedDif * data.slideAccel;
-		moveForce = Mathf.Clamp(moveForce, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
-		this.Log(moveForce * Vector2.up);
-		_rb.AddForce(moveForce * Vector2.up);
-	}
+   #region SLIDE
+   private void Slide()
+   {
+      if(_rb.velocity.y > 0)
+      {
+         _rb.AddForce(-_rb.velocity.y * Vector2.up,ForceMode2D.Impulse);
+      }
+      float speedDif = data.slideSpeed - _rb.velocity.y;   
+      float moveForce = speedDif * data.slideAccel;
+      moveForce = Mathf.Clamp(moveForce, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
+      this.Log(moveForce * Vector2.up);
+      _rb.AddForce(moveForce * Vector2.up);
+   }
     #endregion
     
     #region CHECK METHODS
 
     private bool CanJump()
     {
-	    // 벽에 닿고 있을 때는 Jump가 아닌 Wall Jump를 하기 위해서 조건 추가 -> 점프 - 벽점프 - 더블 점프가 되지 않는 버그 수정
-		return (_jumpCounter > 0) && (TimerOnWall < 0);
+       // 벽에 닿고 있을 때는 Jump가 아닌 Wall Jump를 하기 위해서 조건 추가 -> 점프 - 벽점프 - 더블 점프가 되지 않는 버그 수정
+      return (_jumpCounter > 0) && (TimerOnWall < 0);
     }
 
-	private bool CanWallJump()
+   private bool CanWallJump()
     {
-	    // Wall Jump가 가능한 환경
-	    // 1. Jump Button을 누름
-	    // 2. Wall과 닿아있으며 Ground에 닿고 있지 않음
-	    // 3. Wall Jump를 하고 있지 않음
-	    // 4. 
-		return TimerPressJumpBtn > 0 && TimerOnWall > 0 && TimerOnGround <= 0 && (!IsWallJumping ||
-			 (TimerOnWallRight > 0 && _lastWallJumpDir == 1) || (TimerOnWallLeft > 0 && _lastWallJumpDir == -1));
-	}
+       // Wall Jump가 가능한 환경
+       // 1. Jump Button을 누름
+       // 2. Wall과 닿아있으며 Ground에 닿고 있지 않음
+       // 3. Wall Jump를 하고 있지 않음
+       // 4. 
+      return TimerPressJumpBtn > 0 && TimerOnWall > 0 && TimerOnGround <= 0 && (!IsWallJumping ||
+          (TimerOnWallRight > 0 && _lastWallJumpDir == 1) || (TimerOnWallLeft > 0 && _lastWallJumpDir == -1));
+   }
 
-	private bool CanJumpCut()
+   private bool CanJumpCut()
     {
-	    this.Log(IsJumping.ToString());
-		return IsJumping && _rb.velocity.y > 0;
+       this.Log(IsJumping.ToString());
+      return IsJumping && _rb.velocity.y > 0;
     }
 
-	private bool CanWallJumpCut()
-	{
-		return IsWallJumping && _rb.velocity.y > 0;
-	}
+   private bool CanWallJumpCut()
+   {
+      return IsWallJumping && _rb.velocity.y > 0;
+   }
 
-	private bool CanDash()
-	{
-		// Dash가 가능한 환경
-		// 1. Dash를 하고 있지 않으며 남은 Dash Amount가 1 이상
-		// 2. Ground에 닿고 있으며 Dash의 CoolTime이 충전이 끝난 상태
-		if (!IsDashing && _dashCounter < data.dashAmount && TimerOnGround > 0 && !_isDashCoolTime)
-		{
-			StartCoroutine(nameof(RefillDash), 1);
-		}
+   private bool CanDash()
+   {
+      // Dash가 가능한 환경
+      // 1. Dash를 하고 있지 않으며 남은 Dash Amount가 1 이상
+      // 2. Ground에 닿고 있으며 Dash의 CoolTime이 충전이 끝난 상태
+      if (!IsDashing && _dashCounter < data.dashAmount && TimerOnGround > 0 && !_isDashCoolTime)
+      {
+         StartCoroutine(nameof(RefillDash), 1);
+      }
 
-		return _dashCounter > 0;
-	}
+      return _dashCounter > 0;
+   }
 
-	public bool CanSlide()
+   public bool CanSlide()
     {
-	    // Slide가 가능한 환경
-	    // 1. 벽에 붙어 있으며 Jump 또는 Wall Jump를 하고 있지 않음
-	    // 2. Dash를 하고 있지 않으며 Ground에 닿고 있지 않음
-	    if (TimerOnWall > 0 && !IsJumping && !IsWallJumping && !IsDashing && TimerOnGround <= 0)
-	    {
-		    return true;
-	    }
-		else return false;
-	}
+       // Slide가 가능한 환경
+       // 1. 벽에 붙어 있으며 Jump 또는 Wall Jump를 하고 있지 않음
+       // 2. Dash를 하고 있지 않으며 Ground에 닿고 있지 않음
+       if (TimerOnWall > 0 && !IsJumping && !IsWallJumping && !IsDashing && TimerOnGround <= 0)
+       {
+          return true;
+       }
+      else return false;
+   }
 
-	public bool CanTeeter()
-	{
-		if (!IsJumping && !_isMoving && !IsLookUp && !IsLookDown)
-		{
-			return true;
-		}
-		else return false;
-	}
+   public bool CanTeeter()
+   {
+      if (!IsJumping && !_isMoving && !IsLookUp && !IsLookDown)
+      {
+         return true;
+      }
+      else return false;
+   }
     #endregion
 }
