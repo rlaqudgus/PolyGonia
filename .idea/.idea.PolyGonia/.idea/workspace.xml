@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1800897b-b620-46bc-b046-70891d26bab2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PolyGonia/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Player Data.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Player Data.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/NewScenes/Beta1.4 MapScene_TG.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Beta1.3/NewScenes/Beta1.4 MapScene_TG.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/Sword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Sword.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Manager/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerData.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +139,7 @@
       <workItem from="1715164400002" duration="1623000" />
       <workItem from="1715258311195" duration="172000" />
       <workItem from="1715345179419" duration="5848000" />
+      <workItem from="1715487201685" duration="5032000" />
     </task>
     <servers />
   </component>

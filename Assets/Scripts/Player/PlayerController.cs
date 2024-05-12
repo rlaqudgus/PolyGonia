@@ -293,16 +293,20 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    }
 	    else if (!IsDashing && !IsWallJumping)
 	    {
-		    Run(1);
+		    if (isShield || _isParry)
+		    {
+			    Run(0.15f);
+		    }
+		    else
+		    {
+			    Run(1);
+		    }
 	    }
 	    else if (_isDashAttacking)
 	    {
 		    Run(data.dashEndRunLerp);
 	    }
-	    else if (isShield || _isParry)
-	    {
-		    Run(0.25f);
-	    }
+	    
 	    #endregion
 	    // Slide
 	    if (IsSliding)

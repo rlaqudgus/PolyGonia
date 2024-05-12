@@ -108,6 +108,8 @@ public class PlayerData : ScriptableObject
 		//Calculate jumpForce using the formula (initialJumpVelocity = gravity * timeToJumpApex)
 		// jumpForce가 아니라 정확히는 initJumpVelocity지만 그 값을 힘으로 취급
 		jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
+
+		jumpCutGravityMult = fallGravityMult * 1.5f;
     }
 }
 
