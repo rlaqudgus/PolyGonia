@@ -11582,145 +11582,6 @@ Transform:
   - {fileID: 142429948}
   m_Father: {fileID: 825904387}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1136592629
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1136592631}
-  - component: {fileID: 1136592630}
-  - component: {fileID: 1136592632}
-  m_Layer: 0
-  m_Name: JoyconInputManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1136592630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136592629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3898b8b9024c45a4486ab7eb516bbd5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jc_index: 0
-  isShouldertrigger: 0
-  isShoulderPressed: 0
-  isAttackbuttontrigger: 0
-  leftStick: {x: 0, y: 0}
-  JoyCon_Move:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: J_OnLook
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: J_OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  JoyCon_Shield:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: J_OnShield
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  JoyCon_ShieldTrigger:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: J_ShieldTrigger
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  JoyCon_Attack:
-    m_PersistentCalls:
-      m_Calls: []
-  JoyCon_Parry:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: J_OnParry
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!4 &1136592631
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136592629}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 39.98272, y: -3.3401833, z: 0.06594062}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1136592632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136592629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57888e49e08877b4aabbfb47db1690c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnableIMU: 1
-  EnableLocalize: 1
 --- !u!1 &1145488306
 GameObject:
   m_ObjectHideFlags: 0
@@ -14510,6 +14371,75 @@ RectTransform:
   m_AnchoredPosition: {x: 75, y: -125}
   m_SizeDelta: {x: -150, y: 50}
   m_Pivot: {x: 0, y: 1}
+--- !u!1001 &5479094466689842348
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 527344298109351356, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_Size.x
+      value: 2.847454
+      objectReference: {fileID: 0}
+    - target: {fileID: 527344298109351356, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.009931564
+      objectReference: {fileID: 0}
+    - target: {fileID: 527344298109351356, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.55863845
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 670430846464539284, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3176988253886502302, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
+      propertyPath: m_Name
+      value: SceneChangeBox
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c8e4172096dbc1143aa61ac8b5c5b1e1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -14527,6 +14457,7 @@ SceneRoots:
   - {fileID: 406077161}
   - {fileID: 437032826}
   - {fileID: 1981619055}
+  - {fileID: 5479094466689842348}
   - {fileID: 226620637}
   - {fileID: 796015783}
   - {fileID: 1094360300}
@@ -14538,7 +14469,6 @@ SceneRoots:
   - {fileID: 144130397}
   - {fileID: 617791917}
   - {fileID: 1188454712}
-  - {fileID: 1136592631}
   - {fileID: 1326840347}
   - {fileID: 1074467332}
   - {fileID: 1507272457}

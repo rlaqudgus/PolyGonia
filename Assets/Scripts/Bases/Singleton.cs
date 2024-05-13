@@ -15,14 +15,18 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
     }
 
     protected void CreateSingleton(T instance, bool dontDestroyOnLoad = false)
-        {
-            _instance = instance;
-            if (dontDestroyOnLoad) DontDestroyOnLoad(this);
-            Init();
-        }
+    {
+        //if(_instance)
+        //{
+        //    Destroy(this.gameObject);
+        //}
+        _instance = instance;
+        if (dontDestroyOnLoad) DontDestroyOnLoad(this);
+        Init();
+    }
 
-        protected virtual void Init()
-        {
-        
-        }
+    protected virtual void Init()
+    {
+
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class KeyboardInputManager : Singleton<KeyboardInputManager>
 {
-    private PlayerInput _playerInput;
+    [SerializeField] private PlayerInput _playerInput;
 
     #region InputState
 
