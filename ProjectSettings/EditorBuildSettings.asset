@@ -6,21 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 MainMenu.unity
-    guid: 471d7d1ae99fd524582325ad1953fadd
+    path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 MainMenu.unity
+    guid: b2c9261be78fd974c9163ffa0074574a
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor.unity
-    guid: 162fc502e66030d4caf5262ee5234ed3
+    path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 OutDoor.unity
+    guid: 72a8003db0cb46b469447d75bfa26e47
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 Dungeon.unity
-    guid: 28b6ebfd5d1c70148b7f8dc1bd857de8
-  - enabled: 0
-    path: Assets/Scenes/Beta1.3/Beta1.3Scenes/Beta1.3 MapScene.unity
-    guid: 90110170c30b58047a29abb76ab94424
-  - enabled: 0
-    path: Assets/Scenes/Beta1.3/Beta1.3Scenes/Beta1.3 Dungeon.unity
-    guid: 9d16bbc4e970f9c47a0240b277083adc
-  - enabled: 1
-    path: Assets/Scenes/Beta1.3/Beta1.3Scenes/Beta1.3 MainMenu.unity
-    guid: f47feb410b824354ba020a18bf049b93
+    path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 Dungeon.unity
+    guid: ff099d3be68bbf94e9c4058194e7a385
   m_configObjects: {}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2abd936d3fb80438e0d51be94e77db, type: 3}
   m_Name: Second Quest
   m_EditorClassIdentifier: 
+  id: Second Quest
   displayName: New Quest!
   levelRequirement: -1
   questPrerequisites:

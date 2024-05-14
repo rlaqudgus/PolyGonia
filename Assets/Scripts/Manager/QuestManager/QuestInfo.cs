@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Quest Data")]
 public class QuestInfo : ScriptableObject 
 {
-    [SerializeField] 
-    public string id { get; private set; }
+    public string id;
 
     [Header("General")]
     public string displayName;
