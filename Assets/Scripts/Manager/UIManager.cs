@@ -13,6 +13,7 @@ public class UIManager : Singleton<UIManager>
         private readonly Dictionary<string, GameObject> _uiDic = new Dictionary<string, GameObject>();
         private int _order = 10;
         private bool _pause = false;
+        public bool isPaused { get { return _pause; } }
 
         private readonly Stack<GameObject> _popupStack = new Stack<GameObject>();
         private GameObject _background;
@@ -50,6 +51,8 @@ public class UIManager : Singleton<UIManager>
             _popupStack.Push(uiObj);
             
             if(pauseOnUI) Pause();
+
+            KeyboardInputManager.Instance.SetInputState(KeyboardInputManager.PLAYER, false);
         }
 
         public void OpenBackgroundUI(string uiName)
@@ -73,6 +76,8 @@ public class UIManager : Singleton<UIManager>
             _order--;
 
             if (_pause) Resume();
+
+            KeyboardInputManager.Instance.SetInputState(KeyboardInputManager.PLAYER, _popupStack.Count == 0);
         }
         
         public void CloseAllPopupUI()
@@ -102,6 +107,9 @@ public class UIManager : Singleton<UIManager>
 
         #region Pause
 
+        // Pause 및 Resume 이 UI 로 종속되므로
+        // Input System 을 설정하는 부분을 OpenPopupUI 와 ClosePopupUI 로 이동
+
         public void Pause()
         {
             _pause = true;
@@ -110,9 +118,6 @@ public class UIManager : Singleton<UIManager>
             // Sound
             SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
             SoundManager.Instance.PauseVoice();
-
-            // Input System
-            KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.UI);
         }
 
         public void Resume()
@@ -123,9 +128,6 @@ public class UIManager : Singleton<UIManager>
             // Sound
             SoundManager.Instance.Transition(1f);
             SoundManager.Instance.ResumeVoice();
-
-            // Input System
-            KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.PLAYER);
         }
         
         #endregion
