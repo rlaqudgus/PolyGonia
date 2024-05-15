@@ -15,4 +15,13 @@ public class QuestEvents
         }
     }
 
+    public event Action<string, int, QuestStepState> OnQuestStepStateChange;
+
+    public void QuestStepStateChange(string id, int stepIndex, QuestStepState questStepState)
+    {
+        if (OnQuestStepStateChange != null)
+        {
+            OnQuestStepStateChange(id, stepIndex, questStepState);
+        }
+    }
 }

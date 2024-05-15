@@ -20,18 +20,33 @@ public class CollectItemsQuestStep : QuestStep
 
     private void Start()
     {
-        _itemsCollected = 0;   
+        
     }
 
     private void ItemCollected(Item item)
     {
         if (item.itemType != _itemType) return;
 
-        _itemsCollected++;
+        if (_itemsCollected < _itemsToComplete)
+        {
+            _itemsCollected++;
+            UpdateState();
+        }
         
         if (_itemsCollected >= _itemsToComplete)
         {
             FinishQuestStep();
         }
+    }
+
+    private void UpdateState()
+    {
+        string state = _itemsCollected.ToString();
+        ChangeState(state);
+    }
+
+    protected override void SetQuestStepState(string state)
+    {
+        this._itemsCollected = System.Int32.Parse(state);
     }
 }

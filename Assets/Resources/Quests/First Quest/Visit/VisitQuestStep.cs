@@ -12,4 +12,10 @@ public class VisitQuestStep : QuestStep
 
         FinishQuestStep();
     }
+
+    protected override void SetQuestStepState(string state)
+    {
+        // Do Nothing
+        return;
+    }
 }
