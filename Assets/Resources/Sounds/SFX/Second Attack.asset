@@ -13,5 +13,17 @@ MonoBehaviour:
   m_Name: Second Attack
   m_EditorClassIdentifier: 
   id: Second Attack
-  description: 
+  description: 'Swing
+
+
+    XxChr0nosxX
+
+    March 27th, 2015
+
+
+    https://freesound.org/people/XxChr0nosxX/sounds/268227/
+
+
+    Creative
+    Commons 0'
   clip: {fileID: 8300000, guid: ddf1861acb5b82341a40f739e95ed790, type: 3}

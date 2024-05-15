@@ -13,5 +13,18 @@ MonoBehaviour:
   m_Name: First Attack
   m_EditorClassIdentifier: 
   id: First Attack
-  description: 
+  description: 'Sword sound 2
+
+    
+
+    Merrick079
+
+    April 15th, 2021
+
+
+    https://freesound.org/people/Merrick079/sounds/568169/
+
+
+    Creative
+    Commons 0'
   clip: {fileID: 8300000, guid: cb2c50fc538ebf648adeefea487da6cd, type: 3}

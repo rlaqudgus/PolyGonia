@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Hopeful Music
   m_EditorClassIdentifier: 
   id: Hopeful Music
-  description: 
-  clip: {fileID: 0}
+  description: "Beyond the sky \r\ncomposed by Ryoma Yamamoto\r\nhttps://dova-s.jp/EN/bgm/play16552.html"
+  clip: {fileID: 8300000, guid: ad3a12498600ed8419a63acd4538480b, type: 3}

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Bright Music
   m_EditorClassIdentifier: 
   id: Bright Music
-  description: 
+  description: "Meeting is hidden in the clouds of a half-moon\r\n( \u9022\u3075\u3053\u3068\u306F\u7247\u5272\u308C\u6708\u306E\u96F2\u96A0\u308C
+    )\r\ncomposed by modus\r\nhttps://dova-s.jp/EN/bgm/play20311.html"
   clip: {fileID: 8300000, guid: 7c6fd28f3d869664984d8c3becf81193, type: 3}

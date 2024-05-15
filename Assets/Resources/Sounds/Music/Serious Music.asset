@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Serious Music
   m_EditorClassIdentifier: 
   id: Serious Music
-  description: 
+  description: "Memory of Stars\r\ncomposed by \u30CF\u30B7\u30DE\u30DF\r\nhttps://dova-s.jp/EN/bgm/play20310.html\n"
   clip: {fileID: 8300000, guid: 7ccaa15e6a3df2e4da7e21cf94fafce6, type: 3}
