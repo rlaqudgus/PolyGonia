@@ -10,12 +10,22 @@ public abstract class QuestStep : MonoBehaviour
     private string _questId;
     private int _stepIndex;
 
-    public void InitializeQuestStep(string questId, int stepIndex, string questStepState)
+    protected virtual void OnEnable()
+    {
+        QuestManager.Instance.allQuestSteps.Add(this);
+    }
+
+    protected virtual void OnDisable()
+    {
+        QuestManager.Instance.allQuestSteps.Remove(this);
+    }
+
+    public void InitializeQuestStep(string questId, int stepIndex, QuestStepState questStepState)
     {
         this._questId = questId;
         this._stepIndex = stepIndex;
 
-        if (questStepState != null && questStepState != "")
+        if (questStepState != null && questStepState.state != "")
         {
             SetQuestStepState(questStepState);
         }        
@@ -42,15 +52,12 @@ public abstract class QuestStep : MonoBehaviour
 
     // QuestStep 의 상태에 변화가 생기면 QuestManager 한테 이를 알려주고
     // QuestManager 는 해당하는 Quest의 StepIndex 정보를 변경한다
-    protected void ChangeState(string newState)
+
+    protected void ChangeQuestStepState(QuestStepState state)
     {
-        GameManager.Instance.questEvents.QuestStepStateChange(
-            _questId, 
-            _stepIndex, 
-            new QuestStepState(newState)
-        );
+        QuestManager.Instance.ChangeQuestStepState(_questId, _stepIndex, state);
     }
 
-    protected abstract void SetQuestStepState(string state);
-
+    protected abstract void UpdateQuestStepState();
+    protected abstract void SetQuestStepState(QuestStepState state);
 }

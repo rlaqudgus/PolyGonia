@@ -8,19 +8,21 @@ public class CollectItemsQuestStep : QuestStep
     [SerializeField] private int _itemsCollected;
     [SerializeField] private int _itemsToComplete;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         GameManager.Instance.miscEvents.OnItemCollected += ItemCollected;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         GameManager.Instance.miscEvents.OnItemCollected -= ItemCollected;
     }
 
     private void Start()
     {
-        
+        UpdateQuestStepState();
     }
 
     private void ItemCollected(Item item)
@@ -30,7 +32,7 @@ public class CollectItemsQuestStep : QuestStep
         if (_itemsCollected < _itemsToComplete)
         {
             _itemsCollected++;
-            UpdateState();
+            UpdateQuestStepState();
         }
         
         if (_itemsCollected >= _itemsToComplete)
@@ -39,14 +41,14 @@ public class CollectItemsQuestStep : QuestStep
         }
     }
 
-    private void UpdateState()
+    protected override void UpdateQuestStepState()
     {
-        string state = _itemsCollected.ToString();
-        ChangeState(state);
+        QuestStepState state = new QuestStepState(_itemsCollected.ToString());
+        ChangeQuestStepState(state);
     }
 
-    protected override void SetQuestStepState(string state)
+    protected override void SetQuestStepState(QuestStepState state)
     {
-        this._itemsCollected = System.Int32.Parse(state);
+        this._itemsCollected = System.Int32.Parse(state.state);
     }
 }
