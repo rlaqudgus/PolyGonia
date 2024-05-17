@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Beta1.4/Beta1.4 MainMenu.unity
     guid: 471d7d1ae99fd524582325ad1953fadd
   - enabled: 1
+    path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor_Mapsystem.unity
+    guid: 8e5d679dbeb73c648aef4baab1790d65
+  - enabled: 1
+    path: Assets/Scenes/Beta1.4/Beta1.4 Dungeon_MapSystem.unity
+    guid: ae58a15d7cecebd4b94d9a68e658981f
+  - enabled: 1
     path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor.unity
     guid: 162fc502e66030d4caf5262ee5234ed3
   - enabled: 1
