@@ -6024,13 +6024,14 @@ GameObject:
   - component: {fileID: 505949238}
   - component: {fileID: 505949240}
   - component: {fileID: 505949239}
+  - component: {fileID: 505949241}
   m_Layer: 11
   m_Name: DungeonScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &505949238
 Transform:
   m_ObjectHideFlags: 0
@@ -10337,6 +10338,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &505949241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505949237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62532e9956501a24bb7e818b22b0f0c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Beta1.4 Dungeon_MapSystem
 --- !u!1 &530026126
 GameObject:
   m_ObjectHideFlags: 0
@@ -12362,7 +12376,7 @@ Camera:
   far clip plane: 50
   field of view: 60
   orthographic: 1
-  orthographic size: 100
+  orthographic size: 50
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -15904,6 +15918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1087005105}
   - component: {fileID: 1087005106}
+  - component: {fileID: 1087005107}
   m_Layer: 11
   m_Name: MapContainer
   m_TagString: Untagged
@@ -15940,6 +15955,18 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &1087005107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087005104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56feb666fb83b854187480707d847bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1094360300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17788,13 +17815,14 @@ GameObject:
   - component: {fileID: 1702749505}
   - component: {fileID: 1702749507}
   - component: {fileID: 1702749506}
+  - component: {fileID: 1702749508}
   m_Layer: 11
   m_Name: OutdoorScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1702749505
 Transform:
   m_ObjectHideFlags: 0
@@ -28031,6 +28059,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1702749508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702749504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62532e9956501a24bb7e818b22b0f0c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: Beta1.4 OutDoor_Mapsystem
 --- !u!1 &1725615463
 GameObject:
   m_ObjectHideFlags: 3

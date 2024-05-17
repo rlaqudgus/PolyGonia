@@ -25,6 +25,16 @@ public class GameManager : Singleton<GameManager>
     public MiscEvents miscEvents;
     public QuestEvents questEvents;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void Awake()
     {
         CreateSingleton(this, true);
@@ -105,5 +115,10 @@ public class GameManager : Singleton<GameManager>
         SoundManager.Instance.Transition(1f);
         // UI
         UIManager.Instance.CloseAllPopupUI();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        MapManager.Instance.RevealRoom();
     }
 }
