@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour, IAttackable
     public PlayerData data; // player에 관한 변수들을 저장한 scriptable object
     [SerializeField] private RayBox _ray;
     [SerializeField] private float _invincibleTime;
-    [SerializeField] private int _maxHP;
-    [SerializeField] private int _HP;
-    
+    //[SerializeField] private int _maxHP;
+    //[SerializeField] private int _HP;
+
+    private PlayerStatus _playerStatus;
+
     private int _dir;
     private bool _isMoving;
     private bool _canTeeter;
@@ -103,10 +105,11 @@ public class PlayerController : MonoBehaviour, IAttackable
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
         _shield = GetComponentInChildren<Shield>(true);
+        _playerStatus = GetComponent<PlayerStatus>();
 
-       SetGravityScale(data.gravityScale);
+        SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
-        _HP = _maxHP;
+        //_HP = _maxHP;
 
         KeyboardInputManager.Instance.MoveAction += Move;
         KeyboardInputManager.Instance.LookAction += Look;
@@ -544,10 +547,12 @@ public class PlayerController : MonoBehaviour, IAttackable
     public void Damaged(int dmg)
     {
         DamageEffect();
-        this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
+        _playerStatus.TakeDamage(dmg); //Status를 따로 관리하기 위해 PlayerStatus에서 관리
+        /*this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
         _HP -= dmg;
 
         //if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
+        if (_HP < 1) GameManager.Instance.PlayerDied(gameObject);*/
     }
 
     void DamageEffect()

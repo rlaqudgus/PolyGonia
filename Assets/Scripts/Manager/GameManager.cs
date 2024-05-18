@@ -106,4 +106,17 @@ public class GameManager : Singleton<GameManager>
         // UI
         UIManager.Instance.CloseAllPopupUI();
     }
+
+    public void PlayerDied(GameObject player)
+    {
+        UnityEngine.Debug.Log("Player has died.");
+        if (RespawnManager.Instance != null)
+        {
+            RespawnManager.Instance.OnPlayerDeath(player);
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("RespawnManager instance is null!");
+        }
+    }
 }
