@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 MainMenu.unity
+    path: Assets/Scenes/Beta1.4/NewScenes SY/Beta1.4 MainMenu.unity
     guid: 471d7d1ae99fd524582325ad1953fadd
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor.unity
+    path: Assets/Scenes/Beta1.4/NewScenes SY/Beta1.4 OutDoor.unity
     guid: 162fc502e66030d4caf5262ee5234ed3
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 Dungeon.unity
+    path: Assets/Scenes/Beta1.4/NewScenes SY/Beta1.4 Dungeon.unity
     guid: 28b6ebfd5d1c70148b7f8dc1bd857de8
   - enabled: 0
     path: Assets/Scenes/Beta1.3/Beta1.3Scenes/Beta1.3 MapScene.unity

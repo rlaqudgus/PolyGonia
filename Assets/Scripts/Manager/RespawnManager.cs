@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
@@ -6,6 +5,8 @@ public class RespawnManager : MonoBehaviour
     public static RespawnManager Instance { get; private set; }
 
     private Vector3 _checkpointPosition;
+    private int _currentCheckpointOrder = -1; // 초기값을 -1로 설정하여 체크포인트가 아직 설정되지 않았음을 나타냄
+
 
     private void Awake()
     {
@@ -20,9 +21,22 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-    public void SetCheckpoint(Vector3 checkpointPosition)
+    public void SetCheckpoint(Vector3 checkpointPosition, int checkpointOrder)
     {
-        _checkpointPosition = checkpointPosition;
+        if (checkpointOrder >= _currentCheckpointOrder)
+        {
+            _checkpointPosition = checkpointPosition;
+            _currentCheckpointOrder = checkpointOrder;
+            Debug.Log("Checkpoint updated to order: " + checkpointOrder);
+        }
+        else
+        {
+            Debug.Log("Checkpoint order " + checkpointOrder + " is not higher than the current checkpoint order " + _currentCheckpointOrder);
+        }
+    }
+    public void UpdateCheckpoint(Checkpoint checkpoint)
+    {
+        SetCheckpoint(checkpoint.transform.position, checkpoint.checkpointOrder);
     }
 
     public void RespawnPlayer(GameObject player)
