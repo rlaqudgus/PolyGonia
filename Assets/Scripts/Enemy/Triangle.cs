@@ -352,7 +352,7 @@ public class Triangle : Enemy, IAttackable, IDetectable
         //코루틴 최상위에서 hp가 0이 되면 자동으로 Death 코루틴이 실행되도록 했으나, Attack 하위 코루틴이 실행될때는 코드 흐름 중지,
         //최상위 코루틴은 딜레이되어서 0.n초간 딜레이가 있음;
         //
-        this.Log($"currentHp : {_hp} - {dmg} = {_hp - dmg}");
+        this.Log($"enemycurrentHp : {_hp} - {dmg} = {_hp - dmg}");
         _hp -= dmg;
         
         //blood effect?
