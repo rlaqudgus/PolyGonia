@@ -16,6 +16,9 @@ public class Soldier : Triangle
     protected override IEnumerator Detect()
     {
         yield return base.Detect();
+
+        //Attack state에서 Detect로 넘어갈 때 target이 null이면 idle로
+        if (!_target) StateChange(EnemyState.Idle);
         
         //이동 로직 
         Move(chaseDir, _moveSpd);

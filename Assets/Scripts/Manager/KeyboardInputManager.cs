@@ -104,6 +104,11 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
         if (context.started) UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
     }
 
+    public void OnMap(InputAction.CallbackContext context)
+    {
+        if (context.started) UIManager.Instance.OpenPopupUI(UIManager.MAP_CANVAS);
+    }
+
     public void OnInteract(InputAction.CallbackContext input)
     {
         if (input.started) InteractAction?.Invoke();
