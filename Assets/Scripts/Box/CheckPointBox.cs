@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class CheckpointBox : MonoBehaviour
 {
     public int checkpointOrder;
 

@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Beta1.4/Beta1.4 Dungeon_MapSystem.unity
     guid: ae58a15d7cecebd4b94d9a68e658981f
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor.unity
+    path: Assets/Scenes/Beta1.4/NewScenes SY/Beta1.4 OutDoor.unity
     guid: 162fc502e66030d4caf5262ee5234ed3
   - enabled: 1
     path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 Dungeon.unity

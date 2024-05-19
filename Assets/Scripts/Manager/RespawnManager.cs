@@ -34,7 +34,7 @@ public class RespawnManager : MonoBehaviour
             Debug.Log("Checkpoint order " + checkpointOrder + " is not higher than the current checkpoint order " + _currentCheckpointOrder);
         }
     }
-    public void UpdateCheckpoint(Checkpoint checkpoint)
+    public void UpdateCheckpoint(CheckpointBox checkpoint)
     {
         SetCheckpoint(checkpoint.transform.position, checkpoint.checkpointOrder);
     }
