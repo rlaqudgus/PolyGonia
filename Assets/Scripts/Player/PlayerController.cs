@@ -383,7 +383,14 @@ public class PlayerController : MonoBehaviour, IAttackable
         }
         else
         {
-           _anim.SetBool("isAttacking", true);
+           if (_dir == 1) // right attack
+           {
+               _anim.SetBool("isAttackR", true);
+           }
+           else if (_dir == -1)
+           {
+              _anim.SetBool("isAttackL", true);
+           }
            _anim.SetTrigger("Attack");
         }
 
@@ -393,7 +400,14 @@ public class PlayerController : MonoBehaviour, IAttackable
     private void AttackCancel()
     {
        IsAttacking = false;
-       _anim.SetBool("isAttacking", false);
+       if (_dir == 1) // right attack
+       {
+          _anim.SetBool("isAttackR", false);
+       }
+       else if (_dir == -1)
+       {
+          _anim.SetBool("isAttackL", false);
+       }
        _anim.ResetTrigger("Parry");
     }
 
