@@ -30,13 +30,13 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     #endregion
 
+    protected override void Init() => _playerInput ??= GetComponent<PlayerInput>();
+
     private void Awake()
     {
-        CreateSingleton(this, true);
+        CreateSingleton(this);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
-    protected override void Init() => _playerInput ??= GetComponent<PlayerInput>();
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

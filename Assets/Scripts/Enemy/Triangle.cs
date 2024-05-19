@@ -326,27 +326,8 @@ public class Triangle : Enemy, IAttackable, IDetectable
         }
     }
 
-    // IAttackable
-    public void ByShield(Shield shield)
-    {
-        this.Log("Attacked by Shield");
-
-        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * shield.weaponForce * (1 / level), ForceMode2D.Impulse);
-        //shield.ShieldEffect();
-    }
-
-    // [TG] [2024-04-04] [feat]
-    // 1. Triangle이 Player의 무기로 공격당했을 때
-    // 2. blood 효과?
-    public void ByWeapon(Weapon weapon)
-    {
-        this.Log("Attacked by Weapon");
-        //attack.AttackEffect();
-        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * weapon.weaponForce * (1 / level), ForceMode2D.Impulse);
-    }
-
     // IDamageable
-    public void Damaged(int dmg)
+    public void Damaged(int dmg, Weapon weapon)
     {
         //여기서 분기처리?
         //코루틴 최상위에서 hp가 0이 되면 자동으로 Death 코루틴이 실행되도록 했으나, Attack 하위 코루틴이 실행될때는 코드 흐름 중지,
@@ -354,6 +335,10 @@ public class Triangle : Enemy, IAttackable, IDetectable
         //
         this.Log($"enemycurrentHp : {_hp} - {dmg} = {_hp - dmg}");
         _hp -= dmg;
+        
+        this.Log("Attacked by Weapon");
+        //attack.AttackEffect();
+        gameObject.GetComponent<Rigidbody2D>().AddForce(runDir * weapon.weaponForce * (1 / level), ForceMode2D.Impulse);
         
         //blood effect?
         //dosth

@@ -36,12 +36,19 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
-        CreateSingleton(this, true);
+        CreateSingleton(this);
 
         miscEvents = new MiscEvents();  
         playerEvents = new PlayerEvents();
     }
 
+     private void Start()
+    {
+        UIManager.Instance.OpenBackgroundUI(UIManager.BACKGROUND_CANVAS);
+    }
+
+
+#region Gamestate
 
     public void UpdateGameState(GameState newGameState)
     {
@@ -61,8 +68,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     public void InitScene(){
-
     }
+
+       
+
+    
 
     public void GamePlay(){
         

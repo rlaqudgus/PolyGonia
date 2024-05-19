@@ -14,19 +14,16 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
             }
     }
 
-    protected void CreateSingleton(T instance, bool dontDestroyOnLoad = false)
-    {
-        //if(_instance)
-        //{
-        //    Destroy(this.gameObject);
-        //}
-        _instance = instance;
-        if (dontDestroyOnLoad) DontDestroyOnLoad(this);
-        Init();
-    }
-
-    protected virtual void Init()
-    {
+        protected void CreateSingleton(T instance)
+        {
+            if (_instance == null)
+            {
+                _instance = instance; 
+                DontDestroyOnLoad(this);
+                Init();
+            }
+            else Destroy(this);
+        }
 
     }
 }
