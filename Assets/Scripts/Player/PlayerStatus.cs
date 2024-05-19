@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
-    public int maxHealth = 3;
+    public int maxHealth = 5;
     [SerializeField] private int currentHealth;
 
     void Awake()
@@ -23,12 +23,12 @@ public class PlayerStatus : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            PlayerDied();
         }
     }
     
 
-    void Die()
+    public void PlayerDied()
     {
         RespawnManager.Instance.OnPlayerDeath(gameObject);
     }

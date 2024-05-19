@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 2259706471767929655}
   - component: {fileID: 4653042928756086666}
   - component: {fileID: 4374348109103404528}
+  - component: {fileID: -2352730056310483332}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -467,8 +468,6 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 4edb02e29dd693a47b14be334ae5fbb0, type: 2}
   _ray: {fileID: 372700976509540781}
   _invincibleTime: 2
-  _maxHP: 5
-  _HP: 5
   isShield: 0
   isInvincible: 0
   scannedObjects: []
@@ -572,6 +571,20 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &-2352730056310483332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868314773221598724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f29c3c40537b5f4786bd717e4a245c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  currentHealth: 0
 --- !u!1 &6503071864491161633
 GameObject:
   m_ObjectHideFlags: 0
