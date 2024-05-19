@@ -8,12 +8,8 @@ using Utilities;
 // https://www.youtube.com/watch?v=rdX7nhH6jdM - Structure
 // https://www.youtube.com/watch?v=KJfzT1VfOaM - Audio Mixer
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
-    private static SoundManager _instance;
-    public  static SoundManager  Instance { get { return _instance; } }
-
-    public Sound[] musicSounds, sfxSounds;
     public AudioSource musicSource, sfxSource, voiceSource;
     public AudioMixer mixer;
 
@@ -35,23 +31,12 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-            // SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+        CreateSingleton(this);
 
-    public void Start()
-    {   
-        foreach (Sound sound in musicSounds) { _musicSoundDict.Add(sound.name, sound.clip); }
-        foreach (Sound sound in sfxSounds)   { _sfxSoundDict.Add(sound.name, sound.clip)  ; }
-
+        // Assets/Resources/Sounds 폴더에 존재하는 모든 Sound 로드
+        _musicSoundDict = CreateSoundDict("Music");
+        _sfxSoundDict = CreateSoundDict("SFX");
+        
         musicSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Music")[0];
         sfxSource.outputAudioMixerGroup   = mixer.FindMatchingGroups("SFX")[0];
         voiceSource.outputAudioMixerGroup = mixer.FindMatchingGroups("Voice")[0];
@@ -62,6 +47,24 @@ public class SoundManager : MonoBehaviour
         _isVoiceMuted = false;
 
         _savedVoiceTime = -1f;
+    }
+
+    private Dictionary<string, AudioClip> CreateSoundDict(string path)
+    {
+        Sound[] allSounds = Resources.LoadAll<Sound>("Sounds/" + path);
+        Dictionary<string, AudioClip> soundDict = new Dictionary<string, AudioClip>();
+
+        foreach (Sound sound in allSounds)
+        {
+            if (soundDict.ContainsKey(sound.id))
+            {
+                Debug.LogWarning("Duplicate ID found when creating sound dictionary: " + sound.id);
+            }
+            
+            soundDict.Add(sound.id, sound.clip);
+        }
+
+        return soundDict;
     }
 
     public AudioClip GetMusicClip(string name) { return _musicSoundDict[name]; }

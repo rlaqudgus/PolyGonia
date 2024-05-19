@@ -9,8 +9,7 @@ public class HurtBox : MonoBehaviour
     {
         if (transform.parent.TryGetComponent<IAttackable>(out IAttackable attackTarget))
         {
-            attackTarget.ByWeapon(weapon);
-            if (dmg != 0) attackTarget.Damaged(dmg);
+            attackTarget.Damaged(dmg, weapon);
         }
     }
 }

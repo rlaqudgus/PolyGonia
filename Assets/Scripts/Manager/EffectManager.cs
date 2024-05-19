@@ -17,7 +17,7 @@ public class EffectManager : Singleton<EffectManager>
     // Start is called before the first frame update
     private void Awake()
     {
-        CreateSingleton(this);
+       CreateSingleton(this);
         _playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
@@ -53,7 +53,17 @@ public class EffectManager : Singleton<EffectManager>
         //���� ��� ������Ʈ invincible�� ����
         foreach (Transform child in go.transform)
         {
-            child.gameObject.layer = child.gameObject.name == "Detector" ? LayerMask.NameToLayer("Player1") : LayerMask.NameToLayer("Invincible");
+            switch (child.gameObject.name)
+            {
+                case "Detector":
+                    child.gameObject.layer = LayerMask.NameToLayer("Player1");
+                    break;
+                case "MapIcon":
+                    break;
+                default:
+                    child.gameObject.layer = LayerMask.NameToLayer("Invincible");
+                    break;
+            }
         }
 
         //�������� ����Ʈ
@@ -70,7 +80,14 @@ public class EffectManager : Singleton<EffectManager>
         //���� ��� ������Ʈ �ٽ� �÷��̾�� ���� 
         foreach (Transform child in go.transform)
         {
-            child.gameObject.layer = LayerMask.NameToLayer("Player1");
+            switch (child.gameObject.name)
+            {
+                case "MapIcon":
+                    break;
+                default:
+                    child.gameObject.layer = LayerMask.NameToLayer("Player1");
+                    break;
+            }
         }
     }
 

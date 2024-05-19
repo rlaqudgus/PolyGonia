@@ -14,7 +14,7 @@ public class QuestIcon : MonoBehaviour
     [SerializeField] private GameObject _canFinishIcon;
     [SerializeField] private GameObject _finishedIcon;
 
-    private void Start()
+    private void Awake()
     {
         _icons = new GameObject[] 
         { 

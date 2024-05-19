@@ -18,7 +18,14 @@ public class PlayerController : MonoBehaviour, IAttackable
     public PlayerData data; // player에 관한 변수들을 저장한 scriptable object
     [SerializeField] private RayBox _ray;
     [SerializeField] private float _invincibleTime;
-    [SerializeField] private int _maxHP;
+    //[SerializeField] private int _maxHP;
+    //[SerializeField] private int _HP;
+
+    //체력 시스템 통일 요망
+    //playerstatus에서 체력 받아오기
+    private PlayerStatus _playerStatus;
+
+    [SerializeField] public int _maxHP;
     [SerializeField] private int _HP;
     
     private int _dir;
@@ -34,16 +41,12 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     // InteractBox에서 사용
     [HideInInspector] public List<GameObject> scannedObjects = new List<GameObject>();
-
-    private PlayerInput _playerInput;
-
+    
     private Rigidbody2D _rb;
-
-    private SpriteRenderer _spriteRenderer;
-
     private Animator _anim;
 
-    private Shield _shield;
+    private WeaponController _weaponController;
+    
 
     #region PLAYER MOVE
     
@@ -94,20 +97,28 @@ public class PlayerController : MonoBehaviour, IAttackable
     [Header("Layers & Tags")]
     [SerializeField] private LayerMask _layerTerrain;
     #endregion
-    
-    void Start()
-    {
-       
-        _playerInput = GetComponent<PlayerInput>();
-        _rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _anim = GetComponent<Animator>();
-        _shield = GetComponentInChildren<Shield>(true);
 
-       SetGravityScale(data.gravityScale);
+    #region EventHandler
+
+    public Action<int> OnDamaged = null;
+    public Action<int> OnHealed = null;
+
+    #endregion
+    
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<Animator>();
+        _playerStatus = GetComponent<PlayerStatus>();
+        _weaponController = GetComponent<WeaponController>();
+
+        SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
         _HP = _maxHP;
 
+        Debug.Log(_HP);
+        OnHealed?.Invoke(_HP);
+        
         KeyboardInputManager.Instance.MoveAction += Move;
         KeyboardInputManager.Instance.LookAction += Look;
         KeyboardInputManager.Instance.JumpAction += OnJumpInput;
@@ -134,28 +145,35 @@ public class PlayerController : MonoBehaviour, IAttackable
        KeyboardInputManager.Instance.InteractAction -= Interact;
     }
 
-    void Update()
+    private void TimerUpdate()
     {
-       // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
-       TimerOnGround -= Time.deltaTime;
-       TimerOnWall -= Time.deltaTime;
-       TimerOnWallRight -= Time.deltaTime;
-       TimerOnWallLeft -= Time.deltaTime;
-       TimerPressJumpBtn -= Time.deltaTime;
-       TimerPressDashBtn -= Time.deltaTime;
-       
-       #region COLLISION CHECKS
-       if (!IsDashing) // (!IsDashing && !IsJumping) 에서 수정
-       {
-          // 기존의 OnCollision2D를 이용한 Ground Check은 실시간 모니터링을 하기 힘들어 Update함수에서 check를 함
-          // CheckWithbox의 BoxCastAll가 동적 함수라 Update내에서 쓰기에는 많은 리소스를 잡아먹을 것 같아 정적 검사인 OverlapBox사용
-          
-          // Ground Check
-          if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _layerTerrain) && !IsJumping)
-          {
-             TimerOnGround = data.coyoteTime;
-             _jumpCounter = data.jumpAmount;
-          }
+	    // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
+	    TimerOnGround -= Time.deltaTime;
+	    TimerOnWall -= Time.deltaTime;
+	    TimerOnWallRight -= Time.deltaTime;
+	    TimerOnWallLeft -= Time.deltaTime;
+	    TimerPressJumpBtn -= Time.deltaTime;
+	    TimerPressDashBtn -= Time.deltaTime;
+
+    }
+
+    private void Update()
+    {
+	    TimerUpdate();
+	    
+
+	    #region COLLISION CHECKS
+	    if (!IsDashing) // (!IsDashing && !IsJumping) 에서 수정
+	    {
+		    // 기존의 OnCollision2D를 이용한 Ground Check은 실시간 모니터링을 하기 힘들어 Update함수에서 check를 함
+		    // CheckWithbox의 BoxCastAll가 동적 함수라 Update내에서 쓰기에는 많은 리소스를 잡아먹을 것 같아 정적 검사인 OverlapBox사용
+		    
+		    // Ground Check
+		    if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _layerTerrain) && !IsJumping)
+		    {
+			    TimerOnGround = data.coyoteTime;
+			    _jumpCounter = data.jumpAmount;
+		    }
 
           // Right Wall Check
           if ((Physics2D.OverlapBox(_wallCheckPoint.position, _wallCheckSize, 0, _layerTerrain) && _dir == 1) && !IsWallJumping)
@@ -304,7 +322,11 @@ public class PlayerController : MonoBehaviour, IAttackable
       }
       
       // this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
-      // this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
+      // this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}, TimerOnGround : {TimerOnGround > 0}");
+      if (IsWallJumping == true)
+      {
+         this.Log("IsWallJumping is true");
+      }
       _anim.SetBool("isMoving", _isMoving);
     }
     
@@ -350,7 +372,6 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     private void Look(float y)
     {
-       if (_isMoving) return;
 
        IsLookUp = y > 0;
        IsLookDown = y < 0;
@@ -363,7 +384,7 @@ public class PlayerController : MonoBehaviour, IAttackable
        isShield = shield;
         if (shield) _anim.SetTrigger("Shield");
 
-        WeaponController.Instance.UseShield(shield);
+        _weaponController.UseShield(shield);
         _anim.SetBool("isShield", shield);
 
     }
@@ -372,19 +393,25 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
        IsAttacking = true;
         int idx = IsLookUp ? 0 : IsLookDown ? 2 : 1; //LookUP이 true면 0, lookDown이 true면 2 다 아니면 1 위에서 아래 순
-
+        
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
         if (isShield)
         {
             _anim.SetTrigger("Parry");
         }
+        else
+        {
+           _anim.SetBool("isAttacking", true);
+           _anim.SetTrigger("Attack");
+        }
 
-        WeaponController.Instance.UseWeapon(idx);
+        _weaponController.UseWeapon(idx);
     }
 
     private void AttackCancel()
     {
        IsAttacking = false;
+       _anim.SetBool("isAttacking", false);
        _anim.ResetTrigger("Parry");
     }
 
@@ -541,13 +568,14 @@ public class PlayerController : MonoBehaviour, IAttackable
         transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * knockBackDist,0);
     }
     
-    public void Damaged(int dmg)
+    public void Damaged(int dmg, Weapon weapon)
     {
         DamageEffect();
-        this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
+        _playerStatus.TakeDamage(dmg); //Status를 따로 관리하기 위해 PlayerStatus에서 관리
+        
         _HP -= dmg;
 
-        //if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
+        OnDamaged?.Invoke(dmg);
     }
 
     void DamageEffect()
@@ -565,30 +593,6 @@ public class PlayerController : MonoBehaviour, IAttackable
         
         JoyConManager.Instance?.j[0].SetRumble(160, 320, 1f, 400);
         
-    }
-
-    // [TG] [2024-04-04] [question]
-    // Player의 ByShield은 단순 transform.position 변경이지만 Triangle의 ByShield는 Addforce 사용 (?)
-    // 나중에 AddForce로 통일하는 것이 좋아 보임
-    public void ByShield(Shield shield)
-    {
-        PlayerKnockBack(0.5f);
-    }
-
-    public void ByParry(Shield shield)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    public void ByWeapon(Weapon weapon)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    void SceneTest()
-    {
-        //대충 씬 전환 확인하는코드
-        SceneManager.LoadScene(0);
     }
 
     #region JoyCon Functions
@@ -644,7 +648,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     void ResetShield()
     {
-        WeaponController.Instance.UseShield(isShield);
+        _weaponController.UseShield(isShield);
         _anim.ResetTrigger("Shield");
     }
 
@@ -652,7 +656,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         this.Log("Parry");
         _anim.SetTrigger("Parry");
-        WeaponController.Instance.UseWeapon(0);
+        _weaponController.UseWeapon(0);
         Invoke("ResetParry", 0.2f);
     }
 
@@ -810,7 +814,8 @@ public class PlayerController : MonoBehaviour, IAttackable
     private bool CanJump()
     {
        // 벽에 닿고 있을 때는 Jump가 아닌 Wall Jump를 하기 위해서 조건 추가 -> 점프 - 벽점프 - 더블 점프가 되지 않는 버그 수정
-      return (_jumpCounter > 0) && (TimerOnWall < 0);
+       // Wall과 Ground에 동시에 닿고 있을 시 점프가 되지 않던 버그 수정
+      return (_jumpCounter > 0) && (TimerOnWall < 0 || (TimerOnGround > 0 && TimerOnWall > 0));
     }
 
    private bool CanWallJump()

@@ -85,7 +85,8 @@ public class EnemyManager : MonoBehaviour
     // 모든 Enemy를 Set에서 제거하고 Destroy한다
     public void Clear() 
     {
-        foreach (Enemy enemy in _enemySet) 
+        HashSet<Enemy> enemySetCopied = new HashSet<Enemy>(_enemySet);
+        foreach (Enemy enemy in enemySetCopied)
         {
             Destroy(enemy.gameObject);
         }
