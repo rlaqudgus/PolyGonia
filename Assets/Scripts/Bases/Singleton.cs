@@ -14,11 +14,15 @@ namespace Bases
             }
         }
 
-        protected void CreateSingleton(T instance, bool dontDestroyOnLoad = false)
+        protected void CreateSingleton(T instance)
         {
-            _instance = instance;
-            if (dontDestroyOnLoad) DontDestroyOnLoad(this);
-            Init();
+            if (_instance == null)
+            {
+                _instance = instance; 
+                DontDestroyOnLoad(this);
+                Init();
+            }
+            else Destroy(this);
         }
 
         protected virtual void Init()

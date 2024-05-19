@@ -342,10 +342,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7406845069004775575}
+  - component: {fileID: 6424443721229195349}
   - component: {fileID: 1029419770371555544}
   - component: {fileID: 905092815307175552}
   - component: {fileID: 501125325822856914}
-  - component: {fileID: 6424443721229195349}
   - component: {fileID: 2259706471767929655}
   - component: {fileID: 4653042928756086666}
   - component: {fileID: 4374348109103404528}
@@ -377,6 +377,33 @@ Transform:
   - {fileID: 5880056672442193125}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6424443721229195349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5868314773221598724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 678e52720a44398429e90770f60b047a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 4edb02e29dd693a47b14be334ae5fbb0, type: 2}
+  _ray: {fileID: 372700976509540781}
+  _invincibleTime: 2
+  _maxHP: 5
+  _HP: 5
+  isShield: 0
+  isInvincible: 0
+  scannedObjects: []
+  _groundCheckPoint: {fileID: 4295513638778843983}
+  _groundCheckSize: {x: 0.4, y: 0.1}
+  _wallCheckPoint: {fileID: 5770417961328852374}
+  _wallCheckSize: {x: 0.1, y: 0.4}
+  _layerTerrain:
+    serializedVersion: 2
+    m_Bits: 1073741824
 --- !u!212 &1029419770371555544
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -452,33 +479,6 @@ MonoBehaviour:
   _weaponArray:
   - {fileID: 4301598785456602144}
   - {fileID: 7727574962847130238}
---- !u!114 &6424443721229195349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5868314773221598724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 678e52720a44398429e90770f60b047a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 4edb02e29dd693a47b14be334ae5fbb0, type: 2}
-  _ray: {fileID: 372700976509540781}
-  _invincibleTime: 2
-  _maxHP: 5
-  _HP: 5
-  isShield: 0
-  isInvincible: 0
-  scannedObjects: []
-  _groundCheckPoint: {fileID: 4295513638778843983}
-  _groundCheckSize: {x: 0.4, y: 0.1}
-  _wallCheckPoint: {fileID: 5770417961328852374}
-  _wallCheckSize: {x: 0.1, y: 0.4}
-  _layerTerrain:
-    serializedVersion: 2
-    m_Bits: 1073741824
 --- !u!61 &2259706471767929655
 BoxCollider2D:
   m_ObjectHideFlags: 0

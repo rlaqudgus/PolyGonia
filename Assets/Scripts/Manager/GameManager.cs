@@ -27,11 +27,16 @@ namespace Manager
 
         private void Awake()
         {
-            CreateSingleton(this, true);
+            CreateSingleton(this);
 
             miscEvents = new MiscEvents();
             playerEvents = new PlayerEvents();
             questEvents = new QuestEvents();
+        }
+
+        private void Start()
+        {
+            UIManager.Instance.OpenBackgroundUI(UIManager.BACKGROUND_CANVAS);
         }
 
         #region Gamestate

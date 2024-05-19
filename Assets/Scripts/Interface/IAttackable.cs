@@ -4,8 +4,5 @@ using UnityEngine;
 
 public interface IAttackable
 {
-    //Weapon으로 합병
-    public void ByParry(Shield shield);
-    public void ByWeapon(Weapon weapon);
-    public void Damaged(int Dmg);
+    public void Damaged(int dmg, Weapon weapon);
 }

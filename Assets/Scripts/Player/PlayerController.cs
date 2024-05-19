@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     public PlayerData data; // player에 관한 변수들을 저장한 scriptable object
     [SerializeField] private RayBox _ray;
     [SerializeField] private float _invincibleTime;
-    [SerializeField] private int _maxHP;
+    [SerializeField] public int _maxHP;
     [SerializeField] private int _HP;
     
     private int _dir;
@@ -35,16 +35,12 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     // InteractBox에서 사용
     [HideInInspector] public List<GameObject> scannedObjects = new List<GameObject>();
-
-    private PlayerInput _playerInput;
-
+    
     private Rigidbody2D _rb;
-
-    private SpriteRenderer _spriteRenderer;
-
     private Animator _anim;
 
-    private Shield _shield;
+    private WeaponController _weaponController;
+    
 
     #region PLAYER MOVE
     
@@ -95,20 +91,27 @@ public class PlayerController : MonoBehaviour, IAttackable
     [Header("Layers & Tags")]
     [SerializeField] private LayerMask _layerTerrain;
     #endregion
+
+    #region EventHandler
+
+    public Action<int> OnDamaged = null;
+    public Action<int> OnHealed = null;
+
+    #endregion
     
-    void Start()
+    private void Start()
     {
-	    
-        _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _anim = GetComponent<Animator>();
-        _shield = GetComponentInChildren<Shield>(true);
+        _weaponController = GetComponent<WeaponController>();
 
 	    SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
         _HP = _maxHP;
 
+        Debug.Log(_HP);
+        OnHealed?.Invoke(_HP);
+        
         KeyboardInputManager.Instance.MoveAction += Move;
         KeyboardInputManager.Instance.LookAction += Look;
         KeyboardInputManager.Instance.JumpAction += OnJumpInput;
@@ -135,7 +138,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    KeyboardInputManager.Instance.InteractAction -= Interact;
     }
 
-    void Update()
+    private void TimerUpdate()
     {
 	    // Timer가 0보다 큰 경우 타이머에 해당하는 상태가 활성화된 것
 	    TimerOnGround -= Time.deltaTime;
@@ -144,7 +147,14 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    TimerOnWallLeft -= Time.deltaTime;
 	    TimerPressJumpBtn -= Time.deltaTime;
 	    TimerPressDashBtn -= Time.deltaTime;
+
+    }
+
+    private void Update()
+    {
+	    TimerUpdate();
 	    
+
 	    #region COLLISION CHECKS
 	    if (!IsDashing) // (!IsDashing && !IsJumping) 에서 수정
 	    {
@@ -359,7 +369,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 	    isShield = shield;
         if (shield) _anim.SetTrigger("Shield");
 
-        WeaponController.Instance.UseShield(shield);
+        _weaponController.UseShield(shield);
         _anim.SetBool("isShield", shield);
 
     }
@@ -375,7 +385,7 @@ public class PlayerController : MonoBehaviour, IAttackable
             _anim.SetTrigger("Parry");
         }
 
-        WeaponController.Instance.UseWeapon(idx);
+        _weaponController.UseWeapon(idx);
     }
 
     private void AttackCancel()
@@ -537,13 +547,13 @@ public class PlayerController : MonoBehaviour, IAttackable
         transform.position = (Vector2)transform.position - new Vector2(transform.localScale.x * knockBackDist,0);
     }
     
-    public void Damaged(int dmg)
+    public void Damaged(int dmg, Weapon weapon)
     {
         DamageEffect();
         this.Log($"currentHp : {_HP} - {dmg} = {_HP - dmg}");
         _HP -= dmg;
 
-        //if (_HP == 1) GameManager.Instance.UpdateGameState(GameState.LowHealth);
+        OnDamaged?.Invoke(dmg);
     }
 
     void DamageEffect()
@@ -561,30 +571,6 @@ public class PlayerController : MonoBehaviour, IAttackable
         
         JoyConManager.Instance?.j[0].SetRumble(160, 320, 1f, 400);
         
-    }
-
-    // [TG] [2024-04-04] [question]
-    // Player의 ByShield은 단순 transform.position 변경이지만 Triangle의 ByShield는 Addforce 사용 (?)
-    // 나중에 AddForce로 통일하는 것이 좋아 보임
-    public void ByShield(Shield shield)
-    {
-        PlayerKnockBack(0.5f);
-    }
-
-    public void ByParry(Shield shield)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    public void ByWeapon(Weapon weapon)
-    {
-        //throw new System.NotImplementedException();
-    }
-
-    void SceneTest()
-    {
-        //대충 씬 전환 확인하는코드
-        SceneManager.LoadScene(0);
     }
 
     #region JoyCon Functions
@@ -640,7 +626,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     void ResetShield()
     {
-        WeaponController.Instance.UseShield(isShield);
+        _weaponController.UseShield(isShield);
         _anim.ResetTrigger("Shield");
     }
 
@@ -648,7 +634,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
         this.Log("Parry");
         _anim.SetTrigger("Parry");
-        WeaponController.Instance.UseWeapon(0);
+        _weaponController.UseWeapon(0);
         Invoke("ResetParry", 0.2f);
     }
 

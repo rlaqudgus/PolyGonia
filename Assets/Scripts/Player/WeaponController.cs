@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Bases;
 using UnityEngine;
 using Utilities;
-public class WeaponController : Singleton<WeaponController> //Player�� �޾Ƶα�
+public class WeaponController : MonoBehaviour//Player�� �޾Ƶα�
 {
     [SerializeField] private Weapon[] _weaponArray;
     [HideInInspector] public Action[] WeaponAction;
@@ -17,11 +17,6 @@ public class WeaponController : Singleton<WeaponController> //Player�� �޾
     private const int SHIELD_IDX = 1;
 
     #endregion
-
-    private void Awake()
-    {
-        CreateSingleton(this);
-    }
 
     private void Start()
     {

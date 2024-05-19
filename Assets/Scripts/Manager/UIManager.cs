@@ -18,16 +18,21 @@ namespace Manager
         private bool _pause = false;
 
         private readonly Stack<GameObject> _popupStack = new Stack<GameObject>();
-        private GameObject _background;
-
+        private GameObject _background = null;
+        private GameObject _mobilePad;
+        
         #region UIObjectName
 
         public const string MAIN_MENU = "Main Menu";
         public const string SETTING_MENU = "Settings Menu";
         public const string MOBILE_CANVAS = "Mobile Canvas";
         public const string DIALOGUE_CANVAS = "Dialogue Canvas";
+        public const string BACKGROUND_CANVAS = "Background Canvas";
         
         #endregion
+
+        public Action onPause = null;
+        
         
         private void Awake()
         {
@@ -42,26 +47,31 @@ namespace Manager
 
         #region UI
 
-        public void OpenPopupUI(string uiName) => OpenPopupUI(uiName, false);
-        public void OpenPopupUI(string uiName, bool pauseOnUI)
+        public GameObject OpenPopupUI(string uiName) => OpenPopupUI(uiName, false);
+        public GameObject OpenPopupUI(string uiName, bool pauseOnUI)
         {
             GameObject uiObj = OpenUI(uiName, _order);
-            if (uiObj == null) return;
+            if (uiObj == null) return null;
             
             _order++;
-            EventSystem.current.SetSelectedGameObject(uiObj.transform.GetChild(0).gameObject);
+            var obj = uiObj.GetComponentInChildren<Button>().gameObject;
+            EventSystem.current.SetSelectedGameObject(obj);
             _popupStack.Push(uiObj);
             
             if(pauseOnUI) Pause();
+
+            return uiObj;
         }
 
-        public void OpenBackgroundUI(string uiName)
+        public GameObject OpenBackgroundUI(string uiName)
         {
             GameObject uiObj = OpenUI(uiName, -1);
-            if (uiObj == null) return;
+            if (uiObj == null) return null;
             
             _background?.SetActive(false);
             _background = uiObj;
+
+            return uiObj;
         }
 
         public void ClosePopupUI()
@@ -72,7 +82,11 @@ namespace Manager
             popup.SetActive(false);
 
             if (_popupStack.Count >= 1)
-                EventSystem.current.SetSelectedGameObject(_popupStack.Peek().transform.GetChild(0).gameObject);
+            {
+                var obj = _popupStack.Peek().GetComponentInChildren<Button>().gameObject;
+                EventSystem.current.SetSelectedGameObject(obj);
+            }
+
             _order--;
 
             if (_pause) Resume();
@@ -87,7 +101,7 @@ namespace Manager
         private GameObject OpenUI(string uiName, int sortingOrder)
         {
             GameObject uiObj = _uiDic[uiName];
-
+            
             if (uiObj.activeSelf) return null;
             
             Canvas canvas = uiObj.GetOrAddComponent<Canvas>();
@@ -116,6 +130,8 @@ namespace Manager
 
             // Input System
             KeyboardInputManager.Instance.UpdateInputState(KeyboardInputManager.UI);
+            
+            onPause?.Invoke();
         }
 
         public void Resume()
