@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79c9e66b193b8648b215a0a6c14efa8, type: 3}
+  m_Name: Bright Music
+  m_EditorClassIdentifier: 
+  id: Bright Music
+  description: "Meeting is hidden in the clouds of a half-moon\r\n( \u9022\u3075\u3053\u3068\u306F\u7247\u5272\u308C\u6708\u306E\u96F2\u96A0\u308C
+    )\r\ncomposed by modus\r\nhttps://dova-s.jp/EN/bgm/play20311.html"
+  clip: {fileID: 8300000, guid: 7c6fd28f3d869664984d8c3becf81193, type: 3}

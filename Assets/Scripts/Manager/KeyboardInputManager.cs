@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class KeyboardInputManager : Singleton<KeyboardInputManager>
 {
@@ -10,6 +11,7 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     public const string PLAYER = "Player";
     public const string UI = "UI";
+    public const string PAUSE = "Pause";
 
     #endregion
 
@@ -28,13 +30,37 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     #endregion
 
-    private void Awake() => CreateSingleton(this, true);
+    private void Awake()
+    {
+        CreateSingleton(this, true);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     protected override void Init() => _playerInput ??= GetComponent<PlayerInput>();
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Set Pause Action Map true if the scene is not "Start Menu"
+        // ex) SetInputState(PAUSE, gameState != Init);
+        SetInputState(PAUSE, true);
+    }
 
     public void UpdateInputState(string inputState)
     {
         if (_playerInput.currentActionMap.ToString() == inputState) return;
         _playerInput.SwitchCurrentActionMap(inputState);
+    }
+
+    public void SetInputState(string inputState, bool state)
+    {
+        InputActionMap actionMap = _playerInput.actions.FindActionMap(inputState);
+        if (actionMap == null) Debug.LogWarning("There is no action map: " + name);
+
+        if (actionMap.enabled ^ state)
+        {
+            if (state) actionMap.Enable();
+            else       actionMap.Disable();
+        }
     }
 
     #region MoveInput
@@ -101,7 +127,12 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.started) UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
+        // [SH] - 기존 계획은 키보드를 통한 토글
+        if (context.started)
+        {
+            if (!UIManager.Instance.isPaused) UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
+            else UIManager.Instance.ClosePopupUI();
+        }
     }
 
     public void OnMap(InputAction.CallbackContext context)

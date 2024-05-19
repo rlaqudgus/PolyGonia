@@ -23,7 +23,6 @@ public class GameManager : Singleton<GameManager>
 
     public PlayerEvents playerEvents;
     public MiscEvents miscEvents;
-    public QuestEvents questEvents;
 
     private void OnEnable()
     {
@@ -41,7 +40,6 @@ public class GameManager : Singleton<GameManager>
 
         miscEvents = new MiscEvents();  
         playerEvents = new PlayerEvents();
-        questEvents = new QuestEvents();
     }
 
 

@@ -10,12 +10,41 @@ public class Quest
     // state info
     public QuestState state;
     private int _currentQuestStepIndex;
+    public QuestStepState[] questStepStates;
+
+    // Quest Point info
+    [HideInInspector] 
+    public List<QuestPoint> questPointList;
 
     public Quest(QuestInfo questInfo)
     {
         this.info = questInfo;
         this.state = QuestState.REQUIREMENTS_NOT_MET;
         this._currentQuestStepIndex = 0;
+        this.questStepStates = new QuestStepState[info.questStepPrefabs.Length];
+
+        for (int i = 0; i < questStepStates.Length; i++)
+        {
+            questStepStates[i] = new QuestStepState();
+        }
+
+        questPointList = new List<QuestPoint>();
+    }
+
+    public Quest(QuestInfo questInfo, QuestState questState, int currentQuestStepIndex, QuestStepState[] questStepStates, List<QuestPoint> questPointList)
+    {
+        this.info = questInfo;
+        this.state = questState;
+        this._currentQuestStepIndex = currentQuestStepIndex;
+        this.questStepStates = questStepStates;
+        this.questPointList = questPointList;
+
+        if (this.questStepStates.Length != this.info.questStepPrefabs.Length)
+        {
+            Debug.LogWarning(
+                "Something may be changed in QuestInfo - saved data is out of sync. " + this.info.id
+            );
+        }
     }
 
     public void MoveToNextStep()
@@ -36,7 +65,7 @@ public class Quest
             // 최적화 시 오브젝트 풀링 사용
             GameObject newQuestStepObject = Object.Instantiate(questStepPrefab, parentTransform);
             QuestStep questStep = newQuestStepObject.GetComponent<QuestStep>();
-            questStep.InitializeQuestStep(info.id);
+            questStep.InitializeQuestStep(info.id, _currentQuestStepIndex, questStepStates[_currentQuestStepIndex]);
         }
     }
 
@@ -53,5 +82,15 @@ public class Quest
         }
 
         return questStepPrefab;
+    }
+
+    public QuestData GetQuestData()
+    {
+        return new QuestData(
+            state, 
+            _currentQuestStepIndex, 
+            questStepStates,
+            questPointList
+        );
     }
 }

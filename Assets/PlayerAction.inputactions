@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "11526ca8-abe3-4dee-ae89-98d532cc8074",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "5daaa515-9520-486c-acb4-2b06a36b037b",
@@ -367,17 +358,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b38aab3f-635b-4c34-a7ad-b01616008e02",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "434fd461-0b2f-49c4-b106-a741490650af",
                     "path": "<Keyboard>/e",
                     "interactions": "",
@@ -404,15 +384,6 @@
             "name": "UI",
             "id": "c4904c88-6d43-4c02-bf78-9b96ba73bc24",
             "actions": [
-                {
-                    "name": "Resume",
-                    "type": "Button",
-                    "id": "d7ad7e8c-8990-490c-ac00-8edc28c293e6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
                 {
                     "name": "Submit",
                     "type": "Button",
@@ -505,28 +476,6 @@
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "c78db740-b8e6-476e-bd54-0d2c3ebbb556",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Resume",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "289e097a-ddcc-4eec-83d3-210293aa1b6b",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Resume",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "Keyboard",
                     "id": "4ccbf344-5ead-4315-9f9f-9b2c25e6bb1d",
@@ -889,6 +838,45 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Pause",
+            "id": "bd173071-cfbc-41d7-9fed-b7baf6464193",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "0ed49ec6-5256-4dc1-982e-69633ade1a7b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e8a533e5-0b0c-4990-a8ae-7ee33c33711b",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2fd7a54f-f4bd-4b91-9b1f-b3470607a6a2",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
