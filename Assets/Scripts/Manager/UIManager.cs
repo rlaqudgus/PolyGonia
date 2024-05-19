@@ -24,6 +24,7 @@ public class UIManager : Singleton<UIManager>
         public const string SETTING_MENU = "Settings Menu";
         public const string MOBILE_CANVAS = "Mobile Canvas";
         public const string DIALOGUE_CANVAS = "Dialogue Canvas";
+        public const string MAP_CANVAS = "Map Canvas";
         
         #endregion
         

@@ -36,7 +36,7 @@ public class Shield : Weapon
             var parent = col.transform.parent;
             if (!parent.TryGetComponent<IAttackable>(out IAttackable a)) return;
 
-            EffectManager.Instance.InstantiateEffect(ParticleColor.YELLOW, (transform.position + col.transform.position) * .5f);
+            EffectManager.Instance.InstantiateEffect(ParticleColor.YELLOW, (transform.position + col.transform.position) * .5f + Vector3.up);
             
             WeaponAction?.Invoke();
 

@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 MainMenu.unity
     guid: b2c9261be78fd974c9163ffa0074574a
   - enabled: 1
-    path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 OutDoor.unity
-    guid: 72a8003db0cb46b469447d75bfa26e47
+    path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor_Mapsystem.unity
+    guid: 8e5d679dbeb73c648aef4baab1790d65
+  - enabled: 1
+    path: Assets/Scenes/Beta1.4/Beta1.4 Dungeon_MapSystem.unity
+    guid: ae58a15d7cecebd4b94d9a68e658981f
+  - enabled: 1
+    path: Assets/Scenes/Beta1.4/Beta1.4 OutDoor.unity
+    guid: 162fc502e66030d4caf5262ee5234ed3
   - enabled: 1
     path: Assets/Scenes/Beta1.4/SanghwaScenes/Beta1.4 Dungeon.unity
     guid: ff099d3be68bbf94e9c4058194e7a385

@@ -304,7 +304,11 @@ public class PlayerController : MonoBehaviour, IAttackable
       }
       
       // this.Log($"isJump : {IsJumping}, isSlide : {IsSliding}, isDash : {IsDashing}, isWallJump : {IsWallJumping}, isJumpCut : {_isJumpCut}, isMoving : {_isMoving}, isGround : {(TimerOnGround > 0)}, isOnWall : {(TimerOnWall > 0)}");
-      // this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}");
+      // this.Log($"TimerOnLeftWall : {TimerOnWallLeft > 0}, TimerOnRightWall : {TimerOnWallRight > 0}, TimerOnGround : {TimerOnGround > 0}");
+      if (IsWallJumping == true)
+      {
+         this.Log("IsWallJumping is true");
+      }
       _anim.SetBool("isMoving", _isMoving);
     }
     
@@ -350,7 +354,6 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     private void Look(float y)
     {
-       if (_isMoving) return;
 
        IsLookUp = y > 0;
        IsLookDown = y < 0;
@@ -372,11 +375,16 @@ public class PlayerController : MonoBehaviour, IAttackable
     {
        IsAttacking = true;
         int idx = IsLookUp ? 0 : IsLookDown ? 2 : 1; //LookUP이 true면 0, lookDown이 true면 2 다 아니면 1 위에서 아래 순
-
+        
         // 눌렀을 때 shieldbox를 끄고 parrybox를 켠다
         if (isShield)
         {
             _anim.SetTrigger("Parry");
+        }
+        else
+        {
+           _anim.SetBool("isAttacking", true);
+           _anim.SetTrigger("Attack");
         }
 
         WeaponController.Instance.UseWeapon(idx);
@@ -385,6 +393,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     private void AttackCancel()
     {
        IsAttacking = false;
+       _anim.SetBool("isAttacking", false);
        _anim.ResetTrigger("Parry");
     }
 
@@ -810,7 +819,8 @@ public class PlayerController : MonoBehaviour, IAttackable
     private bool CanJump()
     {
        // 벽에 닿고 있을 때는 Jump가 아닌 Wall Jump를 하기 위해서 조건 추가 -> 점프 - 벽점프 - 더블 점프가 되지 않는 버그 수정
-      return (_jumpCounter > 0) && (TimerOnWall < 0);
+       // Wall과 Ground에 동시에 닿고 있을 시 점프가 되지 않던 버그 수정
+      return (_jumpCounter > 0) && (TimerOnWall < 0 || (TimerOnGround > 0 && TimerOnWall > 0));
     }
 
    private bool CanWallJump()
