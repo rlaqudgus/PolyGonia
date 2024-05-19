@@ -17,7 +17,7 @@ public class EffectManager : Singleton<EffectManager>
     // Start is called before the first frame update
     private void Awake()
     {
-        CreateSingleton(this,true);
+       CreateSingleton(this);
         _playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 

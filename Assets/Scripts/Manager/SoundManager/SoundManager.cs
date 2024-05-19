@@ -31,7 +31,7 @@ public class SoundManager : Singleton<SoundManager>
 
     private void Awake()
     {
-        CreateSingleton(this, true);
+        CreateSingleton(this);
 
         // Assets/Resources/Sounds 폴더에 존재하는 모든 Sound 로드
         _musicSoundDict = CreateSoundDict("Music");

@@ -35,7 +35,7 @@ public class UIManager : Singleton<UIManager>
         
         private void Awake()
         {
-            CreateSingleton(this, true);
+            CreateSingleton(this);
 
             foreach (var uiObj in uiArray)
             {

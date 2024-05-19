@@ -16,7 +16,7 @@ public class QuestManager : Singleton<QuestManager>
 
     private void Awake()
     {
-        CreateSingleton(this, true);
+        CreateSingleton(this);
 
         questMap = CreateQuestMap(false);
         allQuestSteps = new HashSet<QuestStep>();

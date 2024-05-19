@@ -6,6 +6,6 @@ public class DontDestroyObject : Singleton<DontDestroyObject>
 {
     private void Awake()
     {
-        CreateSingleton(this, true);
+        CreateSingleton(this);
     }
 }
