@@ -115,6 +115,7 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.CloseAllPopupUI();
     }
 
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         MapManager.Instance.RevealRoom();
