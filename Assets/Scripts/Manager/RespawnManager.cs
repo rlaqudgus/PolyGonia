@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
@@ -6,6 +5,8 @@ public class RespawnManager : MonoBehaviour
     public static RespawnManager Instance { get; private set; }
 
     private Vector3 _checkpointPosition;
+    private int _currentCheckpointOrder = -1; // ï¿½Ê±â°ªï¿½ï¿½ -1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ Ã¼Å©ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½
+
 
     private void Awake()
     {
@@ -20,9 +21,22 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-    public void SetCheckpoint(Vector3 checkpointPosition)
+    public void SetCheckpoint(Vector3 checkpointPosition, int checkpointOrder)
     {
-        _checkpointPosition = checkpointPosition;
+        if (checkpointOrder >= _currentCheckpointOrder)
+        {
+            _checkpointPosition = checkpointPosition;
+            _currentCheckpointOrder = checkpointOrder;
+            Debug.Log("Checkpoint updated to order: " + checkpointOrder);
+        }
+        else
+        {
+            Debug.Log("Checkpoint order " + checkpointOrder + " is not higher than the current checkpoint order " + _currentCheckpointOrder);
+        }
+    }
+    public void UpdateCheckpoint(Checkpoint checkpoint)
+    {
+        SetCheckpoint(checkpoint.transform.position, checkpoint.checkpointOrder);
     }
 
     public void RespawnPlayer(GameObject player)
@@ -37,7 +51,7 @@ public class RespawnManager : MonoBehaviour
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» ¶§ ¸®½ºÆùÇÏ´Â ¸Þ¼­µå ¿¹½Ã
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½×¾ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void OnPlayerDeath(GameObject player)
     {
         if (Instance != null)
@@ -47,8 +61,8 @@ public class RespawnManager : MonoBehaviour
         }
         else
         {
-            // »õ·Î¿î ÀÎ½ºÅÏ½º »ý¼ºÀº ¿©±â¿¡ Æ÷ÇÔµÇÁö ¾Ê½À´Ï´Ù.
-            // ´ë½Å, ÀÎ½ºÅÏ½º°¡ ÀÌ¹Ì Á¸ÀçÇÏÁö ¾ÊÀ¸¸é ¿¡·¯¸¦ ·Î±×·Î Ãâ·ÂÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½Ôµï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.
+            // ï¿½ï¿½ï¿½, ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             UnityEngine.Debug.Log("RespawnManager instance is null!");
         }
     }
