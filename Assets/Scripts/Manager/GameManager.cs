@@ -27,18 +27,17 @@ public class GameManager : Singleton<GameManager>
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        //SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Awake()
     {
         CreateSingleton(this);
-
         miscEvents = new MiscEvents();
         playerEvents = new PlayerEvents();
     }
@@ -129,8 +128,5 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        MapManager.Instance.RevealRoom();
-    }
+   
 }

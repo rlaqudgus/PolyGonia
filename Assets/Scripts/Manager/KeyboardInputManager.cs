@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 public class KeyboardInputManager : Singleton<KeyboardInputManager>
 {
-    [SerializeField] private PlayerInput _playerInput;
+    public PlayerInput _playerInput;
 
     #region InputState
 
@@ -30,7 +31,11 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     #endregion
 
-    protected override void Init() => _playerInput ??= GetComponent<PlayerInput>();
+    protected override void Init()
+    {
+        this.Log("init");
+        _playerInput ??= GetComponent<PlayerInput>();
+    }
 
     private void Awake()
     {
@@ -38,10 +43,21 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Set Pause Action Map true if the scene is not "Start Menu"
         // ex) SetInputState(PAUSE, gameState != Init);
+        //this.Log("sceneload");
         SetInputState(PAUSE, true);
     }
 

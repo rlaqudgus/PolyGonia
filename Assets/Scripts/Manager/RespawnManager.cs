@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Utilities;
 public class RespawnManager : MonoBehaviour
 {
     public static RespawnManager Instance { get; private set; }
@@ -27,11 +27,11 @@ public class RespawnManager : MonoBehaviour
         {
             _checkpointPosition = checkpointPosition;
             _currentCheckpointOrder = checkpointOrder;
-            Debug.Log("Checkpoint updated to order: " + checkpointOrder);
+            this.Log("Checkpoint updated to order: " + checkpointOrder);
         }
         else
         {
-            Debug.Log("Checkpoint order " + checkpointOrder + " is not higher than the current checkpoint order " + _currentCheckpointOrder);
+            this.Log("Checkpoint order " + checkpointOrder + " is not higher than the current checkpoint order " + _currentCheckpointOrder);
         }
     }
     public void UpdateCheckpoint(CheckpointBox checkpoint)
@@ -46,7 +46,7 @@ public class RespawnManager : MonoBehaviour
         PlayerStatus playerStatus = player.GetComponent<PlayerStatus>();
         if (playerStatus != null)
         {
-            UnityEngine.Debug.Log("HP reset");
+            this.Log("HP reset");
             playerStatus.ResetHealth();
         }
     }
@@ -56,14 +56,14 @@ public class RespawnManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            UnityEngine.Debug.Log("RespawnManager instance is not null!");
+            this.Log("RespawnManager instance is not null!");
             RespawnPlayer(player);
         }
         else
         {
             // ���ο� �ν��Ͻ� ������ ���⿡ ���Ե��� �ʽ��ϴ�.
             // ���, �ν��Ͻ��� �̹� �������� ������ ������ �α׷� ����մϴ�.
-            UnityEngine.Debug.Log("RespawnManager instance is null!");
+            this.Log("RespawnManager instance is null!");
         }
     }
 }

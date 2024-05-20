@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 
 public class MapManager : Singleton<MapManager>
 {
@@ -10,6 +11,12 @@ public class MapManager : Singleton<MapManager>
     {
         CreateSingleton(this);
         _rooms = GetComponentsInChildren<MapContainerData>(true);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void RevealRoom()
@@ -26,5 +33,11 @@ public class MapManager : Singleton<MapManager>
                 return;
             }
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //this.Log("revealroom");
+        RevealRoom();
     }
 }

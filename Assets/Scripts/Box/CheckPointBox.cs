@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utilities;
 
 public class CheckpointBox : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class CheckpointBox : MonoBehaviour
         {
             // 플레이어가 체크포인트에 도달했을 때의 동작
             RespawnManager.Instance.UpdateCheckpoint(this);
-            Debug.Log("Checkpoint reached at position: " + transform.position);
+            this.Log("Checkpoint reached at position: " + transform.position);
         }
     }
 }

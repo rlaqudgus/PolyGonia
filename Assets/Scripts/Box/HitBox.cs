@@ -20,7 +20,7 @@ public class HitBox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         // HitBox가 HurtBox와 trigger 되었을 경우 
-        if (col.TryGetComponent(out HurtBox hbox) && (!dontHitPlayer|| !col.CompareTag("Player")))
+        if (col.TryGetComponent(out HurtBox hbox))
         {
             this.Log($"{this.gameObject.name} collided with {hbox.gameObject.name}");
             hbox.Attacked(_weapon, hitPoint);

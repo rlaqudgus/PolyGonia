@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         _jumpCounter = data.jumpAmount;
         _HP = _maxHP;
 
-        Debug.Log(_HP);
+        this.Log(_HP);
         OnHealed?.Invoke(_HP);
         
         KeyboardInputManager.Instance.MoveAction += Move;

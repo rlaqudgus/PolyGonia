@@ -2370,18 +2370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e29c18dbb77ce64fbd96e24a5d96899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds:
-  - name: Serious Music
-    clip: {fileID: 8300000, guid: 7ccaa15e6a3df2e4da7e21cf94fafce6, type: 3}
-  - name: Hopeful Music
-    clip: {fileID: 8300000, guid: ad3a12498600ed8419a63acd4538480b, type: 3}
-  - name: Bright Music
-    clip: {fileID: 8300000, guid: 7c6fd28f3d869664984d8c3becf81193, type: 3}
-  sfxSounds:
-  - name: First Attack
-    clip: {fileID: 8300000, guid: cb2c50fc538ebf648adeefea487da6cd, type: 3}
-  - name: Second Attack
-    clip: {fileID: 8300000, guid: ddf1861acb5b82341a40f739e95ed790, type: 3}
   musicSource: {fileID: 551362774}
   sfxSource: {fileID: 1378832572}
   voiceSource: {fileID: 100268968}
@@ -10713,22 +10701,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910703461}
         m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
-        m_MethodName: OnPause
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 11526ca8-abe3-4dee-ae89-98d532cc8074
-    m_ActionName: Player/Pause[/Keyboard/p]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 910703461}
-        m_TargetAssemblyTypeName: Manager.KeyboardInputManager, Assembly-CSharp
         m_MethodName: OnInteract
         m_Mode: 0
         m_Arguments:
@@ -10741,10 +10713,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5daaa515-9520-486c-acb4-2b06a36b037b
     m_ActionName: Player/Interact[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: d7ad7e8c-8990-490c-ac00-8edc28c293e6
-    m_ActionName: UI/Resume[/Keyboard/p]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 1a5846fa-04dc-49a9-bf37-8b5a485018e1
@@ -10785,6 +10753,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 50715bd9-389a-49be-8f79-859fb31f2b80
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8cdf557b-3a1e-402c-aa2e-e67935bc3561
+    m_ActionName: Player/Map[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 910703461}
+        m_TargetAssemblyTypeName: KeyboardInputManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0ed49ec6-5256-4dc1-982e-69633ade1a7b
+    m_ActionName: Pause/Pause[/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -10817,6 +10805,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01a9b08e1f2c4fb086e5053957883bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInput: {fileID: 0}
 --- !u!1 &920813511
 GameObject:
   m_ObjectHideFlags: 0
@@ -11854,7 +11843,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1188454710}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfa21cff950c4032b01b6bb85eea89e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f1e47d992a92b9499d2f1aa78f270ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   uiArray:
@@ -13108,6 +13097,10 @@ PrefabInstance:
     - target: {fileID: 5868314773221598724, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6424443721229195349, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
+      propertyPath: _maxHP
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7406845069004775575, guid: 0a709d6ef64b37947bc637795016f8b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15260,67 +15253,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127491202}
   m_CullTransparentMesh: 1
---- !u!1001 &1488249123463845729
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 699080054454600104, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3093025035988677510, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_Name
-      value: Scene Transition Box
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 60.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -10.28
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6476815092336816896, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 46e44943852bcb04bb0b077a5ea8bde0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -15335,7 +15267,6 @@ SceneRoots:
   - {fileID: 1487370653}
   - {fileID: 1626062869}
   - {fileID: 1104474926}
-  - {fileID: 1488249123463845729}
   - {fileID: 406077161}
   - {fileID: 437032826}
   - {fileID: 1981619055}
