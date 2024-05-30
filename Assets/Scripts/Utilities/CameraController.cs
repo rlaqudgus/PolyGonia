@@ -2,7 +2,8 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class CameraController : MonoBehaviour
     float defaultSize;
 
     [Header("PostProcessing Components")]
-    [SerializeField] private PostProcessVolume _postProcessController;
+    [SerializeField] private Volume _postProcessController;
 
     private void Awake()
     {
@@ -123,8 +124,8 @@ public class CameraController : MonoBehaviour
     {
         float elapsedTime = 0;
 
-        _postProcessController.profile.TryGetSettings(out Grain grain);
-        _postProcessController.profile.TryGetSettings(out Vignette vignette);
+        _postProcessController.profile.TryGet(out FilmGrain grain);
+        _postProcessController.profile.TryGet(out Vignette vignette);
 
         while(elapsedTime < duration)
         {

@@ -11,6 +11,17 @@ public class CameraManager : Singleton<CameraManager>
     {
         CreateSingleton(this);
     }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.playerEvents.OnPlayerLowHealth += LowHpPostProcess;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.playerEvents.OnPlayerLowHealth -= LowHpPostProcess;
+    }
+
     protected override void Init()
     {
         if (_controller == null) _controller = GameObject.Find("Virtual Camera").GetComponent<CameraController>();
@@ -25,5 +36,5 @@ public class CameraManager : Singleton<CameraManager>
     public void FollowTarget(GameObject target) => _controller.FollowTarget(target);
 
     [ContextMenu("hp1Effect")]
-    public void LowHpPostProcess(float time) => _controller.LowHpPostProcess(time, 1, .4f);
+    public void LowHpPostProcess() => _controller.LowHpPostProcess(2, 1, .6f);
 }

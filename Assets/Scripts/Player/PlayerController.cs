@@ -27,7 +27,16 @@ public class PlayerController : MonoBehaviour, IAttackable
 
     [SerializeField] public int _maxHP;
     [SerializeField] private int _HP;
-    
+
+    public int HP
+    {
+        get { return _HP; }
+        set 
+        { 
+            _HP = value;
+            GameManager.Instance.playerEvents.PlayerHealthChange(value);
+        }
+    }
     private int _dir;
     private bool _isMoving;
     private bool _canTeeter;
@@ -114,7 +123,7 @@ public class PlayerController : MonoBehaviour, IAttackable
 
         SetGravityScale(data.gravityScale);
         _jumpCounter = data.jumpAmount;
-        _HP = _maxHP;
+        HP = _maxHP;
 
         this.Log(_HP);
         OnHealed?.Invoke(_HP);
@@ -573,7 +582,7 @@ public class PlayerController : MonoBehaviour, IAttackable
         DamageEffect();
         _playerStatus.TakeDamage(dmg); //Status를 따로 관리하기 위해 PlayerStatus에서 관리
         
-        _HP -= dmg;
+        HP -= dmg;
 
         OnDamaged?.Invoke(dmg);
     }

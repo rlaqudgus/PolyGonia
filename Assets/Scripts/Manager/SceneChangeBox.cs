@@ -1,12 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneTransition : MonoBehaviour
+public class SceneChangeBox : MonoBehaviour
 {
     public int targetScene;  // 전환할 씬 이름
-
-    
-    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
