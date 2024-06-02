@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerStatus : MonoBehaviour
 {
     public int maxHealth = 5;
-    [SerializeField] private int currentHealth;
+    [SerializeField] public int currentHealth;
 
     void Awake()
     {

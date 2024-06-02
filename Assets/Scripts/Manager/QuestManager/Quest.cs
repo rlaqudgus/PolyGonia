@@ -9,35 +9,42 @@ public class Quest
 
     // state info
     public QuestState state;
-    private int _currentQuestStepIndex;
+    public int currentQuestStepIndex;
     public QuestStepState[] questStepStates;
-
-    // Quest Point info
-    [HideInInspector] 
-    public List<QuestPoint> questPointList;
 
     public Quest(QuestInfo questInfo)
     {
         this.info = questInfo;
         this.state = QuestState.REQUIREMENTS_NOT_MET;
-        this._currentQuestStepIndex = 0;
+        this.currentQuestStepIndex = 0;
         this.questStepStates = new QuestStepState[info.questStepPrefabs.Length];
 
         for (int i = 0; i < questStepStates.Length; i++)
         {
             questStepStates[i] = new QuestStepState();
         }
-
-        questPointList = new List<QuestPoint>();
     }
 
-    public Quest(QuestInfo questInfo, QuestState questState, int currentQuestStepIndex, QuestStepState[] questStepStates, List<QuestPoint> questPointList)
+    public Quest(QuestInfo questInfo, QuestData questData)
+    {
+        this.info = questInfo;
+        this.state = questData.state;
+        this.currentQuestStepIndex = questData.questStepIndex;
+        this.questStepStates = questData.questStepStates;
+
+        if (this.questStepStates.Length != this.info.questStepPrefabs.Length)
+        {
+            Debug.LogWarning(
+                "Something may be changed in QuestInfo - saved data is out of sync. " + this.info.id
+            );
+        }
+    }
+    public Quest(QuestInfo questInfo, QuestState questState, int currentQuestStepIndex, QuestStepState[] questStepStates)
     {
         this.info = questInfo;
         this.state = questState;
-        this._currentQuestStepIndex = currentQuestStepIndex;
+        this.currentQuestStepIndex = currentQuestStepIndex;
         this.questStepStates = questStepStates;
-        this.questPointList = questPointList;
 
         if (this.questStepStates.Length != this.info.questStepPrefabs.Length)
         {
@@ -49,12 +56,12 @@ public class Quest
 
     public void MoveToNextStep()
     {
-        _currentQuestStepIndex++;
+        currentQuestStepIndex++;
     }
 
     public bool CurrentStepExists()
     {
-        return (_currentQuestStepIndex < info.questStepPrefabs.Length);
+        return (currentQuestStepIndex < info.questStepPrefabs.Length);
     }
 
     public void InstantiateCurrentQuestStep(Transform parentTransform)
@@ -65,7 +72,7 @@ public class Quest
             // 최적화 시 오브젝트 풀링 사용
             GameObject newQuestStepObject = Object.Instantiate(questStepPrefab, parentTransform);
             QuestStep questStep = newQuestStepObject.GetComponent<QuestStep>();
-            questStep.InitializeQuestStep(info.id, _currentQuestStepIndex, questStepStates[_currentQuestStepIndex]);
+            questStep.InitializeQuestStep(this);
         }
     }
 
@@ -74,23 +81,13 @@ public class Quest
         GameObject questStepPrefab = null;
         if (CurrentStepExists()) 
         {
-            questStepPrefab = info.questStepPrefabs[_currentQuestStepIndex];
+            questStepPrefab = info.questStepPrefabs[currentQuestStepIndex];
         }
         else
         {
-            Debug.LogWarning("Tried to get quest step prefab, but stepIndex was out of range indicating that there is no current step: QuestId = " + info.id + " / " + "stepIndex = " + _currentQuestStepIndex);
+            Debug.LogWarning("Tried to get quest step prefab, but stepIndex was out of range indicating that there is no current step: QuestId = " + info.id + " / " + "stepIndex = " + currentQuestStepIndex);
         }
 
         return questStepPrefab;
-    }
-
-    public QuestData GetQuestData()
-    {
-        return new QuestData(
-            state, 
-            _currentQuestStepIndex, 
-            questStepStates,
-            questPointList
-        );
     }
 }

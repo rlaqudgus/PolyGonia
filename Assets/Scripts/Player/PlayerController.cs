@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour, IAttackable
     //체력 시스템 통일 요망
     //playerstatus에서 체력 받아오기
     private PlayerStatus _playerStatus;
+    public PlayerStatus playerStatus { get { return _playerStatus; } }
 
     [SerializeField] public int _maxHP;
     [SerializeField] private int _HP;

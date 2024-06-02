@@ -45,27 +45,22 @@ public class QuestPoint : NPC, ITalkable
 
     private void OnEnable()
     {
-        QuestManager.Instance.GetQuestById(_questId).questPointList.Add(this);
+        Quest quest = QuestManager.Instance.GetQuestById(_questId);
+        QuestStateChange(quest);
+
+        QuestManager.Instance.OnQuestStateChange += QuestStateChange;
         DialogueManager.Instance.OnDialogueEnded += DialogueEnded;
 
     }
 
     private void OnDisable()
     {
-        QuestManager.Instance.GetQuestById(_questId).questPointList.Remove(this);
+        QuestManager.Instance.OnQuestStateChange -= QuestStateChange;
         DialogueManager.Instance.OnDialogueEnded -= DialogueEnded;
     }
 
-    public void ChangeQuestState(Quest quest)
+    public void QuestStateChange(Quest quest)
     {
-        if (quest.info.id != _questId) 
-        {
-            Debug.LogWarning(
-                "Quest and related NPC is not consistent: " + 
-                quest.info.id + "-" + this.gameObject.name + " " + _questId
-            );
-        }
-
         // update the quest state if this point has the corresponding quest
         if (quest.info.id == _questId)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,13 @@ public class QuestManager : Singleton<QuestManager>
     public HashSet<QuestStep> allQuestSteps;
 
     private int _currentPlayerLevel = 0;
+    public event Action<Quest> OnQuestStateChange;
 
     private void Awake()
     {
         CreateSingleton(this);
 
-        questMap = CreateQuestMap(false);
+        questMap = CreateQuestMap();
         allQuestSteps = new HashSet<QuestStep>();
     }
 
@@ -45,20 +47,11 @@ public class QuestManager : Singleton<QuestManager>
         // QuestPoint 들의 초기 current quest state 를 업데이트
         foreach (Quest quest in questMap.Values)
         {
-            if (quest.state == QuestState.IN_PROGRESS)
-            {
-                quest.InstantiateCurrentQuestStep(this.transform);
-            }
-
-            // QuestPoint 는 OnEnable 시점에 QuestPointList 에 등록된다
-            foreach (QuestPoint questPoint in quest.questPointList)
-            {
-                questPoint.ChangeQuestState(quest);
-            }
+            OnQuestStateChange?.Invoke(quest);
         }
     }
 
-    private Dictionary<string, Quest> CreateQuestMap(bool load)
+    private Dictionary<string, Quest> CreateQuestMap()
     {
         // Assets/Resources/Quests 폴더에 존재하는 모든 QuestInfo 로드
         QuestInfo[] allQuests = Resources.LoadAll<QuestInfo>("Quests");
@@ -72,7 +65,7 @@ public class QuestManager : Singleton<QuestManager>
                 Debug.LogWarning("Duplicate ID found when creating quest map: " + questInfo.id);
             }
             
-            Quest quest = load ? LoadQuest(questInfo) : new Quest(questInfo);
+            Quest quest = new Quest(questInfo);
             idToQuestMap.Add(questInfo.id, quest);
         }
 
@@ -109,18 +102,15 @@ public class QuestManager : Singleton<QuestManager>
 
         quest.state = state;
 
-        foreach (QuestPoint questPoint in quest.questPointList)
-        {
-            questPoint.ChangeQuestState(quest);
-        }
+        OnQuestStateChange?.Invoke(quest);
 
         Debug.Log("Change " + id + " Quest State to " + state.ToString());
     }
 
-    public void ChangeQuestStepState(string id, int stepIndex, QuestStepState state)
+    public void ChangeQuestStepState(QuestStep questStep, QuestStepState state)
     {
-        Quest quest = GetQuestById(id);
-        quest.questStepStates[stepIndex] = state;
+        Quest quest = GetQuestById(questStep.questId);
+        quest.questStepStates[questStep.stepIndex] = state;
     }
 
     private void PlayerLevelChange(int level)
@@ -208,50 +198,40 @@ public class QuestManager : Singleton<QuestManager>
         return;
     }
 
-    private void OnApplicationQuit()
-    {
-        
-    }
-
     #region Save / Load
 
-    public void SaveQuest()
+    public List<QuestData> GetQuestDataList()
     {
+        List<QuestData> questDataList = new List<QuestData>();
         foreach (Quest quest in questMap.Values)
         {
-            SaveQuest(quest);
+            QuestData data = new QuestData(quest);
+            questDataList.Add(data);
         }
+
+        return questDataList;
     }
 
-    private void SaveQuest(Quest quest)
+    public void SetQuestDataList(List<QuestData> questDataList)
     {
-        try
-        {
-            QuestData questData = quest.GetQuestData();
-            string serializedData = JsonUtility.ToJson(questData);
-            
-            PlayerPrefs.SetString(quest.info.id, serializedData);
+        if (questMap == null) questMap = CreateQuestMap();
 
-            Debug.Log(serializedData);
-            Debug.Log("Saved");
-        }
-
-        catch (System.Exception e)
-        {   
-            Debug.LogError("Failed to save quest with id " + quest.info.id + ": " + e);
-        }
-    }
-
-    public void LoadQuest()
-    {
-        questMap = CreateQuestMap(true);
-
+        // 기존에 존재하는 모든 Quest Step 파괴
         HashSet<QuestStep> allQuestStepsCopied = new HashSet<QuestStep>(allQuestSteps);
         foreach (QuestStep questStep in allQuestStepsCopied)
         {
             Destroy(questStep.gameObject);
         }
 
+        // 데이터 로드
+        foreach (QuestData questData in questDataList)
+        {
+            Quest oldQuest = GetQuestById(questData.id);
+            Quest newQuest = new Quest(oldQuest.info, questData);
+            questMap[newQuest.info.id] = newQuest;
+        }
+
+        // 데이터 반영
         foreach (Quest quest in questMap.Values)
         {
             if (quest.state == QuestState.IN_PROGRESS)
@@ -259,45 +239,11 @@ public class QuestManager : Singleton<QuestManager>
                 quest.InstantiateCurrentQuestStep(this.transform);
             }
 
-            foreach (QuestPoint questPoint in quest.questPointList)
-            {
-                questPoint.ChangeQuestState(quest);
-            }
+            OnQuestStateChange?.Invoke(quest);
         }
 
-        Debug.Log("Loaded");
-    }
-
-    private Quest LoadQuest(QuestInfo questInfo)
-    {
-        Quest quest = null;
-
-        try
-        {
-            if (PlayerPrefs.HasKey(questInfo.id))
-            {
-                string serializedData = PlayerPrefs.GetString(questInfo.id);
-                QuestData questData = JsonUtility.FromJson<QuestData>(serializedData);
-
-                quest = new Quest(
-                    questInfo, questData.state, questData.questStepIndex, 
-                    questData.questStepStates, questData.questPointList
-                );
-            }
-            else
-            {
-                quest = new Quest(questInfo);
-            }
-        }
-
-        catch (System.Exception e)
-        {   
-            Debug.LogError("Failed to load quest with id " + quest.info.id + ": " + e);
-        }
-
-        return quest;
+        Debug.Log("Set Quest Data List works");
     }
 
     #endregion
-
 }
