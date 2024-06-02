@@ -7,18 +7,16 @@ using UnityEngine;
 [System.Serializable]
 public class QuestData
 {
+    public string id;
     public QuestState state;
     public int questStepIndex;
     public QuestStepState[] questStepStates;
-    
-    [HideInInspector] 
-    public List<QuestPoint> questPointList;
 
-    public QuestData(QuestState state, int questStepIndex, QuestStepState[] questStepStates, List<QuestPoint> questPointList)
+    public QuestData(Quest quest)
     {
-        this.state = state;
-        this.questStepIndex = questStepIndex;
-        this.questStepStates = questStepStates;
-        this.questPointList = questPointList;
+        this.id = quest.info.id;
+        this.state = quest.state;
+        this.questStepIndex = quest.currentQuestStepIndex;
+        this.questStepStates = quest.questStepStates;
     }
 }

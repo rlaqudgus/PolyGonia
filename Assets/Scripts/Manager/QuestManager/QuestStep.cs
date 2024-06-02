@@ -5,10 +5,9 @@ using UnityEngine;
 public abstract class QuestStep : MonoBehaviour
 {
     [SerializeField] Dialogue dialogue;
-    private bool isFinished = false;
-
-    private string _questId;
-    private int _stepIndex;
+    private bool _isFinished = false;
+    public string questId;
+    public int stepIndex;
 
     protected virtual void OnEnable()
     {
@@ -20,10 +19,11 @@ public abstract class QuestStep : MonoBehaviour
         QuestManager.Instance.allQuestSteps.Remove(this);
     }
 
-    public void InitializeQuestStep(string questId, int stepIndex, QuestStepState questStepState)
+    public void InitializeQuestStep(Quest quest)
     {
-        this._questId = questId;
-        this._stepIndex = stepIndex;
+        this.questId = quest.info.id;
+        this.stepIndex = quest.currentQuestStepIndex;
+        QuestStepState questStepState = quest.questStepStates[quest.currentQuestStepIndex];
 
         if (questStepState != null && questStepState.state != "")
         {
@@ -33,9 +33,9 @@ public abstract class QuestStep : MonoBehaviour
 
     protected void FinishQuestStep()
     {       
-        if (isFinished) return;
+        if (_isFinished) return;
         
-        isFinished = true;
+        _isFinished = true;
         Debug.Log("Finish Quest Step: " + this.gameObject.name);
 
         // 현재 QuestStep 을 끝냈음을 알리는 어떤 수단이 필요
@@ -45,7 +45,7 @@ public abstract class QuestStep : MonoBehaviour
             DialogueManager.Instance.StartDialogue(dialogue);
         }
 
-        QuestManager.Instance.AdvanceQuest(_questId);
+        QuestManager.Instance.AdvanceQuest(questId);
 
         Destroy(this.gameObject);
     }
@@ -55,7 +55,7 @@ public abstract class QuestStep : MonoBehaviour
 
     protected void ChangeQuestStepState(QuestStepState state)
     {
-        QuestManager.Instance.ChangeQuestStepState(_questId, _stepIndex, state);
+        QuestManager.Instance.ChangeQuestStepState(this, state);
     }
 
     protected abstract void UpdateQuestStepState();

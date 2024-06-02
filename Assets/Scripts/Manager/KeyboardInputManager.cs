@@ -12,7 +12,7 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     public const string PLAYER = "Player";
     public const string UI = "UI";
-    public const string PAUSE = "Pause";
+    public const string GLOBAL = "Global";
 
     #endregion
 
@@ -55,10 +55,8 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Set Pause Action Map true if the scene is not "Start Menu"
-        // ex) SetInputState(PAUSE, gameState != Init);
-        //this.Log("sceneload");
-        SetInputState(PAUSE, true);
+        // SetInputState(GLOBAL, gameState != Init);
+        SetInputState(GLOBAL, true);
     }
 
     public void UpdateInputState(string inputState)
@@ -143,11 +141,10 @@ public class KeyboardInputManager : Singleton<KeyboardInputManager>
 
     public void OnPause(InputAction.CallbackContext context)
     {
-        // [SH] - 기존 계획은 키보드를 통한 토글
         if (context.started)
         {
-            if (!UIManager.Instance.isPaused) UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU, true);
-            else UIManager.Instance.ClosePopupUI();
+            if (!GameManager.Instance.isPaused) GameManager.Instance.Pause();
+            else GameManager.Instance.Resume();
         }
     }
 

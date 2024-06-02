@@ -25,6 +25,9 @@ public class GameManager : Singleton<GameManager>
     public PlayerEvents playerEvents;
     public MiscEvents miscEvents;
 
+    private bool _isPaused = false;
+    public bool isPaused { get { return _isPaused; } }
+
     private void OnEnable()
     {
         //SceneManager.sceneLoaded += OnSceneLoaded;
@@ -127,6 +130,58 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.CloseAllPopupUI();
     }
 
+#region Pause
 
+    public void Pause()
+    {
+        _isPaused = true;
+        Time.timeScale = 0;
+
+        // Sound
+        SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
+        SoundManager.Instance.PauseVoice();
+
+        // UI
+        UIManager.Instance.OpenPopupUI(UIManager.MAIN_MENU);
+    }
+
+    public void Resume()
+    {
+        _isPaused = false;
+        Time.timeScale = 1;
+
+        // Sound
+        SoundManager.Instance.Transition(1f);
+        SoundManager.Instance.ResumeVoice();
+
+        // UI
+        UIManager.Instance.ClosePopupUI();
+    }
+        
+#endregion
+
+#region Save / Load
+
+    public void Save() 
+    {
+        DataManager.SavePlayer(playerController);
+        DataManager.SaveQuest();
+        this.Log("Save work");
+    }
+    public void Load()
+    {
+        PlayerInfo playerInfo = DataManager.LoadPlayer();
+        DataManager.SetPlayer(playerController, playerInfo);
+        this.Log("Load work: current player health is " + playerInfo.health);
+
+        List<QuestData> questDataList = DataManager.LoadQuest();
+        foreach (QuestData questData in questDataList) 
+        {
+            this.Log(questData.id + " loaded!");
+        }
+        DataManager.SetQuest(questDataList);
+    }
+
+#endregion
    
 }
