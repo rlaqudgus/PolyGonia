@@ -12,8 +12,6 @@ public class UIManager : Singleton<UIManager>
         public GameObject[] uiArray;
         private readonly Dictionary<string, GameObject> _uiDic = new Dictionary<string, GameObject>();
         private int _order = 10;
-        private bool _pause = false;
-        public bool isPaused { get { return _pause; } }
 
         private readonly Stack<GameObject> _popupStack = new Stack<GameObject>();
         private GameObject _background = null;
@@ -45,9 +43,8 @@ public class UIManager : Singleton<UIManager>
         }
 
         #region UI
-
-        public GameObject OpenPopupUI(string uiName) => OpenPopupUI(uiName, false);
-        public GameObject OpenPopupUI(string uiName, bool pauseOnUI)
+        
+        public GameObject OpenPopupUI(string uiName)
         {
             GameObject uiObj = OpenUI(uiName, _order);
             if (uiObj == null) return null;
@@ -57,8 +54,6 @@ public class UIManager : Singleton<UIManager>
             EventSystem.current.SetSelectedGameObject(obj);
             _popupStack.Push(uiObj);
             
-            if(pauseOnUI) Pause();
-
             KeyboardInputManager.Instance.SetInputState(KeyboardInputManager.PLAYER, false);
             return uiObj;
         }
@@ -89,7 +84,6 @@ public class UIManager : Singleton<UIManager>
 
             _order--;
 
-            if (_pause) Resume();
 
             KeyboardInputManager.Instance.SetInputState(KeyboardInputManager.PLAYER, _popupStack.Count == 0);
         }
@@ -119,32 +113,6 @@ public class UIManager : Singleton<UIManager>
 
         #endregion
 
-        #region Pause
-
-        // Pause 및 Resume 이 UI 로 종속되므로
-        // Input System 을 설정하는 부분을 OpenPopupUI 와 ClosePopupUI 로 이동
-
-        public void Pause()
-        {
-            _pause = true;
-            Time.timeScale = 0;
-
-            // Sound
-            SoundManager.Instance.pauseSnapshot.TransitionTo(1f);
-            SoundManager.Instance.PauseVoice();
-            
-            onPause?.Invoke();
-        }
-
-        public void Resume()
-        {
-            _pause = false;
-            Time.timeScale = 1;
-
-            // Sound
-            SoundManager.Instance.Transition(1f);
-            SoundManager.Instance.ResumeVoice();
-        }
-        
-        #endregion
+        public void Pause() => GameManager.Instance.Pause();
+        public void Resume() => GameManager.Instance.Resume();
     }
